@@ -1,0 +1,7 @@
+﻿  GeometricProgression.cpp
+C:\Users\user\source\Научная работа\GeometricProgression\GeometricProgression.cpp(12,56): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\GeometricProgression\GeometricProgression.cpp(18,38): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\GeometricProgression\GeometricProgression.cpp(44,44): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\GeometricProgression\GeometricProgression.cpp(47,50): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\GeometricProgression\GeometricProgression.cpp(52,54): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+  GeometricProgression.vcxproj -> C:\Users\user\source\Научная работа\GeometricProgression\x64\Debug\GeometricProgression.exe

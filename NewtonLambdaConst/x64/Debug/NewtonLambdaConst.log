@@ -1,0 +1,6 @@
+﻿  NewtonLambdaConst.cpp
+C:\Users\user\source\Научная работа\NewtonLambdaConst\NewtonLambdaConst.cpp(21): warning C4715: Lambda: значение возвращается не при всех путях выполнения
+C:\Users\user\source\Научная работа\NewtonLambdaConst\NewtonLambdaConst.cpp(39): warning C4715: DfLeft: значение возвращается не при всех путях выполнения
+C:\Users\user\source\Научная работа\NewtonLambdaConst\NewtonLambdaConst.cpp(55): warning C4715: DfCenter: значение возвращается не при всех путях выполнения
+C:\Users\user\source\Научная работа\NewtonLambdaConst\NewtonLambdaConst.cpp(70): warning C4715: DfRight: значение возвращается не при всех путях выполнения
+  NewtonLambdaConst.vcxproj -> C:\Users\user\source\Научная работа\NewtonLambdaConst\x64\Debug\NewtonLambdaConst.exe

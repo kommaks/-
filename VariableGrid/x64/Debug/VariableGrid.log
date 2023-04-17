@@ -1,0 +1,12 @@
+﻿  VariableGrid.cpp
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(21,28): warning C4244: return: преобразование "double" в "int", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(25,51): warning C4244: return: преобразование "double" в "int", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(29,51): warning C4244: return: преобразование "double" в "int", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(232,12): warning C4101: zn: неиспользованная локальная переменная
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(277,56): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(283,38): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(304,44): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(306,50): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(311,54): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\VariableGrid\VariableGrid.cpp(32): warning C4715: DefineN: значение возвращается не при всех путях выполнения
+  VariableGrid.vcxproj -> C:\Users\user\source\Научная работа\VariableGrid\x64\Debug\VariableGrid.exe
