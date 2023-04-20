@@ -1,3 +1,4 @@
 TITLE="Graphics"
 VARIABLES= "i", "F"
-1 -nan(ind)
+1 2.28248e-05
+2 6.94388e-10

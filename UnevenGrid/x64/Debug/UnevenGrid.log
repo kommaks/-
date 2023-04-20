@@ -1,19 +1,11 @@
 ﻿  UnevenGrid.cpp
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(175,102): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(175,124): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(176,38): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(176,60): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(176,77): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(176,101): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(248,61): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(248,82): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(264,83): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(264,104): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(271,40): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(271,61): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(437,56): warning C4244: return: преобразование "double" в "float", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(443,38): warning C4244: return: преобразование "double" в "float", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(464,44): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(466,50): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(471,54): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(251,48): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(252,41): warning C4244: аргумент: преобразование "const double" в "int", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(484,56): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(490,38): warning C4244: return: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(511,44): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(513,50): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(518,54): warning C4244: аргумент: преобразование "double" в "float", возможна потеря данных
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(135): warning C4715: Lambda: значение возвращается не при всех путях выполнения
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(156): warning C4715: DfLambda: значение возвращается не при всех путях выполнения
   UnevenGrid.vcxproj -> C:\Users\user\source\Научная работа\UnevenGrid\x64\Debug\UnevenGrid.exe

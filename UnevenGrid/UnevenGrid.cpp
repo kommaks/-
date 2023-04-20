@@ -56,9 +56,9 @@ double Cp(double T, int a)
         D = -2.534480;
         E = 0.082139;
     }
-    if (a == pow(10, -9))
-        return 1.;
-    else
+    //if (a == pow(10, -9))
+    //    return 1;
+    //else
         return A + B * T_forCp + C * pow(T_forCp, 2.) + D * pow(T_forCp, 3.) + E * pow(T_forCp, -2.);
 }
 
@@ -84,9 +84,9 @@ double DfCp(double T, int a)
         D = -2.534480;
         E = 0.082139;
     }
-    if (a == pow(10, -9))
-        return 1.;
-    else
+    //if (a == pow(10, -9))
+    //    return 1.;
+    //else
         return (B + 2. * C * T_forCp + 3. * D * pow(T_forCp, 2.) - 2. * E * pow(T_forCp, -3.)) / 1000.;
 }
 
@@ -96,19 +96,20 @@ double Density(double T, int a)
 {                                              
     const double R = 8.314462;
     const double p = pow(10, 5);
-    if (a == pow(10, -9))
-        return 1.;
-    else
+    //if (a == pow(10, -9))
+    //    return 1;
+    //else {
         return p / (R * T);
+    //}
 }
 
 double DfDensity(double T, int a)
 {
     const double R = 8.314462;
     const double p = pow(10, 5);
-    if (a == pow(10, -9))
-        return 1.;
-    else
+    //if (a == pow(10, -9))
+    //    return 1;
+    //else
         return - p / (R * pow(T, 2.));
 }
 
@@ -117,8 +118,8 @@ double Lambda(double T, const double a, const double b, const double c)
 {
     if (a == pow(10, -9))
         return a * pow(T, 2.0) + b * T + c;
-    else
-    {
+    /*else
+    //{
         //Introduce thermal conductivity INSTEAD of thermal diffusivity
         const double T_star = 647.096;
         double L0 = 2.443221 * pow(10, -3.);
@@ -126,16 +127,18 @@ double Lambda(double T, const double a, const double b, const double c)
         double L2 = 6.770357 * pow(10, -3.);
         double L3 = -3.454586 * pow(10, -3.);
         double L4 = 4.096266 * pow(10, -4.);
+        double lambda_star = pow(10, -3);
         double teta = T / T_star;
-        return sqrt(teta) / (L0 + L1 / teta + L2 / pow(teta, 2.) + L3 / pow(teta, 3.) + L4 / pow(teta, 4.));
+        return lambda_star * (sqrt(teta) / (L0 + L1 / teta + L2 / pow(teta, 2.) + L3 / pow(teta, 3.) + L4 / pow(teta, 4.)));
     }
+    */
 }
 double DfLambda(double T, const double a, const double b)
 {
     if (a == pow(10, -9))
         return 2 * a * T + b;
-    else
-    {
+    /*else
+    //{
         //Introduce thermal conductivity INSTEAD of thermal diffusivity
         const double T_star = 647.096;
         double L0 = 2.443221 * pow(10, -3.);
@@ -143,51 +146,57 @@ double DfLambda(double T, const double a, const double b)
         double L2 = 6.770357 * pow(10, -3.);
         double L3 = -3.454586 * pow(10, -3.);
         double L4 = 4.096266 * pow(10, -4.);
+        double lambda_star = pow(10, -3);
         double teta = T / T_star;
         double bracket_sum = pow(L0 + L1 / teta + L2 / pow(teta, 2.) + L3 / pow(teta, 3.) + L4 / pow(teta, 4.), 2.);
-        return (1. / (bracket_sum * T_star * sqrt(teta))) * (1. / 2. + (L1 / teta + 2. * L2 / pow(teta, 2.)
-            + 3. * L3 / pow(teta, 3.) + 4. * L4 / pow(teta, 4.)) / bracket_sum); 
+        return lambda_star * ((1. / (bracket_sum * T_star * sqrt(teta))) * (1. / 2. + (L1 / teta + 2. * L2 / pow(teta, 2.)
+            + 3. * L3 / pow(teta, 3.) + 4. * L4 / pow(teta, 4.)) / bracket_sum)); 
     }
+    */
 }
 //Setting j-1 element of matrix
 double DfLeft(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c,
-    const int j, const int k)
+    int j, int k)
 {
-    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j] + r[j - 1]) / 2., 2.) * (-DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b)
-        * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1]) + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]));
+    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j] + r[j - 1]) / 2., 2.)
+        * (-DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
+            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]));
 }
 //Setting j element of matrix
 double DfCenter(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c, const double d,
-    const int j, const int k)
+    int j, int k)
 {
     //Time step = 1
-    double dt = 1;
-    if (a == pow(10, -9))
-        return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda((T[j][k] + T[j + 1][k]) / 2., a, b) *
-            (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j]) - Lambda((T[j][k] + T[j + 1][k]) / 2., a, b, c) / (r[j + 1] - r[j])) -
-            pow((r[j] + r[j - 1]) / 2., 2.) * (DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
-            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1. / dt;
-    else
-    {
-        return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda((T[j][k] + T[j + 1][k]) / 2., a, b) *
-            (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j]) - Lambda((T[j][k] + T[j + 1][k]) / 2., a, b, c) / (r[j + 1] - r[j])) -
-            pow((r[j] + r[j - 1]) / 2., 2.) * (DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
-                + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]))) - (Cp(T[j][k], a) * Density(T[j][k], a)
-                    + (DfCp(T[j][k], a) * Density(T[j][k], a) + Cp(T[j][k], a) * DfDensity(T[j][k], a)) * T[j][k]) / dt;
-    }
+    double dt = 0.1;
+    //if (a == pow(10, -9))
+    //{
+    //    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.)
+    //       * (DfLambda((T[j][k] + T[j + 1][k]) / 2., a, b) * (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j])
+    //            - Lambda((T[j][k] + T[j + 1][k]) / 2., a, b, c) / (r[j + 1] - r[j])) - pow((r[j] + r[j - 1]) / 2., 2.)
+    //        * (DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
+    //            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1. / dt;
+    //}
+    //else
+    //{
+    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda((T[j][k] + T[j + 1][k]) / 2., a, b) *
+        (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j]) - Lambda((T[j][k] + T[j + 1][k]) / 2., a, b, c) / (r[j + 1] - r[j])) -
+        pow((r[j] + r[j - 1]) / 2., 2.) * (DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
+            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1 / dt;
+    //}
 }
 //Setting j+1 element of matrix
 double DfRight(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c,
-    const int j, const int k)
+    int j, int k)
 {
-    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda((T[j + 1][k] + T[j][k]) / 2., a, b)
-        * (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j]) + Lambda((T[j + 1][k] + T[j][k]) / 2., a, b, c) / (r[j + 1] - r[j]));
+    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j + 1] + r[j]) / 2., 2.)
+        * (DfLambda((T[j + 1][k] + T[j][k]) / 2., a, b) * (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j])
+            + Lambda((T[j + 1][k] + T[j][k]) / 2., a, b, c) / (r[j + 1] - r[j]));
 }
 
 double AdiabaticBoundaryDfs(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c,
     const int j, const int k)
 {
-    double dt = 1;
+    double dt = 0.1;
     return (2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.) * (DfLambda((T[1][k] + T[2][k]) / 2., a, b) *
         (T[2][k] - T[1][k]) / (r[2] - r[1]) - Lambda((T[1][k] + T[2][k]) / 2., a, b, c) / (r[2] - r[1]))) - 1 / dt;
 }
@@ -220,7 +229,7 @@ void Jacobian(vector<vector<double>>& J, vector<double>& r, vector<vector<double
     else if (const_params == 2 || const_params == 1)
     {
         //Jacobians for left boundary
-        J[1][1] = DfCenter(r, T, a, b, c, d, 1, n + 1);
+        J[1][1] = AdiabaticBoundaryDfs(r, T, a, b, c, 1, n + 1);
         J[1][2] = DfRight(r, T, a, b, c, 1, n + 1);
         for (int j = 2; j < N_minus; j++) {
             J[j][j - 1] = DfLeft(r, T, a, b, c, j, n + 1);
@@ -236,17 +245,23 @@ void F(vector<double>& f, vector<vector<double>>& T, const int N_minus, vector<d
     const double b, const double c, const double d, const int n, const int const_params)
 {
     //Time step = 1
-    double dt = 1;
+    double dt = 0.1;
     if (const_params == 0)
     {
+        cout << "Dens" << Density(T[0][n + 1], a) << "\n";
+        cout << "Cp" << Cp(T[0][n + 1], a) << "\n";
+        cout << "Lambda" << Lambda((T[1][n + 1] + T[1][n + 1]) / 2., a, b, c) << "\n";
         for (int j = 1; j < N_minus + 1; j++)
         {
             //cout << "(T[j][n + 1] - T[j][n])" << (T[j][n + 1] - T[j][n]) << endl;
             f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * Lambda((T[j + 1][n + 1] + T[j][n + 1]) / 2., a, b, c)
                 * (T[j + 1][n + 1] - T[j][n + 1]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
                 * Lambda((T[j][n + 1] + T[j - 1][n + 1]) / 2., a, b, c) * (T[j][n + 1] - T[j - 1][n + 1]) 
-                / (r[j] - r[j - 1])) - Density(T[j][n + 1], a) * Cp(T[j][n + 1], a) * (T[j][n + 1] - T[j][n]) / dt);
-            cout << j << " f" << j << " " << f[j] << endl;
+                / (r[j] - r[j - 1])) - (T[j][n + 1] - T[j][n]) / dt);
+            
+            //cout << "a =" << a << "\n";
+
+            //cout << j << " f" << j << " " << f[j] << endl;
             /*
             cout << "T[" << j << "][n + 1]" << T[j][n + 1] << "\n";
             cout << "Cp" << Cp(T[j][n + 1]) << "\n";
@@ -260,15 +275,17 @@ void F(vector<double>& f, vector<vector<double>>& T, const int N_minus, vector<d
     }
     else if (const_params == 2 || const_params == 1)
     {
-        f[1] = -((2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.) * Lambda((T[2][n + 1] + T[1][n + 1]) / 2., a, b, c)
-            * (T[2][n + 1] - T[1][n + 1]) / (r[2] - r[1])) - Density(T[1][n + 1], a) * Cp(T[1][n + 1], a) * (T[1][n + 1] - T[1][n]) / dt);
-        for (int j = 1; j < N_minus + 1; j++)
+        f[1] = -((2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.)
+            * Lambda((T[2][n + 1] + T[1][n + 1]) / 2., a, b, c)
+            * (T[2][n + 1] - T[1][n + 1]) / (r[2] - r[1])) - (T[1][n + 1] - T[1][n]) / dt);
+        //cout << "f[0]" << f[0] << "\n";
+        for (int j = 2; j < N_minus + 1; j++)
         {
             //cout << "(T[j][n + 1] - T[j][n])" << (T[j][n + 1] - T[j][n]) << endl;
             f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * Lambda((T[j + 1][n + 1] + T[j][n + 1]) / 2., a, b, c)
                 * (T[j + 1][n + 1] - T[j][n + 1]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
                 * Lambda((T[j][n + 1] + T[j - 1][n + 1]) / 2., a, b, c) * (T[j][n + 1] - T[j - 1][n + 1]) / (r[j] - r[j - 1]))
-                - Density(T[j][n + 1], a) * Cp(T[j][n + 1], a) * (T[j][n + 1] - T[j][n]) / dt);
+                - (T[j][n + 1] - T[j][n]) / dt);
             //cout << j << " f" << j << " " << f[j] << endl;
         }
     }
@@ -306,7 +323,8 @@ void Progonka(vector<vector<double>>& T, vector<double>& alpha, vector<double>& 
         T[i][k] += dT[i];
         //cout << "T" << i  << " =" << T[i][k] << endl;
     }
-    //T[0][k] = T[1][k];
+    T[0][k] = T[1][k];
+    //cout << "T[0][k]" << T[0][k] << "\n";
 }
 
 void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const double d,
@@ -316,6 +334,7 @@ void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const dou
     vector<double> alpha(N), beta(N), dT(N + 1), nevyaz(N);
     vector < vector <double> > J(N + 1, vector <double>(N + 1));
     ofstream OutNevyazka;
+    ofstream OutStepCurrentTemp;
     ofstream OutCurrentTemp;
     for (int n = 0; n < total_time; n++)
     { 
@@ -335,9 +354,26 @@ void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const dou
             OutNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
             OutNevyazka << R"(VARIABLES= "i", "F")" << endl;
         }
+        OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(0) + ".dat");
+        OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
+        OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
+        for (int i = 0; i < N + 1; i++) {
+            //cout << r[i] << endl;
+            OutCurrentTemp << r[i] << " " << T[i][0] << " " << Lambda(T[i][0], a, b, c) << "\n";
+        }
+        OutCurrentTemp.close();
         //Getting Solution using cycle of Newton method
         while (mod_nevyaz > pow(10, -6))
         {
+            //Collecting Nevyazka
+            /*
+            if (s % 10 == 0 || s < 10)
+            {
+                OutStepNevyazka.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Nevyazka_Step" + to_string(s) + ".dat");
+                OutStepNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
+                OutStepNevyazka << R"(VARIABLES= "i", "F")" << endl;
+            }
+            */
             mod_nevyaz = 0;
             Jacobian(J, r, T, N_minus, a, b, c, d, n, const_params);
             cout << "s " << s << endl;
@@ -356,14 +392,25 @@ void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const dou
             //Collecting Tempereature and Lambda
             if (n % 10 == 0 || n < 10)
             {
-                OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(n) + ".dat");
+                OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(n + 1) + ".dat");
                 OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
                 OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
                 for (int i = 0; i < N + 1; i++) {
                     //cout << r[i] << endl;
-                    OutCurrentTemp << r[i] << " " << T[i][n] << " " << Lambda(T[i][n], a, b, c) << "\n";
+                    OutCurrentTemp << r[i] << " " << T[i][n + 1] << " " << Lambda(T[i][n + 1], a, b, c) << "\n";
                 }
                 OutCurrentTemp.close();
+            }
+            if (s % 10 == 0 || s < 10)
+            {
+                OutStepCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_Step" + to_string(s) + ".dat");
+                OutStepCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
+                OutStepCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
+                for (int i = 0; i < N + 1; i++) {
+                    //cout << r[i] << endl;
+                    OutStepCurrentTemp << r[i] << " " << T[i][n + 1] << " " << Lambda(T[i][n + 1], a, b, c) << "\n";
+                }
+                OutStepCurrentTemp.close();
             }
         }
         OutNevyazka.close();
@@ -580,23 +627,23 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
 
 int main()
 {
-    const int const_params = 0;          // 0 - r нестац, 1 - r нестац капля и газ, 2 - r нестац адиабатич слева  
-    const int total_time = 300;
+    const int const_params = 1;          // 0 - r нестац, 1 - r нестац капля и газ, 2 - r нестац адиабатич слева  
+    const int total_time = 1000;
     const int power_of = 6;
     const double a = pow(10, -(power_of + 3)), b = pow(10, -power_of), c = pow(10, -(power_of - 3));
     const double d = 0.1;                          //коэффициент диффузии
-    const double T_l = 303;
-    const double T_r = 1503;
+    const double T_l = 400;
+    const double T_r = 1500;
     double h = 0.2;
     //зададим минимальный возможный размер ячейки
-    const double h_min = 0.0025;                   //0.05 / 20 = 0.0025
+    const double h_min = 0.0025;                   //0.05 / 20 = 0.0025 ; 
     int N = 100;
     const int Nd = 20;
     const double x_l = 0.0;
     //const double R = 0.05;                       //примерно 0.5 мм
     const double x_r = 1.0;                        //1 примерно равен 10 мм
     double R = x_l + Nd * h_min;                   //зададим радиус капли
-    double q = DefineQ(N, h_min, x_r, x_l);
+    double q = DefineQ(N - Nd, h_min, x_r, R);
     vector<double> r;
     vector < vector <double> > T;
     InitialGrid(N, x_l, x_r, T_l, T_r, r, T, h, q, h_min, total_time, const_params, Nd);
