@@ -33,8 +33,8 @@ int DefineN(double h, const double q, const double x_l, const double x_r)
 }
 */
 
-//Formula setting for Heat Capacity
-double Cp(double T, int a)
+//Formula setting for Heat Capacity and it's derivative
+double Cp(double T, const double a)
 {
     const double T_boiling = 373;
     double A, B, C, D, E;
@@ -61,8 +61,7 @@ double Cp(double T, int a)
     //else
         return A + B * T_forCp + C * pow(T_forCp, 2.) + D * pow(T_forCp, 3.) + E * pow(T_forCp, -2.);
 }
-
-double DfCp(double T, int a)
+double DfCp(double T, const double a)
 {
     const double T_boiling = 373;
     double A, B, C, D, E;
@@ -89,10 +88,8 @@ double DfCp(double T, int a)
     //else
         return (B + 2. * C * T_forCp + 3. * D * pow(T_forCp, 2.) - 2. * E * pow(T_forCp, -3.)) / 1000.;
 }
-
-
-//Formula setting for Density
-double Density(double T, int a) 
+//Formula setting for Density and it's derivative
+double Density(double T, const double a) 
 {                                              
     const double R = 8.314462;
     const double p = pow(10, 5);
@@ -102,8 +99,7 @@ double Density(double T, int a)
         return p / (R * T);
     //}
 }
-
-double DfDensity(double T, int a)
+double DfDensity(double T, const double a)
 {
     const double R = 8.314462;
     const double p = pow(10, 5);
@@ -112,8 +108,7 @@ double DfDensity(double T, int a)
     //else
         return - p / (R * pow(T, 2.));
 }
-
-//Formula setting for thermal conductivity
+//Formula setting for thermal conductivity and it's derivative
 double Lambda(double T, const double a, const double b, const double c)
 {
     if (a == pow(10, -9))
@@ -154,145 +149,127 @@ double DfLambda(double T, const double a, const double b)
     }
     */
 }
+//Setting arrays of parametres depending on T:
+void ArraysParameters(double T, const double a, const double b, const double c, const int N)
+{
+    vector <double> Cp, DfCp, Density, DfDensity;
+    Cp.resize(N + 1);
+    DfCp.resize(N + 1);
+    Density.resize(N + 1);
+    DfDensity.resize(N + 1);
+
+}
 //Setting j-1 element of matrix
-double DfLeft(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c,
-    int j, int k)
+double DfLeft(vector<double>& r, vector<double>& T_next, const double a, const double b, const double c,
+    int j)
 {
     return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j] + r[j - 1]) / 2., 2.)
-        * (-DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
-            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]));
+        * (-DfLambda((T_next[j] + T_next[j - 1]) / 2., a, b) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
+            + Lambda((T_next[j] + T_next[j - 1]) / 2., a, b, c) / (r[j] - r[j - 1]));
 }
 //Setting j element of matrix
-double DfCenter(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c, const double d,
-    int j, int k)
+double DfCenter(vector<double>& r, vector<double>& T_next, const double a, const double b, const double c,
+    const double d, int j, const double dt)
 {
-    //Time step = 1
-    double dt = 0.1;
     //if (a == pow(10, -9))
     //{
     //    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.)
-    //       * (DfLambda((T[j][k] + T[j + 1][k]) / 2., a, b) * (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j])
-    //            - Lambda((T[j][k] + T[j + 1][k]) / 2., a, b, c) / (r[j + 1] - r[j])) - pow((r[j] + r[j - 1]) / 2., 2.)
-    //        * (DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
-    //            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1. / dt;
+    //       * (DfLambda((T_next[j] + T_next[j + 1]) / 2., a, b) * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
+    //            - Lambda((T_next[j] + T_next[j + 1]) / 2., a, b, c) / (r[j + 1] - r[j])) - pow((r[j] + r[j - 1]) / 2., 2.)
+    //        * (DfLambda((T_next[j] + T_next[j - 1]) / 2., a, b) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
+    //            + Lambda((T_next[j] + T_next[j - 1]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1. / dt;
     //}
     //else
     //{
-    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda((T[j][k] + T[j + 1][k]) / 2., a, b) *
-        (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j]) - Lambda((T[j][k] + T[j + 1][k]) / 2., a, b, c) / (r[j + 1] - r[j])) -
-        pow((r[j] + r[j - 1]) / 2., 2.) * (DfLambda((T[j][k] + T[j - 1][k]) / 2., a, b) * (T[j][k] - T[j - 1][k]) / (r[j] - r[j - 1])
-            + Lambda((T[j][k] + T[j - 1][k]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1 / dt;
+    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda((T_next[j] + T_next[j + 1]) / 2., a, b) *
+        (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - Lambda((T_next[j] + T_next[j + 1]) / 2., a, b, c) / (r[j + 1] - r[j])) -
+        pow((r[j] + r[j - 1]) / 2., 2.) * (DfLambda((T_next[j] + T_next[j - 1]) / 2., a, b) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
+            + Lambda((T_next[j] + T_next[j - 1]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1 / dt;
     //}
 }
 //Setting j+1 element of matrix
-double DfRight(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c,
-    int j, int k)
+double DfRight(vector<double>& r, vector<double>& T_next, const double a, const double b, const double c,
+    int j)
 {
     return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j + 1] + r[j]) / 2., 2.)
-        * (DfLambda((T[j + 1][k] + T[j][k]) / 2., a, b) * (T[j + 1][k] - T[j][k]) / (r[j + 1] - r[j])
-            + Lambda((T[j + 1][k] + T[j][k]) / 2., a, b, c) / (r[j + 1] - r[j]));
+        * (DfLambda((T_next[j + 1] + T_next[j]) / 2., a, b) * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
+            + Lambda((T_next[j + 1] + T_next[j]) / 2., a, b, c) / (r[j + 1] - r[j]));
 }
 
-double AdiabaticBoundaryDfs(vector<double>& r, vector<vector<double>>& T, const double a, const double b, const double c,
-    const int j, const int k)
+double AdiabaticBoundaryDfs(vector<double>& r, vector<double>& T_next, const double a, const double b, const double c,
+    const int j, const double dt)
 {
-    double dt = 0.1;
-    return (2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.) * (DfLambda((T[1][k] + T[2][k]) / 2., a, b) *
-        (T[2][k] - T[1][k]) / (r[2] - r[1]) - Lambda((T[1][k] + T[2][k]) / 2., a, b, c) / (r[2] - r[1]))) - 1 / dt;
+    return (2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.) * (DfLambda((T_next[1] + T_next[2]) / 2., a, b) *
+        (T_next[2] - T_next[1]) / (r[2] - r[1]) - Lambda((T_next[1] + T_next[2]) / 2., a, b, c) / (r[2] - r[1]))) - 1 / dt;
 }
-void Jacobian(vector<vector<double>>& J, vector<double>& r, vector<vector<double>>& T, const int N_minus, const double a,
-    const double b, const double c, const double d, int n, const int const_params)
+void Jacobian(vector<vector<double>>& J, vector<double>& r, vector<double>& T_next, const int N_minus, const double a,
+    const double b, const double c, const double d, const double dt, const int const_params)
 {
     if (const_params == 0)
     {
-            J[1][1] = DfCenter(r, T, a, b, c, d, 1, n + 1);
-            /*
-            cout << "J[1][1]" << J[1][1] << endl;
-            cout << "DfL" << DfLambda((T[2] + T[1]) / 2., a, b) << endl;
-            cout << "L" << Lambda((T[2] + T[1]) / 2., a, b, c) << endl;
-            cout << "r[0]" << r[0] << endl;
-            cout << "r[1]" << r[1] << endl;
-            cout << "r[2]" << r[2] << endl;
-            cout << "T[1]" << T[1] << endl;
-            cout << "T[2]" << T[2] << endl;
-            */
-            J[1][2] = DfRight(r, T, a, b, c, 1, n + 1);
+            J[1][1] = DfCenter(r, T_next, a, b, c, d, 1, dt);
+            J[1][2] = DfRight(r, T_next, a, b, c, 1);
             //cout << "J[1][2]" << J[1][2] << endl;
             for (int j = 2; j < N_minus; j++) {
-                J[j][j - 1] = DfLeft(r, T, a, b, c, j, n + 1);
-                J[j][j] = DfCenter(r, T, a, b, c, d, j, n + 1);
-                J[j][j + 1] = DfRight(r, T, a, b, c, j, n + 1);
+                J[j][j - 1] = DfLeft(r,T_next, a, b, c, j);
+                J[j][j] = DfCenter(r, T_next, a, b, c, d, j, dt);
+                J[j][j + 1] = DfRight(r, T_next, a, b, c, j);
             }
-            J[N_minus][N_minus - 1] = DfLeft(r, T, a, b, c, N_minus, n + 1);
-            J[N_minus][N_minus] = DfCenter(r, T, a, b, c, d, N_minus, n + 1);
+            J[N_minus][N_minus - 1] = DfLeft(r, T_next, a, b, c, N_minus);
+            J[N_minus][N_minus] = DfCenter(r, T_next, a, b, c, d, N_minus, dt);
     }
     else if (const_params == 2 || const_params == 1)
     {
         //Jacobians for left boundary
-        J[1][1] = AdiabaticBoundaryDfs(r, T, a, b, c, 1, n + 1);
-        J[1][2] = DfRight(r, T, a, b, c, 1, n + 1);
+        J[1][1] = AdiabaticBoundaryDfs(r, T_next, a, b, c, 1, dt);
+        J[1][2] = DfRight(r, T_next, a, b, c, 1);
         for (int j = 2; j < N_minus; j++) {
-            J[j][j - 1] = DfLeft(r, T, a, b, c, j, n + 1);
-            J[j][j] = DfCenter(r, T, a, b, c, d, j, n + 1);
-            J[j][j + 1] = DfRight(r, T, a, b, c, j, n + 1);
+            J[j][j - 1] = DfLeft(r, T_next, a, b, c, j);
+            J[j][j] = DfCenter(r, T_next, a, b, c, d, j, dt);
+            J[j][j + 1] = DfRight(r, T_next, a, b, c, j);
         }
-        J[N_minus][N_minus - 1] = DfLeft(r, T, a, b, c, N_minus, n + 1);
-        J[N_minus][N_minus] = DfCenter(r, T, a, b, c, d, N_minus, n + 1);
+        J[N_minus][N_minus - 1] = DfLeft(r, T_next, a, b, c, N_minus);
+        J[N_minus][N_minus] = DfCenter(r, T_next, a, b, c, d, N_minus, dt);
     }
 }
 
-void F(vector<double>& f, vector<vector<double>>& T, const int N_minus, vector<double>& r, const double a,
-    const double b, const double c, const double d, const int n, const int const_params)
+void F(vector<double>& f, vector<double>& T_cur, vector<double>& T_next, const int N_minus, vector<double>& r, const double a,
+    const double b, const double c, const double d, const double dt, const int const_params)
 {
-    //Time step = 1
-    double dt = 0.1;
     if (const_params == 0)
     {
-        cout << "Dens" << Density(T[0][n + 1], a) << "\n";
-        cout << "Cp" << Cp(T[0][n + 1], a) << "\n";
-        cout << "Lambda" << Lambda((T[1][n + 1] + T[1][n + 1]) / 2., a, b, c) << "\n";
+        cout << "Dens" << Density(T_next[0], a) << "\n";
+        cout << "Cp" << Cp(T_next[0], a) << "\n";
+        cout << "Lambda" << Lambda(T_next[1], a, b, c) << "\n";
         for (int j = 1; j < N_minus + 1; j++)
         {
-            //cout << "(T[j][n + 1] - T[j][n])" << (T[j][n + 1] - T[j][n]) << endl;
-            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * Lambda((T[j + 1][n + 1] + T[j][n + 1]) / 2., a, b, c)
-                * (T[j + 1][n + 1] - T[j][n + 1]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
-                * Lambda((T[j][n + 1] + T[j - 1][n + 1]) / 2., a, b, c) * (T[j][n + 1] - T[j - 1][n + 1]) 
-                / (r[j] - r[j - 1])) - (T[j][n + 1] - T[j][n]) / dt);
-            
-            //cout << "a =" << a << "\n";
-
-            //cout << j << " f" << j << " " << f[j] << endl;
-            /*
-            cout << "T[" << j << "][n + 1]" << T[j][n + 1] << "\n";
-            cout << "Cp" << Cp(T[j][n + 1]) << "\n";
-            cout << "DfCp" << DfCp(T[j][n + 1]) << "\n";
-            cout << "Density" << Density(T[j][n + 1]) << "\n";
-            cout << "DfDensity" << DfDensity(T[j][n + 1]) << "\n";
-            cout << "Lambda" << Lambda((T[j][n + 1] + T[j - 1][n + 1]) / 2., a, b, c) << "\n";
-            cout << "DfLambda" << DfLambda((T[j][n + 1] + T[j - 1][n + 1]) / 2., a, b) << "\n";
-            */
+            //cout << "(T_next[j] - T_cur[j])" << (T_next[j] - T_cur[j] << endl;
+            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * Lambda((T_next[j + 1] + T_next[j]) / 2., a, b, c)
+                * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
+                * Lambda((T_next[j] + T_next[j - 1]) / 2., a, b, c) * (T_next[j] - T_next[j - 1])
+                / (r[j] - r[j - 1])) - (T_next[j] - T_cur[j]) / dt);
         }
     }
     else if (const_params == 2 || const_params == 1)
     {
         f[1] = -((2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.)
-            * Lambda((T[2][n + 1] + T[1][n + 1]) / 2., a, b, c)
-            * (T[2][n + 1] - T[1][n + 1]) / (r[2] - r[1])) - (T[1][n + 1] - T[1][n]) / dt);
+            * Lambda((T_next[2] + T_next[1]) / 2., a, b, c)
+            * (T_next[2] - T_next[1]) / (r[2] - r[1])) - (T_next[1] - T_cur[1]) / dt);
         //cout << "f[0]" << f[0] << "\n";
         for (int j = 2; j < N_minus + 1; j++)
         {
-            //cout << "(T[j][n + 1] - T[j][n])" << (T[j][n + 1] - T[j][n]) << endl;
-            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * Lambda((T[j + 1][n + 1] + T[j][n + 1]) / 2., a, b, c)
-                * (T[j + 1][n + 1] - T[j][n + 1]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
-                * Lambda((T[j][n + 1] + T[j - 1][n + 1]) / 2., a, b, c) * (T[j][n + 1] - T[j - 1][n + 1]) / (r[j] - r[j - 1]))
-                - (T[j][n + 1] - T[j][n]) / dt);
+            //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
+            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * Lambda((T_next[j + 1] + T_next[j]) / 2., a, b, c)
+                * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
+                * Lambda((T_next[j] + T_next[j - 1]) / 2., a, b, c) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
+                - (T_next[j] - T_cur[j]) / dt);
             //cout << j << " f" << j << " " << f[j] << endl;
         }
     }
 }
 
-void Progonka(vector<vector<double>>& T, vector<double>& alpha, vector<double>& beta, vector<double>& dT, vector<double>& nevyaz, 
-    vector < vector <double> >& J, const int N_minus, int k)
+void Progonka(vector<double>& T_next, vector<double>& alpha, vector<double>& beta, vector<double>& dT,
+    vector<double>& nevyaz, vector < vector <double> >& J, const int N_minus)
 {
     //считаем коэффициенты слева
     //Define denominator for constant formules in method
@@ -315,73 +292,66 @@ void Progonka(vector<vector<double>>& T, vector<double>& alpha, vector<double>& 
     dT[N_minus] = (nevyaz[N_minus] - J[N_minus][N_minus - 1] * beta[N_minus - 1]) /
         (J[N_minus][N_minus] + J[N_minus][N_minus - 1] * alpha[N_minus - 1]);
     //cout << "T[N_minus] " << T[N_minus] << endl;
-    T[N_minus][k] += dT[N_minus];
+    T_next[N_minus] += dT[N_minus];
     //обновляем температуру на узлах
-    cout << "T[N_minus][" << k << "] =" << T[N_minus][k] << endl;
+    cout << "T_next[N_minus] =" << T_next[N_minus] << endl;
     for (int i = N_minus - 1; i >= 1; i--) {
         dT[i] = alpha[i] * dT[i + 1] + beta[i];
-        T[i][k] += dT[i];
+        T_next[i] += dT[i];
         //cout << "T" << i  << " =" << T[i][k] << endl;
     }
-    T[0][k] = T[1][k];
+    T_next[0] = T_next[1];
     //cout << "T[0][k]" << T[0][k] << "\n";
 }
 
-void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const double d,
-    const double a, const double b, const double c, const int total_time, const int const_params)
+void Solver(const int N, vector<double>& r, vector<double>& T_cur, vector<double>& T_next, const double d,
+    const double a, const double b, const double c, const int total_time, const double dt, const int const_params)
 {
     const int N_minus = N - 1;
     vector<double> alpha(N), beta(N), dT(N + 1), nevyaz(N);
     vector < vector <double> > J(N + 1, vector <double>(N + 1));
     ofstream OutNevyazka;
-    ofstream OutStepCurrentTemp;
     ofstream OutCurrentTemp;
+    //задаем начальную температуру следующего слоя как решение предыдущей
+    for (int j = 0; j < N + 1; j++)
+    {
+        T_next[j] = T_cur[j];
+    }
+    //Reading the initial distribution
+    OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(0) + ".dat");
+    OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
+    OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
+    for (int i = 0; i < N + 1; i++) {
+        //cout << r[i] << endl;
+        OutCurrentTemp << r[i] << " " << T_cur[i] << " " << Lambda(T_cur[i], a, b, c) << "\n";
+        cout << r[i] << " " << T_cur[i] << " " << Lambda(T_cur[i], a, b, c) << "\n";
+    }
+    OutCurrentTemp.close();
     for (int n = 0; n < total_time; n++)
     { 
-        //задаем начальную температуру следующего слоя как решение предыдущей
-        for (int j = 0; j < N + 1; j++)
-        {
-            T[j][n + 1] = T[j][n];
-        }
         //метод Ньютона для n-ого временного слоя
         double mod_nevyaz = 10000;
         int s = 0;
-        F(nevyaz, T, N_minus, r, a, b, c, d, n, const_params);
+        //Discrepancy for the current layer
+        F(nevyaz, T_cur, T_next, N_minus, r, a, b, c, d, dt, const_params);
         //Collecting Nevyazka
-        if (n % 10 == 0 || n < 10)
+        if (n % 10 == 0 || n < 20)
         {
             OutNevyazka.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Nevyazka_" + to_string(n) + ".dat");
             OutNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
             OutNevyazka << R"(VARIABLES= "i", "F")" << endl;
         }
-        OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(0) + ".dat");
-        OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
-        OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
-        for (int i = 0; i < N + 1; i++) {
-            //cout << r[i] << endl;
-            OutCurrentTemp << r[i] << " " << T[i][0] << " " << Lambda(T[i][0], a, b, c) << "\n";
-        }
-        OutCurrentTemp.close();
         //Getting Solution using cycle of Newton method
         while (mod_nevyaz > pow(10, -6))
         {
-            //Collecting Nevyazka
-            /*
-            if (s % 10 == 0 || s < 10)
-            {
-                OutStepNevyazka.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Nevyazka_Step" + to_string(s) + ".dat");
-                OutStepNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
-                OutStepNevyazka << R"(VARIABLES= "i", "F")" << endl;
-            }
-            */
             mod_nevyaz = 0;
-            Jacobian(J, r, T, N_minus, a, b, c, d, n, const_params);
+            Jacobian(J, r, T_next, N_minus, a, b, c, d, dt, const_params);
             cout << "s " << s << endl;
-            //МЕТОД ПРОГОНКИ
-            Progonka(T, alpha, beta, dT, nevyaz, J, N_minus, n + 1);
+            //МЕТОД ПРОГОНКИ: T_next change from s to s+1
+            Progonka(T_next, alpha, beta, dT, nevyaz, J, N_minus);
             //cout << "T0" << " =" << T[0] << endl;
             s += 1;
-            F(nevyaz, T, N_minus, r, a, b, c, d, n, const_params);
+            F(nevyaz, T_cur, T_next, N_minus, r, a, b, c, d, dt, const_params);
             for (int i = 1; i < N_minus; i++) {
                 //cout << "nevyaz[i]" << nevyaz[i] << endl;
                 mod_nevyaz += pow(nevyaz[i], 2.0);
@@ -390,37 +360,31 @@ void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const dou
             OutNevyazka << s << " " << mod_nevyaz << endl;
             cout << endl << "nevyazka = " << mod_nevyaz << endl;
             //Collecting Tempereature and Lambda
-            if (n % 10 == 0 || n < 10)
+            if (n % 10 == 0 || n < 20)
             {
                 OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(n + 1) + ".dat");
                 OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
                 OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
                 for (int i = 0; i < N + 1; i++) {
                     //cout << r[i] << endl;
-                    OutCurrentTemp << r[i] << " " << T[i][n + 1] << " " << Lambda(T[i][n + 1], a, b, c) << "\n";
+                    OutCurrentTemp << r[i] << " " << T_next[i] << " " << Lambda(T_next[i], a, b, c) << "\n";
                 }
                 OutCurrentTemp.close();
             }
-            if (s % 10 == 0 || s < 10)
-            {
-                OutStepCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_Step" + to_string(s) + ".dat");
-                OutStepCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
-                OutStepCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
-                for (int i = 0; i < N + 1; i++) {
-                    //cout << r[i] << endl;
-                    OutStepCurrentTemp << r[i] << " " << T[i][n + 1] << " " << Lambda(T[i][n + 1], a, b, c) << "\n";
-                }
-                OutStepCurrentTemp.close();
-            }
         }
         OutNevyazka.close();
+        //задаем начальную температуру следующего слоя как решение предыдущей
+        for (int j = 0; j < N + 1; j++)
+        {
+            T_cur[j] = T_next[j];
+        }
     }
     OutCurrentTemp.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/Temp_" + to_string(total_time) + ".dat");
     OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
     OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
     for (int i = 0; i < N + 1; i++) {
         //cout << r[i] << endl;
-        OutCurrentTemp << r[i] << " " << T[i][total_time] << " " << Lambda(T[i][total_time], a, b, c) << "\n";
+        OutCurrentTemp << r[i] << " " << T_next[i] << " " << Lambda(T_next[i], a, b, c) << "\n";
     }
     OutCurrentTemp.close();
     std::cout << "Done!\n";
@@ -478,19 +442,19 @@ void Solver(const int N, vector<double>& r, vector<vector<double>>& T, const dou
 }
 */
 
-float f(double q, const double N, const double h_min, const double x_r, const double x_l) //возвращает значение функции f(q) = ...
+double f(double q, const double N, const double h_min, const double x_r, const double x_l) //возвращает значение функции f(q) = ...
 
 {
     return h_min * pow(q, N) - (x_r - x_l) * q - h_min + (x_r - x_l);
 }
 
-float df(float q, const double N, const double h_min, const double x_r, const double x_l) //возвращает значение производной
+double df(double q, const double N, const double h_min, const double x_r, const double x_l) //возвращает значение производной
 
 {
     return h_min * N * pow(q, N - 1) - (x_r - x_l);
 }
 
-float d2f(float q) // значение второй производной
+double d2f(double q) // значение второй производной
 
 {
     return 1.;
@@ -499,7 +463,7 @@ float d2f(float q) // значение второй производной
 double DefineQ(const double N, const double h_min, const double x_r, const double x_l)
 {
     int i = 0;//переменные для расчета итерации
-    double x0, xn;// вычисляемые приближения для корня
+    double x0, xn = 0;// вычисляемые приближения для корня
     double a, b;// границы отрезка, между которыми находится решение q
     a = 1;
     b = 1.2;
@@ -525,9 +489,11 @@ double DefineQ(const double N, const double h_min, const double x_r, const doubl
 }
 
 void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, const double T_r, vector<double>& r,
-    vector<vector<double>>& T, double h, const double q, const double h_min, const int big_number, const int const_params, const int Nd)
+    vector<double>& T_cur, vector<double>& T_next, double h, const double q, const double h_min, const int big_number, const int const_params,
+    const int Nd)
 {
-    T.resize(N + 1, vector<double>(big_number + 1));;
+    T_cur.resize(N + 1);
+    T_next.resize(N + 1);
     r.resize(N + 1);
     ofstream OutX;
     OutX.open("C:/Users/user/source/Научная работа/UnevenGrid/Data/X_grid.dat");
@@ -552,7 +518,7 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
         {
             h = h_min;
             r[0] = x_l;
-            T[0][0] = T_l;
+            T_cur[0] = T_l;
             OutX << 0 << " " << h << " " << "\n";
             cout << "x0" << " " << r[0] << endl;
             for (int j = 1; j < N + 1; j++)
@@ -560,10 +526,10 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
                 r[j] = r[j - 1] + h;
                 h = h * q;
                 if (r[j] <= x_l + 0.001)
-                    T[j][0] = T_l;
+                    T_cur[j] = T_l;
                 else
-                    T[j][0] = T_r;
-                cout << "T" << j << " " << T[j][0] << endl;
+                    T_cur[j] = T_r;
+                cout << "T" << j << " " << T_cur[j] << endl;
                 OutX << j << " " << h << " " << "\n";
                 cout << "h" << h << " r" << j << " " << r[j] << endl;
             }
@@ -571,19 +537,19 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
         if (q < 1)
         {
             r[N] = x_r;
-            T[N][0] = T_r;
+            T_cur[N] = T_r;
             cout << "N" << N << endl;
             for (int j = N - 1; j >= 0; j--)
             {
-                cout << "T" << j + 1 << " " << T[j + 1][0] << endl;
+                cout << "T" << j + 1 << " " << T_cur[j + 1] << endl;
                 OutX << j + 1 << " " << h << " " << "\n";
                 cout << "h" << h << " r" << j + 1 << " " << r[j + 1] << endl;
                 r[j] = r[j + 1] - h;
                 h = h * q;
-                T[j][0] = T_r;
+                T_cur[j] = T_r;
             }
-            T[0][0] = T_l;
-            cout << "T" << 0 << " " << T[0][0] << endl;
+            T_cur[0] = T_l;
+            cout << "T" << 0 << " " << T_cur[0] << endl;
             OutX << 0 << " " << h << " " << "\n";
             cout << "h" << h << " r" << 0 << " " << r[0] << endl;
             cout << "Area size = " << r[N] - r[0] << endl;
@@ -596,8 +562,8 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
         {
             //Setting the value on the boundaries and initial distribution
             r[0] = x_l;
-            T[0][0] = T_l;
-            OutX << 0 << " " << h << " " << "\n";
+            T_cur[0] = T_l;
+            cout << "dsfsd" << h << "\n";
             cout << "x0" << " " << r[0] << endl;
             h = h_min;
             int j = 1;
@@ -605,9 +571,9 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
             for (j; j < Nd + 1; j++)
             {
                 r[j] = r[j - 1] + h;
-                T[j][0] = T_l;
+                T_cur[j] = T_l;
 
-                cout << "T" << j << " " << T[j][0] << endl;
+                cout << "T" << j << " " << T_cur[j] << endl;
                 OutX << j << " " << h << " " << "\n";
                 cout << "h" << h << " r" << j << " " << r[j] << endl;
             }
@@ -615,8 +581,8 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
             {
                 r[j] = r[j - 1] + h;
                 h = h * q;
-                T[j][0] = T_r;
-                cout << "T" << j << " " << T[j][0] << endl;
+                T_cur[j] = T_r;
+                cout << "T" << j << " " << T_cur[j] << endl;
                 OutX << j << " " << h << " " << "\n";
                 cout << "h" << h << " r" << j << " " << r[j] << endl;
             }
@@ -628,7 +594,8 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
 int main()
 {
     const int const_params = 1;          // 0 - r нестац, 1 - r нестац капля и газ, 2 - r нестац адиабатич слева  
-    const int total_time = 1000;
+    const double dt = 0.05;
+    const int total_time = 30;
     const int power_of = 6;
     const double a = pow(10, -(power_of + 3)), b = pow(10, -power_of), c = pow(10, -(power_of - 3));
     const double d = 0.1;                          //коэффициент диффузии
@@ -636,7 +603,8 @@ int main()
     const double T_r = 1500;
     double h = 0.2;
     //зададим минимальный возможный размер ячейки
-    const double h_min = 0.0025;                   //0.05 / 20 = 0.0025 ; 
+    const double h_min = 0.00025;                 //0.005 / 20 = 0.00025 ; 
+    //Number of cells
     int N = 100;
     const int Nd = 20;
     const double x_l = 0.0;
@@ -644,11 +612,12 @@ int main()
     const double x_r = 1.0;                        //1 примерно равен 10 мм
     double R = x_l + Nd * h_min;                   //зададим радиус капли
     double q = DefineQ(N - Nd, h_min, x_r, R);
-    vector<double> r;
-    vector < vector <double> > T;
-    InitialGrid(N, x_l, x_r, T_l, T_r, r, T, h, q, h_min, total_time, const_params, Nd);
+    vector <double> r;
+    vector <double> T_cur;
+    vector <double> T_next;
+    InitialGrid(N, x_l, x_r, T_l, T_r, r, T_cur, T_next, h, q, h_min, total_time, const_params, Nd);
     cout << "N" << N << endl;
-    Solver(N, r, T, d, a, b, c, total_time, const_params);
+    Solver(N, r, T_cur, T_next, d, a, b, c, total_time, dt, const_params);
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
