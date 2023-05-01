@@ -1,4 +1,8 @@
 ﻿  UnevenGrid.cpp
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(156): warning C4715: 'DfLambda': not all control paths return a value
-C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(135): warning C4715: 'Lambda': not all control paths return a value
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(74,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(75,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(292,12): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(365,54): warning C4552: '/': result of expression not used
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(251): warning C4715: 'Lambda': not all control paths return a value
+C:\Users\user\source\Научная работа\UnevenGrid\UnevenGrid.cpp(286): warning C4715: 'DfLambda': not all control paths return a value
   UnevenGrid.vcxproj -> C:\Users\user\source\Научная работа\UnevenGrid\x64\Debug\UnevenGrid.exe
