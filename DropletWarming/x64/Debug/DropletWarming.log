@@ -1,0 +1,3 @@
+﻿  DropletWarming.cpp
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(205,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  DropletWarming.vcxproj -> C:\Users\user\source\Научная работа\DropletWarming\x64\Debug\DropletWarming.exe
