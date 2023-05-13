@@ -15,7 +15,7 @@
 
 using namespace std;
 
-double lagrange1(const vector<double>& x, const vector<double>& y, int n, double _x)
+double Lagrange1(const vector<double>& x, const vector<double>& y, int n, double _x)
 {
     double result = 0.0;
     for (int i = 0; i < n; i++)
@@ -48,7 +48,7 @@ int DefineN(double h, const double q, const double x_l, const double x_r)
 }
 */
 //Linear interpolation
-double linIntWConductivity(double T)
+double LinIntWConductivity(double T)
 {
     /*
     const vector<double> LAGR_T = { 273.16, 278.16, 283.16, 288.16, 293.16, 298.16, 303.16, 308.16, 313.16, 318.16, 323.16, 328.16, 333.16,
@@ -82,10 +82,10 @@ double linIntWConductivity(double T)
         LAGR_COND_copy[j] = LAGR_COND[i];
         j += 1;
     }
-    return lagrange1(LAGR_T, LAGR_COND_copy, nx, T);
+    return Lagrange1(LAGR_T, LAGR_COND_copy, nx, T);
 }
 
-//Formula setting for Heat Capacity and it's derivative
+//Formula setting for Heat Capacity and it's derivative, J / (kg * K)
 double Cp(double T, const double a)
 {
     const double Cp_water = 4180.;
@@ -233,7 +233,7 @@ double Lambda(double T, const double a, const double b, const double c)
     else
     {
         if (T <= T_boiling)
-            linIntWConductivity(T);
+            LinIntWConductivity(T);
         else
         {
             //Introduce thermal conductivity INSTEAD of thermal diffusivity
