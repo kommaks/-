@@ -1,6 +1,14 @@
 ﻿  DropletWarming.cpp
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(51,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(52,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(260,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(202): warning C4715: 'Lambda': not all control paths return a value
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(286,12): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(307,16): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(400,9): warning C4552: '-': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(431,20): warning C4101: 'T_temp': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(431,12): warning C4101: 'r_temp': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(554,12): warning C4101: 'I_minus': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(554,21): warning C4101: 'I_plus': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(841,20): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(853,20): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(204): warning C4715: 'Lambda': not all control paths return a value
   DropletWarming.vcxproj -> C:\Users\user\source\Научная работа\DropletWarming\x64\Debug\DropletWarming.exe

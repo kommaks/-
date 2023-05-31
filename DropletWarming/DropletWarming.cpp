@@ -61,7 +61,7 @@ double LinIntWConductivity(double T)
     }
     return Lagrange1(LAGR_T, LAGR_COND_copy, nx, T);
 }
-//Formula setting for Heat Capacity and it's derivative
+//Formula setting for Heat Capacity and it's derivative, J/(kg*K)
 double Cp(double T, const double a)
 {
     const double Cp_water = 4180.;
@@ -89,7 +89,7 @@ double Cp(double T, const double a)
         E = 0.082139;
     }
     //Get value
-    if (a == pow(10, -9))
+    if (a < pow(10, -8))
     {
         if (T <= T_boiling)
             return Cp_water;
@@ -99,6 +99,7 @@ double Cp(double T, const double a)
     else 
         return (AA + B * T_forCp + C * pow(T_forCp, 2.) + D * pow(T_forCp, 3.) + E * pow(T_forCp, -2.)) / W;
 }
+//J/(kg*K^2)
 double DfCp(double T, const double a)
 {
     //Molar mass of water
@@ -124,7 +125,7 @@ double DfCp(double T, const double a)
         E = 0.082139;
     }
     //Get value
-    if (a == pow(10, -9))
+    if (a < pow(10, -8))
         return 0;
     else
         return (B + 2. * C * T_forCp + 3. * D * pow(T_forCp, 2.) - 2. * E * pow(T_forCp, -3.)) / 1000. / W;
@@ -138,7 +139,7 @@ double Density(double T, const double a)
     const double R = 8.314462;
     const double p = pow(10, 5);
     const double W = 18 * pow(10, -3);
-    if (a == pow(10, -9))
+    if (a < pow(10, -8))
     {
         if (T <= T_boiling)
             return rho_water;
@@ -151,13 +152,14 @@ double Density(double T, const double a)
         else
             return p * W / (R * T);
 }
+//kg/(m^3*K)
 double DfDensity(double T, const double a)
 {
     const double T_boiling = 373;
     const double R = 8.314462;
     const double p = pow(10, 5);
     const double W = 18 * pow(10, -3);
-    if (a == pow(10, -9))
+    if (a < pow(10, -8))
         return 0;
     else
     {
@@ -168,13 +170,13 @@ double DfDensity(double T, const double a)
     }
 
 }
-//Formula setting for thermal conductivity and it's derivative, Watt / (m*K)
+//Formula setting for thermal conductivity and it's derivative, Watt/(m*K)
 double Lambda(double T, const double a, const double b, const double c)
 {
     const double lambda_water = 0.56;
     const double lambda_steam = 0.05;
     const double T_boiling = 373;
-    if (a == pow(10, -9))
+    if (a < pow(10, -8))
     {
         if (T <= T_boiling)
             return lambda_water;
@@ -200,10 +202,11 @@ double Lambda(double T, const double a, const double b, const double c)
         }
     }
 }
+//Watt/(m*K^2)
 double DfLambda(double T, const double a, const double b)
 {
     const double T_boiling = 373;
-    if (a == pow(10, -9))
+    if (a < pow(10, -8))
         return 0;
     else
     {
@@ -228,9 +231,10 @@ double DfLambda(double T, const double a, const double b)
 }
 //Setting arrays of parametres depending on T:
 void ArraysParameters(const double a, const double b, const double c, const int N, vector <double>& r, vector <double>& T_next,
-    const double Nd, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity, vector <double>& ADfDensity,
-    vector <double>& ALambda, vector <double>& ADfLambda, int n)
+    const int s, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity, vector <double>& ADfDensity,
+    vector <double>& ALambda, vector <double>& ADfLambda, int n, double inter, double Ti, double p)
 {
+    //Define Parameters
     ACp.resize(N + 1);
     ADfCp.resize(N + 1);
     ADensity.resize(N + 1);
@@ -248,7 +252,7 @@ void ArraysParameters(const double a, const double b, const double c, const int 
         Tg[i] = Tg[i - 1] + dTg;
     }
     */
-    for (int i = 0; i < Nd + 1; i++) {
+    for (int i = 0; i < s + 1; i++) {
         //cout << r[i] << endl;
         ACp[i] = Cp(T_next[i], a);
         ADfCp[i] = DfCp(T_next[i], a);
@@ -257,7 +261,7 @@ void ArraysParameters(const double a, const double b, const double c, const int 
         ALambda[i] = Lambda(T_next[i], a, b, c);
         ADfLambda[i] = DfLambda(T_next[i], a, b);
     }
-    for (int i = Nd + 1; i < N + 1; i++) {
+    for (int i = s + 1; i < N + 1; i++) {
         //cout << r[i] << endl;
         ACp[i] = Cp(T_next[i], a);
         ADfCp[i] = DfCp(T_next[i], a);
@@ -268,191 +272,252 @@ void ArraysParameters(const double a, const double b, const double c, const int 
     }
     //Plot graphics of Parameters as a function of Temperature
     ofstream Parameters;
-    Parameters.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Parameters_" + to_string(n) + ".dat");
+    Parameters.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/Parameters/Parameters_" + to_string(n) + ".dat");
     Parameters << "TITLE=\"" << "Graphics" << "\"" << endl;
-    Parameters << R"(VARIABLES= "rj", "T", "Cp", "DfCp", "rho", "Dfrho", "Lambda", "DfLambda")" << endl;
-    for (int j = 0; j < N + 1; j++) {
-        //cout << r[i] << endl;
+    Parameters << R"(VARIABLES= "rj, m", "T, K", "Cp, J/kg*K", "DfCp, J/kg*K^2", "rho, kg/m^3", "Dfrho, kg/m^3*K", "Lambda, Watt/m*K", "DfLambda, Watt/m*K^2")" << "\n";
+    int j = 0;
+    for (j; j < s + 1; j++) {
+        Parameters << r[j] << " " << T_next[j] << " " << ACp[j] << " " << ADfCp[j] << " " << ADensity[j] << " " << ADfDensity[j] << " "
+            << ALambda[j] << " " << ADfLambda[j] << "\n";
+    }
+    //Interface
+    Parameters << inter << " " << Ti << " " << ACp[s] << " " << ADfCp[s] << " " << ADensity[s] << " " << ADfDensity[s] << " "
+        << ALambda[s] << " " << ADfLambda[s] << "\n";
+    for (j + 1; j < N + 1; j++) {
         Parameters << r[j] << " " << T_next[j] << " " << ACp[j] << " " << ADfCp[j] << " " << ADensity[j] << " " << ADfDensity[j] << " "
             << ALambda[j] << " " << ADfLambda[j] << "\n";
     }
     Parameters.close();
 }
 void GraphicsSystEqu(int n, vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADensity, 
-    const int N, const int Nd, double dM)
+    const int N, const int s, double dM, int flag_evap, double inter, double Ti)
 {
     ofstream OutCurrentTemp;
     ofstream OutFlow;
-    if (n % 10 == 0 || n < 40)
+    if (n % 10 == 0 || n < 40 || flag_evap == 1)
     {
-        OutCurrentTemp.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Temp_" + to_string(n) + ".dat");
+        OutCurrentTemp.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/Temp/Temp_" + to_string(n) + ".dat");
         OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << "\n";
-        OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << "\n";
-        for (int i = 0; i < N + 1; i++) {
-            //cout << r[i] << "\n";
+        OutCurrentTemp << R"(VARIABLES= "rj, m", "T, K", "Lambda, W/m*K" )" << "\n";
+        int i = 0;
+        for (i; i < s + 1; i++)
             OutCurrentTemp << r[i] << " " << T_next[i] << " " << ALambda[i] << "\n";
-        }
+        //Interface
+        OutCurrentTemp << inter << " " << Ti << " " << ALambda[s] << "\n";
+        for (i + 1; i < N + 1; i++)
+            OutCurrentTemp << r[i] << " " << T_next[i] << " " << ALambda[i] << "\n";
         OutCurrentTemp.close();
     }
     //Get flow movement
-    OutFlow.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Flow_" + to_string(n) + ".dat");
+    OutFlow.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/Flow/Flow_" + to_string(n) + ".dat");
     OutFlow << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutFlow << R"(VARIABLES= "rj", "q", "rho", "u_r" )" << "\n";
+    OutFlow << R"(VARIABLES= "rj, m", "q, W", "rho, kg/m^3", "u_r, m/s" )" << "\n";
     //Поток газа выводим
     double u_r;
-    for (int j = Nd + 1; j < N; j++)
+    for (int j = s + 1; j < N; j++)
     {
-        u_r = dM / (4 * PI * pow(r[j], 2.0) * ADensity[j]);
+        u_r = dM / (pow(r[j], 2.0) * ADensity[j]);
         OutFlow << r[j] << " " << ALambda[j] * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]) << " "
             << ADensity[j] << " " << u_r << "\n";
     }
     OutFlow.close();
 }
-//Setting j-1 element of matrix
-double DfLeft(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda, 
-    const double a, const double b, const double c, int j, vector<double>& A_beetween)
+void OpeningFiles(ofstream& OutSurfaceFlow, ofstream& OutLastStepNevyazka, ofstream& OutFirstStepNevyazka)
 {
-    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j] + r[j - 1]) / 2., 2.) * (-0.5 * (ADfLambda[j] + ADfLambda[j - 1]) * A_beetween[j - 1]
-        * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]) + 0.5 * (ALambda[j] + ALambda[j - 1]) * A_beetween[j - 1] / (r[j] - r[j - 1]));
+    //Collecting mass flow on interface
+    OutSurfaceFlow.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/SurfaceFlow.dat");
+    OutSurfaceFlow << "TITLE=\"" << "Graphics" << "\"" << "\n";
+    OutSurfaceFlow << R"(VARIABLES= "t, s", "T0, K", "Ts, K", "Ti, K", "Ts+1, K", "q_d, W", "q_g, W", "dM, kg/s", "rho, kg/m^3", "u_r, m/s", "p, m/(cell size) ", "inter, m" )" << "\n";
+    //Collecting Last Step Nevyazka
+    OutLastStepNevyazka.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/LastStepNevyazka.dat");
+    OutLastStepNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
+    OutLastStepNevyazka << R"(VARIABLES= "t, s", "F")" << endl;
+    //Collecting First Step Nevyazka
+    OutFirstStepNevyazka.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/FirstStepNevyazka.dat");
+    OutFirstStepNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
+    OutFirstStepNevyazka << R"(VARIABLES= "t, s", "F")" << endl;
+}
+double LambdaBetween(vector<double>& r, vector<double>& ALambda, int j, double r_between)
+{   
+    return (r[j + 1] - r[j]) / ((r_between - r[j]) / ALambda[j] + (r[j + 1] - r_between) / ALambda[j + 1]);
+}
+//Setting j-1 element of matrix
+void DfInterface(vector<double>& r, vector<double>& T_next, vector<vector<double>>& J, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
+    vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda, double dt, double dtau, double dM,
+    double Ti, double inter, int s)
+{
+   //To the left of the interface
+    J[s][s - 1] = 1. / (inter - (r[s] + r[s - 1]) / 2.) * pow((r[s - 1] + r[s - 2]) / 2., 2.) * (-LambdaBetween(r, ADfLambda, s - 1, (r[s] + r[s - 1]) / 2.)
+        * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]) + LambdaBetween(r, ALambda, s - 1, (r[s] + r[s - 1]) / 2.) / (r[s] - r[s - 1]));
+    //
+    J[s][s] = 1. / (inter - (r[s] + r[s - 1]) / 2.) * (pow(inter, 2.) * (LambdaBetween(r, ADfLambda, s, inter)
+        * (Ti - T_next[s]) / (inter - r[s]) - LambdaBetween(r, ALambda, s, inter) / (inter - r[s]))
+        - pow((r[s] + r[s - 1]) / 2., 2.) * (LambdaBetween(r, ADfLambda, s - 1, (r[s] + r[s - 1]) / 2.) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1])
+            + LambdaBetween(r, ALambda, s - 1, (r[s] + r[s - 1]) / 2.) / (r[s] - r[s - 1])))
+        - (ACp[s] * ADensity[s] + (ADfCp[s] * ADensity[s] + ACp[s] * ADfDensity[s]) * T_next[s]) * pow(r[s], 2.) / dt
+        - ACp[s] * ADensity[s] * pow(r[s], 2.) / dtau;
+    //
+    J[s + 1][s] = 1. / (inter - (r[s] + r[s - 1]) / 2.) * pow(inter, 2.) * (LambdaBetween(r, ADfLambda, s, inter)
+        * (Ti - T_next[s]) / (inter - r[s]) + LambdaBetween(r, ALambda, s, inter) / (inter - r[s]));
+    //To the left of the interface
+    J[s + 1][s] = 1. / ((r[s + 2] + r[s + 1]) / 2. - inter) * pow(inter, 2.) * (-LambdaBetween(r, ADfLambda, s, inter)
+        * (T_next[s + 1] - Ti) / (r[s + 1] - inter) + LambdaBetween(r, ALambda, s, inter) / (r[s + 1] - inter))
+        + ACp[s + 1] * dM / (r[s + 1] - inter);
+    //
+    J[s + 1][s + 1] = 1. / ((r[s + 2] + r[s + 1]) / 2. - inter) * (pow((r[s + 2] + r[s + 1]) / 2., 2.) * (LambdaBetween(r, ADfLambda, s + 1, (r[s + 2] + r[s + 1]) / 2.)
+        * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]) - LambdaBetween(r, ALambda, s + 1, (r[s + 2] + r[s + 1]) / 2.) / (r[s + 2] - r[s + 1]))
+        - pow(inter, 2.) * (LambdaBetween(r, ADfLambda, s, inter) * (T_next[s + 1] - Ti) / (r[s + 1] - inter)
+            + LambdaBetween(r, ALambda, s, inter) / (r[s + 1] - inter)))
+        - (ACp[s + 1] * ADensity[s + 1] + (ADfCp[s + 1] * ADensity[s + 1] + ACp[s + 1] * ADfDensity[s + 1]) * T_next[s + 1]) * pow(r[s + 1], 2.) / dt
+        - ACp[s + 1] * ADensity[s + 1] * pow(r[s + 1], 2.) / dtau
+        - ACp[s + 1] * dM / (r[s + 1] - inter);
+    //
+    J[s + 1][s + 2] = 1. / ((r[s + 2] + r[s + 1]) / 2. - inter) * pow((r[s + 2] + r[s + 1]) / 2., 2.) * (LambdaBetween(r, ADfLambda, s + 1, (r[s + 2] + r[s + 1]) / 2.)
+        * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]) + LambdaBetween(r, ALambda, s + 1, (r[s + 2] + r[s + 1]) / 2.) / (r[s + 2] - r[s + 1]));
+
+}
+double DfLeft(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda, 
+    const double a, const double b, const double c, int j)
+{
+    return 2. / (r[j + 1] - r[j - 1]) * pow((r[j] + r[j - 1]) / 2., 2.) * (-LambdaBetween(r, ADfLambda, j - 1, (r[j] + r[j - 1]) / 2.)
+        * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]) + LambdaBetween(r, ALambda, j - 1, (r[j] + r[j - 1]) / 2.) / (r[j] - r[j - 1]));
 }
 //Setting j element of matrix
 double DfCenter(vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
     vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda, const double a, const double b, const double c,
-    const double d, int j, const double dt, const double dtau, vector<double>& A, vector<double>& A_beetween)
+    const double d, int j, const double dt, const double dtau)
 {
-    //if (a == pow(10, -9))
-    //{
-    //    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.)
-    //       * (DfLambda((T_next[j] + T_next[j + 1]) / 2., a, b) * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
-    //            - Lambda((T_next[j] + T_next[j + 1]) / 2., a, b, c) / (r[j + 1] - r[j])) - pow((r[j] + r[j - 1]) / 2., 2.)
-    //        * (DfLambda((T_next[j] + T_next[j - 1]) / 2., a, b) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
-    //            + Lambda((T_next[j] + T_next[j - 1]) / 2., a, b, c) / (r[j] - r[j - 1]))) - 1. / dt;
-    //}
-    //else
-    //{
-    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * (0.5 * (ADfLambda[j + 1] + ADfLambda[j]) * A_beetween[j]
-        * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - 0.5 * (ALambda[j + 1] + ALambda[j]) * A_beetween[j] / (r[j + 1] - r[j]))
-        - pow((r[j] + r[j - 1]) / 2., 2.) * (0.5 * (ADfLambda[j] + ADfLambda[j - 1]) * A_beetween[j - 1] * (T_next[j] - T_next[j - 1])
-            / (r[j] - r[j - 1]) + 0.5 * (ALambda[j] + ALambda[j - 1]) * A_beetween[j - 1] / (r[j] - r[j - 1])))
-        - (ACp[j] * ADensity[j] + (ADfCp[j] * ADensity[j] + ACp[j] * ADfDensity[j]) * T_next[j]) * A[j] / dt
-        - ACp[j] * ADensity[j] * A[j] / dtau;
-    //}
+    return 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * (LambdaBetween(r, ADfLambda, j, (r[j + 1] + r[j]) / 2.)
+        * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - LambdaBetween(r, ALambda, j, (r[j + 1] + r[j]) / 2.) / (r[j + 1] - r[j]))
+        - pow((r[j] + r[j - 1]) / 2., 2.) * (LambdaBetween(r, ADfLambda, j - 1, (r[j] + r[j - 1]) / 2.) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
+        + LambdaBetween(r, ALambda, j - 1, (r[j] + r[j - 1]) / 2.) / (r[j] - r[j - 1])))
+        - (ACp[j] * ADensity[j] + (ADfCp[j] * ADensity[j] + ACp[j] * ADfDensity[j]) * T_next[j]) * pow(r[j], 2.) / dt
+        - ACp[j] * ADensity[j] * pow(r[j], 2.) / dtau;
+
+    2. / (r[2] - r[0]) * (pow((r[2] + r[1]) / 2., 2.) * (LambdaBetween(r, ADfLambda, 1, (r[2] + r[1]) / 2.) * (T_next[2] - T_next[1]) / (r[2] - r[1])
+        - LambdaBetween(r, ALambda, 1, (r[2] + r[1]) / 2.) / (r[2] - r[1])))
+        - (ACp[1] * ADensity[1] + (ADfCp[1] * ADensity[1] + ACp[1] * ADfDensity[1]) * T_next[1]) * pow(r[1], 2.) / dt
+        - ACp[1] * ADensity[1] * pow(r[1], 2.) / dtau;
 }
 //Setting j+1 element of matrix
 double DfRight(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda, 
-    const double a, const double b, const double c, int j, vector<double>& A_beetween)
+    const double a, const double b, const double c, int j)
 {
-    return (2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * pow((r[j + 1] + r[j]) / 2., 2.) * (0.5 * (ADfLambda[j + 1] + ADfLambda[j]) * A_beetween[j]
-        * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) + 0.5 * (ALambda[j + 1] + ALambda[j]) * A_beetween[j] / (r[j + 1] - r[j]));
+    return 2. / (r[j + 1] - r[j - 1]) * pow((r[j + 1] + r[j]) / 2., 2.) * (LambdaBetween(r, ADfLambda, j, (r[j + 1] + r[j]) / 2.)
+        * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) + LambdaBetween(r, ALambda, j, (r[j + 1] + r[j]) / 2.) / (r[j + 1] - r[j]));
 }
 //Df for Adiabatic left boundary
-double AdiabaticBoundaryDfs(vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
+double AdiabaticBoundaryDfCenter(vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
     vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda,
-    const double a, const double b, const double c, const double dt, const double dtau, vector<double>& A, vector<double>& A_beetween)
+    const double a, const double b, const double c, const double dt, const double dtau)
 {
-    return (2. / (r[2] - r[0]) / pow(r[1], 2.)) * (pow((r[2] + r[1]) / 2., 2.) * (0.5 * (ADfLambda[2] + ADfLambda[1]) * A_beetween[1]
-        * (T_next[2] - T_next[1]) / (r[2] - r[1]) - 0.5 * (ALambda[2] + ALambda[1]) * A_beetween[1] / (r[2] - r[1]))) - (ACp[1] * ADensity[1] +
-            (ADfCp[1] * ADensity[1] + ACp[1] * ADfDensity[1]) * T_next[1]) * A[1] / dt
-        - ACp[1] * ADensity[1] * A[1] / dtau;
+    return 2. / (r[2] - r[0]) * (pow((r[2] + r[1]) / 2., 2.) * (LambdaBetween(r, ADfLambda, 1, (r[2] + r[1]) / 2.) * (T_next[2] - T_next[1]) / (r[2] - r[1])
+        - LambdaBetween(r, ALambda, 1, (r[2] + r[1]) / 2.) / (r[2] - r[1])))
+        - (ACp[1] * ADensity[1] + (ADfCp[1] * ADensity[1] + ACp[1] * ADfDensity[1]) * T_next[1]) * pow(r[1], 2.) / dt
+        - ACp[1] * ADensity[1] * pow(r[1], 2.) / dtau;
+}
+double AdiabaticBoundaryDfRight(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda,
+    const double a, const double b, const double c)
+{
+    return 2. / (r[2] - r[0]) * pow((r[1] + r[0]) / 2., 2.) * (LambdaBetween(r, ADfLambda, 0, (r[1] + r[0]) / 2.)
+        * (T_next[1] - T_next[0]) / (r[1] - r[0]) + LambdaBetween(r, ALambda, 0, (r[1] + r[0]) / 2.) / (r[1] - r[0]));
 }
 
 void Jacobian(vector<vector<double>>& J, vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp,
     vector <double>& AD, vector <double>& ADfD, vector <double>& AL, vector <double>& ADfL, const int N_minus,
-    const double a, const double b, const double c, const double d, const double dt, const double dtau, double dM, const int Nd,
-    vector<double>& A, vector<double>& A_beetween, const int const_params)
+    const double a, const double b, const double c, const double d, const double dt, const double dtau, double dM, int s, double inter,
+    const double Ti, int flag_evap)
 {
-    
-    if (const_params == 0)
-    {
-            J[1][1] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, 1, dt, dtau, A, A_beetween);
-            J[1][2] = DfRight(r, T_next, AL, ADfL, a, b, c, 1, A_beetween);
-            //cout << "J[1][2]" << J[1][2] << endl;
-            for (int j = 2; j < N_minus; j++) {
-                J[j][j - 1] = DfLeft(r,T_next, AL, ADfL, a, b, c, j, A_beetween);
-                J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau, A, A_beetween);
-                J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j, A_beetween);
-            }
-            J[N_minus][N_minus - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, N_minus, A_beetween);
-            J[N_minus][N_minus] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, N_minus, dt, dtau, A, A_beetween);
+    double r_temp, T_temp;
+    //Jacobians for Water
+    J[0][0] = AdiabaticBoundaryDfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, dt, dtau);
+    J[0][0] = AdiabaticBoundaryDfRight(r, T_next, AL, ADfL, a, b, c);
+    for (int j = 1; j < s + 1; j++) {
+        J[j][j - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, j);
+        J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau);
+        J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j);
+        //cout << J[j][j - 1] << " " << J[j][j] << " " << J[j][j + 1] << "\n";
     }
-    else if (const_params == 2 || const_params == 1)
-    {
-        //Jacobians for left boundary
-        J[1][1] = AdiabaticBoundaryDfs(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, dt, dtau, A, A_beetween);
-        J[1][2] = DfRight(r, T_next, AL, ADfL, a, b, c, 1, A_beetween);
-        for (int j = 2; j < Nd + 1; j++) {
-            J[j][j - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, j, A_beetween);
-            J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau, A, A_beetween);
-            J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j, A_beetween);
-            //cout << J[j][j - 1] << " " << J[j][j] << " " << J[j][j + 1] << "\n";
-        }
-        for (int j = Nd + 1; j < N_minus; j++) {
-            J[j][j - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, j, A_beetween) + ACp[j] * dM / (r[j] - r[j - 1]);
-            J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau, A, A_beetween) - ACp[j] * dM / (r[j] - r[j - 1]);
-            J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j, A_beetween);
-            //cout << J[j][j - 1] << " " << J[j][j] << " " << J[j][j + 1] << "\n";
-        }
-        J[N_minus][N_minus - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, N_minus, A_beetween) + ACp[N_minus] * dM / (r[N_minus] - r[N_minus - 1]);
-        J[N_minus][N_minus] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, N_minus, dt, dtau, A, A_beetween)
-            - ACp[N_minus] * dM / (r[N_minus] - r[N_minus - 1]);
+    //Jacobians for Gaze
+    for (int j = s + 1; j < N_minus; j++) {
+        J[j][j - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, j) + ACp[j] * dM / (r[j] - r[j - 1]);
+        J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau) - ACp[j] * dM / (r[j] - r[j - 1]);
+        J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j);
+        //cout << J[j][j - 1] << " " << J[j][j] << " " << J[j][j + 1] << "\n";
     }
+    J[N_minus][N_minus - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, N_minus) + ACp[N_minus] * dM / (r[N_minus] - r[N_minus - 1]);
+    J[N_minus][N_minus] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, N_minus, dt, dtau)
+        - ACp[N_minus] * dM / (r[N_minus] - r[N_minus - 1]);
+    //for Interface
+    DfInterface(r, T_next, J, ACp, ADfCp, AD, ADfD, AL, ADfL, dt, dtau, dM, Ti, inter, s);
 }
 void F(vector<double>& f, vector<double>& T_cur, vector<double>& T_next, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
-    const int N, vector<double>& r, const double a, const double b, const double c, const double d, const double dt, double dM, const int Nd,
-    vector<double>& A, vector<double>& A_beetween, const int const_params)
+    const int N, vector<double>& r, const double a, const double b, const double c, const double d, const double dt, double dM, int s, double inter,
+    const double Ti, double& mod_nevyaz, int flag_evap)
 {
-    if (const_params == 0)
+    double F;
+    //Nevyazka on the left border
+    F = 2. / (r[2] - r[0]) * pow((r[2] + r[1]) / 2., 2.) * LambdaBetween(r, ALambda, 1, (r[2] + r[1]) / 2.) * (T_next[2] - T_next[1]) / (r[2] - r[1])
+        - ACp[1] * ADensity[1] * pow(r[1], 2.) * (T_next[1] - T_cur[1]) / dt;
+    //f[1] = -F;
+    //cout << "f[1]" << f[1] << "\n";
+    //Nevyazka in Water
+    for (int j = 1; j < s + 1; j++)
     {
-        for (int j = 1; j < N; j++)
-        {
-            //cout << "(T_next[j] - T_cur[j])" << (T_next[j] - T_cur[j] << endl;
-            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j]) * A_beetween[j]
-                * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
-                * 0.5 * (ALambda[j] + ALambda[j - 1]) * A_beetween[j - 1] * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
-                - ACp[j] * (ADensity[j] * (T_next[j] - T_cur[j]) / dt - dM * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])));
-        }
+        //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
+        F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * LambdaBetween(r, ALambda, j, (r[j + 1] + r[j]) / 2.)
+            * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
+            - pow((r[j] + r[j - 1]) / 2., 2.) * LambdaBetween(r, ALambda, j - 1, (r[j] + r[j - 1]) / 2.)
+            * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
+            - ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
+        f[j] = -F;
+        //cout << j << " f1_" << j << " " << f[j] << "\n";
     }
-    else if (const_params == 2 || const_params == 1)
+    //Nevyazka in Gaze
+    for (int j = s + 1; j < N; j++)
     {
-        f[1] = -((2. / (r[2] - r[0]) / pow(r[1], 2.)) * pow((r[2] + r[1]) / 2., 2.) * 0.5 * (ALambda[2] + ALambda[1]) * A_beetween[1]
-            * (T_next[2] - T_next[1]) / (r[2] - r[1])
-            - ACp[1] * ADensity[1] * A[1] * (T_next[1] - T_cur[1]) / dt);
-        //cout << "f[0]" << f[0] << "\n";
-        for (int j = 2; j < Nd + 1; j++)
-        {
-            //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
-            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j])
-                * A_beetween[j] * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.)
-                * 0.5 * (ALambda[j] + ALambda[j - 1]) * A_beetween[j - 1] * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
-                - ACp[j] * ADensity[j] * A [j] * (T_next[j] - T_cur[j]) / dt);
-            //cout << j << " f1_" << j << " " << f[j] << "\n";
-        }
-        for (int j = Nd + 1; j < N; j++)
-        {
-            //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
-            f[j] = -((2. / (r[j + 1] - r[j - 1]) / pow(r[j], 2.)) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j]) * A_beetween[j]
-                * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1]) * A_beetween[j - 1]
-                * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
-                - ACp[j] * (ADensity[j] * A[j] * (T_next[j] - T_cur[j]) / dt + dM * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])));
-            //cout << j << " f1_" << j << " " << f[j] << "\n";
-        }
+        //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
+        F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * LambdaBetween(r, ALambda, j, (r[j + 1] + r[j]) / 2.)
+            * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
+            - pow((r[j] + r[j - 1]) / 2., 2.) * LambdaBetween(r, ALambda, j - 1, (r[j] + r[j - 1]) / 2.)
+            * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
+            - ACp[j] * (ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt + dM * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]));
+        f[j] = -F;
+        //cout << j << " f1_" << j << " " << f[j] << "\n";
     }
+    cout << "flag_evap" << flag_evap << "\n";
+    //To the left of the interface
+    F = 1. / (inter - (r[s] + r[s - 1]) / 2.) * (pow(inter, 2.) * LambdaBetween(r, ALambda, s, inter)
+        * (Ti - T_next[s]) / (inter - r[s])
+        - pow((r[s] + r[s - 1]) / 2., 2.) * LambdaBetween(r, ALambda, s - 1, (r[s] + r[s - 1]) / 2.)
+        * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]))
+        - ACp[s] * ADensity[s] * pow(r[s], 2.) * (T_next[s] - T_cur[s]) / dt;
+    f[s] = -F;
+    //To the right of the interface
+    F = 1. / ((r[s + 2] + r[s + 1]) / 2. - inter) * (pow((r[s + 1] + r[s + 2]) / 2., 2.) * LambdaBetween(r, ALambda, s + 1, (r[s + 1] + r[s + 2]) / 2.)
+        * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1])
+        - pow(inter, 2.) * LambdaBetween(r, ALambda, s, inter) * (T_next[s + 1] - Ti) / (r[s + 1] - inter))
+        - ACp[s + 1] * (ADensity[s + 1] * pow(r[s + 1], 2.) * (T_next[s + 1] - T_cur[s + 1]) / dt + dM * (T_next[s + 1] - Ti) / (r[s + 1] - inter));
+    f[s + 1] = -F;
+    for (int i = 1; i < N; i++)
+        mod_nevyaz += pow(f[i], 2.0);
+    mod_nevyaz = pow(mod_nevyaz, 0.5);
 }
 void Progonka(vector<double>& T_next, vector<double>& alpha, vector<double>& beta, vector<double>& dT,
-    vector<double>& nevyaz, vector < vector <double> >& J, const int N_minus, const int Nd)
+    vector<double>& nevyaz, vector < vector <double> >& J, const int N_minus, const int s, int& flag_evap)
 {
-    const double T_boiling = 373;
+    const double T_boiling = 373.0;
     //считаем коэффициенты слева
     //Define denominator for constant formules in method
     double zn;
-    zn = J[1][1];
+    zn = J[0][0];
     //cout << "zn " << zn << endl;
-    alpha[1] = -J[1][2] / zn;
+    alpha[0] = -J[0][0] / zn;
     //cout << "a[1]" << alpha[1] << endl;
-    beta[1] = nevyaz[1] / zn;
+    beta[0] = nevyaz[0] / zn;
     //cout << "B[1]" << beta[1] << endl;
     //считаем коэффициенты для всех узлов
-    for (int i = 2; i < N_minus; i++) {
+    for (int i = 1; i < N_minus; i++) {
         zn = J[i][i] + J[i][i - 1] * alpha[i - 1];
         //cout << "y" << 1 << " " << zn << endl;
         alpha[i] = -J[i][i + 1] / zn;
@@ -469,138 +534,168 @@ void Progonka(vector<double>& T_next, vector<double>& alpha, vector<double>& bet
         dT[i] = alpha[i] * dT[i + 1] + beta[i];
         //cout << "alpha" << i << " =" << alpha[i] << " beta" << i << " =" << beta[i] << "\n";
         T_next[i] += dT[i];
-        if (i < Nd + 1 && T_next[i] > T_boiling)
+        if (i < s + 1 && T_next[i] > T_boiling)
         {
             //dT[i] = 0;
             T_next[i] = T_boiling;
         }
-        //cout << "T_next" << i << " =" << T_next[i] << "\n";
     }
     //T_next[20] = T_next[21];
     T_next[0] = T_next[1];
     //cout << "T[0][k]" << T[0][k] << "\n";
+    cout << "s_Progonka= " << s << " T_next[s]" << T_next[s] << "\n";
 }
 
 void Solver(const int N, vector<double>& r, vector<double>& T_cur, vector<double>& T_next, const double d,
     const double a, const double b, const double c, const int total_time, const double dt, const int const_params,
-    const double T_l,const double T_r, const double dtau, const int Nd)
+    const double T_l,const double T_r, const double dtau, const int Nd, int m_max)
 {
-    cout << "check" << "\n";
+    int m;
+    double I_minus, I_plus, dM, q_g, q_d, u_r, Lambda_d, Lambda_g;
+    double ALambda_i = 0.679049;
     const int N_minus = N - 1;
-    vector<double> alpha(N), beta(N), dT(N + 1), nevyaz(N);
+    vector<double> alpha(N), beta(N), dT(N + 1), T_next_upd(N + 1), nevyaz(N);
     vector < vector <double> > J(N + 1, vector <double>(N + 1));
     vector <double> ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda;
-    //Define surface position and mass flow on surface
-    double r_s = r[20];
-    double q = 20 * pow(10, 3);                    // W / m^2
-    double L_d = 2258.2 * pow(10, 3);              // J / kg
-    double dM = q * 4 * PI * pow(r_s, 2.0) / L_d;  // kg / s
-    //De-dimensioning dM(canceled)
-    //dM = dM / (4 * PI * pow(r_s, 2.0));
-    cout << dM << "\n";
-    vector <double> A(N + 1);
-    vector <double> A_beetween(N + 1);
-    for (int j = 0; j < N; j++)
-    {
-        A_beetween[j] = 4 * PI * pow((r[j + 1] + r[j]) / 2.0, 2.0);
-        A[j] = 4 * PI * pow(r[j], 2.0);
-    }
-    ofstream OutNevyazka;    
-    ofstream OutCurrentTemp;
-    ofstream OutFlow;
-    //задаем начальную температуру следующего слоя как решение предыдущей
+    int flag_evap = 0;
+    //Define initial surface position and mass flow on surface
+    double p = 1.5;
+    int s = Nd;
+    double inter = r[s] + (p - 1) * (r[s + 1] - r[s]);
+    //Define initial boiling tempereature for surface, K
+    double Ti = 300.;
+    //double q = 20 * pow(10, 3);                  //W / m^2
+    double L_d = 2258.2 * pow(10, 3);              //J / kg 
+    //const determination of dM
+    //dM = 4 * PI * pow(inter, 2.0) * q / L_d;     // kg / s
+    //dM equals zero because it is only warming time
+    dM = 0.;                                       // kg / s
+        //dM / (4 * PI);
+    //Задаем начальную температуру следующего слоя как решение предыдущей
     for (int j = 0; j < N + 1; j++)
-    {
         T_next[j] = T_cur[j];
-    }
-    ArraysParameters(a, b, c, N, r, T_next, Nd, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, 0);
+    cout << "check1" << "\n";
+    ArraysParameters(a, b, c, N, r, T_next, s, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, 0, inter, Ti, p);
+    cout << "check2" << "\n";
     //Reading the initial distribution
-    OutCurrentTemp.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Temp_" + to_string(0) + ".dat");
-    OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
-    OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
-    for (int i = 0; i < N + 1; i++) {
-        //cout << r[i] << endl;
-        OutCurrentTemp << r[i] << " " << T_cur[i] << " " << Lambda(T_cur[i], a, b, c) << "\n";
-        cout << r[i] << " " << T_cur[i] << " " << Lambda(T_cur[i], a, b, c) << "\n";
-    }
-    OutFlow.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Flow_" + to_string(0) + ".dat");
-    OutFlow << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutFlow << R"(VARIABLES= "rj", "q", "rho", "u_r" )" << "\n";
-    //Поток газа выводим
-    double u_r;
-    for (int j = Nd + 1; j < N; j++)
-    {
-        u_r = dM / (4 * PI * pow(r[j], 2.0) * ADensity[j]);
-        OutFlow << r[j] << " " << ALambda[j] * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]) << " "
-            << ADensity[j] << " " << u_r << "\n";
-    }
-    OutCurrentTemp.close();
-    OutFlow.close();
+    GraphicsSystEqu(0, r, T_next, ALambda, ADensity, N, s, dM, flag_evap, inter, Ti);
     ofstream OutSurfaceFlow;
-    //Collecting mass flow on interface
-    OutSurfaceFlow.open("C:/Users/user/source/Научная работа/DropletWarming/Data/SurfaceFlow.dat");
-    OutSurfaceFlow << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutSurfaceFlow << R"(VARIABLES= "t, s", "T, K", "q, W/m^2", "rho, kg/m^3", "u_r, m/s" )" << "\n";
+    ofstream OutLastStepNevyazka;
+    ofstream OutFirstStepNevyazka;
+    OpeningFiles(OutSurfaceFlow, OutLastStepNevyazka, OutFirstStepNevyazka);
+
+    //TIME LOOP
+    ofstream OutNevyazka;
+    int divide_count = 0;
+    double mod_nevyaz_prev;
+    double mod_nevyaz_cur = pow(10., 10.);
     for (int n = 1; n < total_time; n++)
     {
-        //метод Ньютона для n-ого временного слоя
-        double mod_nevyaz = 10000;
-        int s = 0;
-        //Discrepancy for the current layer
-        F(nevyaz, T_cur, T_next, ACp, ADensity, ALambda, N, r, a, b, c, d, dt, dM, Nd, A, A_beetween, const_params);
-        //Поток газа выводим
-        double u_r = dM / (4 * PI * pow(r[20], 2.0) * ADensity[21]);
-        OutSurfaceFlow << n << " " << T_next[20] << " " << ALambda[21] * (T_next[21] - T_next[20]) / (r[21] - r[20]) << " " 
-            << ADensity[21] << " " << u_r << "\n";
-        //Collecting Nevyazka
-        if ((n - 1) % 10 == 0 || n < 40)
+        //Check for flag_evap
+        if (Ti >= 373.)
+            flag_evap = 1;
+        cout << "flag_evap= " << flag_evap << "\n";
+        //Write Nevyazka on the last m-iteration
+        OutLastStepNevyazka << n * dt << " " << mod_nevyaz_cur << "\n";
+        //Change Ti depending on the flow didderence and Writing flows, dM = dM/(4*PI)
+        u_r = dM / (pow(inter, 2.0) * ADensity[s + 1]);
+        OutSurfaceFlow << dt * n << " " << T_next[0] << " " << T_next[s] << " " << Ti << " " << T_next[s + 1] << " "
+            << ALambda[s - 1]  / (r[s + 1] - r[s]) * (p / (p + 1) * T_next[s - 2] - (p + 1) / p * T_next[s - 1] + (2 * p + 1) / ((p + 1) * p) * Ti) << " "
+            << ALambda[s + 2]  / (r[s + 1] - r[s]) * ((2 * p - 7) / ((p - 3) * (p - 4)) * Ti + (p - 4) / (p - 3) * T_next[s + 2] + (p - 3) / (4 - p) * T_next[s + 3]) << " "
+            << dM << " " << ADensity[s + 1] << " " << u_r << " " << p << " " << inter << "\n";
+        //Opening file for Nevyazka
+        OutNevyazka.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/Nevyazka/Nevyazka_" + to_string(n) + ".dat");
+        OutNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
+        OutNevyazka << R"(VARIABLES= "i", "F")" << endl;
+        //Renew counter and Nevyazka
+        mod_nevyaz_cur = pow(10., 10.);
+        m = 0;
+        //Getting Solution using cycle of Newton method, check if isnan() equals (mod == mod)
+        while (mod_nevyaz_cur > 1. && mod_nevyaz_cur == mod_nevyaz_cur && m < m_max)
         {
-            OutNevyazka.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Nevyazka_" + to_string(n) + ".dat");
-            OutNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
-            OutNevyazka << R"(VARIABLES= "i", "F")" << endl;
-        }
-        //Getting Solution using cycle of Newton method
-        while (mod_nevyaz > pow(10, -3) && s < 3)
-        {
-            //Collecting Tempereature, Lambda and Flow
-            GraphicsSystEqu(n, r, T_next, ALambda, ADensity, N, Nd, dM);
-            mod_nevyaz = 0;
-            Jacobian(J, r, T_next, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, N_minus, a, b, c, d, dt, dtau, dM, Nd,
-                A, A_beetween, const_params);
-            cout << "s " << s << endl;
-            //МЕТОД ПРОГОНКИ: T_next change from s to s+1
-            Progonka(T_next, alpha, beta, dT, nevyaz, J, N_minus, Nd);
-            //Renew parameters
-            ArraysParameters(a, b, c, N, r, T_next, Nd, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, n);
-            //cout << "T0" << " =" << T[0] << endl;
-            s += 1;
-            F(nevyaz, T_cur, T_next, ACp, ADensity, ALambda, N, r, a, b, c, d, dt, dM, Nd, A, A_beetween, const_params);
-            for (int i = 1; i < N; i++) {
-                //if (s > 5)
-                    //cout << "nevyaz[" << i << "]" << nevyaz[i] << "\n";
-                mod_nevyaz += pow(nevyaz[i], 2.0);
+            //2nd stage(combination of two processes)
+            if (flag_evap == 1)
+            {
+                //Incrementing the Reference Node for the Liquid / Gazeous Interface
+                if (p >= 2.) {
+                    p = 1.001;
+                    s += 1;
+                }
+                //Decrementing the Reference Node for the Liquid / Gazeous Interface
+                if (p <= 1.) {
+                    p = 1.999;
+                    s -= 1;
+                    //If the Entire Melt Layer Becomes Gazeous the Interace Boundary Condition is Not Applied
+                    if (s <= 5)
+                        cout << "Entire Melt Layer Becomes Gazeous, Time:", dt * n;
+                }
+                //Renew parameters
+                ArraysParameters(a, b, c, N, r, T_next, s, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, n, inter, Ti, p);
+                Lambda_g = (ALambda_i + ALambda[s + 2] + ALambda[s + 3]) / 3.;
+                Lambda_d = (ALambda[s - 2] + ALambda[s - 1] + ALambda_i) / 3.;
+                //Non-const determination of dM
+                q_g = Lambda_g * ((2 * p - 7) / ((p - 3) * (p - 4)) * Ti + (p - 4) / (p - 3) * T_next[s + 2] + (p - 3) / (4 - p) * T_next[s + 3]);
+                q_d = Lambda_d * (p / (p + 1) * T_next[s - 2] - (p + 1) / p * T_next[s - 1] + (2 * p + 1) / ((p + 1) * p) * Ti);
+                dM = -pow(inter, 2.0) / L_d / (r[s + 1] - r[s]) * (q_g - q_d);
+                p += dM * dt / (ADensity[s] * pow(inter, 2.0) * (r[s + 1] - r[s]));
+                inter = r[s] + (p - 1) * (r[s + 1] - r[s]);
+                cout << "p = " << p << "\n";
+                cout << "inter = " << inter << "\n";
             }
-            mod_nevyaz = pow(mod_nevyaz, 0.5);
-            OutNevyazka << s << " " << mod_nevyaz << "\n";
-            cout << "\n" << "nevyazka = " << mod_nevyaz << "\n";
+            //Renew parameters
+            ArraysParameters(a, b, c, N, r, T_next, s, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, n, inter, Ti, p);
+            mod_nevyaz_prev = mod_nevyaz_cur;
+            mod_nevyaz_cur = 0;
+            F(nevyaz, T_cur, T_next, ACp, ADensity, ALambda, N, r, a, b, c, d, dt, dM, s, inter, Ti, mod_nevyaz_cur, flag_evap);
+            cout << "nevyazka = " << mod_nevyaz_cur << "\n" << "\n";
+            //Прежде чем пускать Невязку в прогонку, нужно сделать ее меньше, чем в прошлой итерации, но не более чем с 5 попыток
+            //На 1ой итерации не зайдет сюда, потому что искусственно зададим огромное T_next_prev
+            divide_count = 0;
+            //Redefine previous iteration temperature
+            while (mod_nevyaz_cur > mod_nevyaz_prev && divide_count < 5)
+            {
+                for (int i = 0; i < N; i++) {
+                    T_next[i] -= dT[i];
+                    dT[i] = dT[i] / 2.;
+                    //cout << "dT[i]" << dT[i] << "\n";
+                    T_next[i] += dT[i];
+                }
+                mod_nevyaz_cur = 0;
+                F(nevyaz, T_cur, T_next, ACp, ADensity, ALambda, N, r, a, b, c, d, dt, dM, s, inter, Ti, mod_nevyaz_cur, flag_evap);
+                cout << "nevyazka(modif) = " << mod_nevyaz_cur << "\n" << "\n";
+                divide_count += 1;
+            }
+            //Collecting Nevyazka
+            OutNevyazka << m << " " << mod_nevyaz_cur << "\n";
+            if (m == 1)
+                OutFirstStepNevyazka << n * dt << " " << mod_nevyaz_cur << "\n";
+            Jacobian(J, r, T_next, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, N_minus, a, b, c, d, dt, dtau, dM, s, inter, Ti, flag_evap);
+            cout << "m " << m << endl;
+            //МЕТОД ПРОГОНКИ: T_next change from m to m+1
+            Progonka(T_next, alpha, beta, dT, nevyaz, J, N_minus, s, flag_evap);
+            //Define Ti from Stefan's condition
+            Ti = (-ALambda[s + 2] * ((p - 4) / (p - 3) * T_next[s + 2] + (p - 3) / (4 - p) * T_next[s + 3])
+                + ALambda[s - 1] * (p / (p + 1) * T_next[s - 2] - (p + 1) / p * T_next[s - 1]))
+                / (ALambda[s + 2] * (2 * p - 7) / ((p - 3) * (p - 4)) - ALambda[s - 1] * (2 * p + 1) / ((p + 1) * p));
+            cout << "Ti" << Ti << "\n";
+            //
+            cout << flag_evap << "\n";
+            //cout << "T0" << " =" << T[0] << endl;
+            m += 1;
         }
         OutNevyazka.close();
+        //Collecting Tempereature, Lambda, Flow and Nevyazka from Timestep
+        GraphicsSystEqu(n, r, T_next, ALambda, ADensity, N, s, dM, flag_evap, inter, Ti);
         //задаем начальную температуру следующего слоя как решение предыдущей
         for (int j = 0; j < N + 1; j++)
-        {
             T_cur[j] = T_next[j];
-        }
+        cout << "s = " << s << "\n";
+        if (mod_nevyaz_cur != mod_nevyaz_cur)
+            break;
     }
     OutSurfaceFlow.close();
-    OutCurrentTemp.open("C:/Users/user/source/Научная работа/DropletWarming/Data/Temp_" + to_string(total_time) + ".dat");
-    OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << endl;
-    OutCurrentTemp << R"(VARIABLES= "rj", "T", "Lambda" )" << endl;
-    for (int i = 0; i < N + 1; i++) {
-        //cout << r[i] << endl;
-        OutCurrentTemp << r[i] << " " << T_next[i] << " " << Lambda(T_next[i], a, b, c) << "\n";
-    }
-    OutCurrentTemp.close();
-    std::cout << "Done!\n";
+    OutLastStepNevyazka.close();
+    cout << "Done!\n";
 }
    
 double f(double q, const double N, const double h_min, const double x_r, const double x_l) //возвращает значение функции f(q) = ...
@@ -651,17 +746,17 @@ double DefineQ(const double N, const double h_min, const double x_r, const doubl
 
 void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, const double T_r, vector<double>& r,
     vector<double>& T_cur, vector<double>& T_next, double h, const double q, const double h_min, const int big_number, const int const_params,
-    const int Nd)
+    const int Nd, const int N_uni, const int N_uni_near_center)
 {
     T_cur.resize(N + 1);
     T_next.resize(N + 1);
     r.resize(N + 1);
     ofstream OutX;
-    OutX.open("C:/Users/user/source/Научная работа/DropletWarming/Data/X_grid.dat");
+    OutX.open("C:/Users/user/source/Научная работа/DropletWarming/Data_new/X_grid.dat");
     OutX << "TITLE=\"" << "Graphics" << "\"" << endl;
-    OutX << R"(VARIABLES= "j", "hj" )" << endl;
+    OutX << R"(VARIABLES= "j", "hj, m" )" << endl;
     //Non-uniform 1-dimensional grid 
-    if (const_params == 0 || const_params == 2)
+    if (const_params == 0)
     {
         if (q < 1)
         {
@@ -724,26 +819,43 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
             //Setting the value on the boundaries and initial distribution
             r[0] = x_l;
             T_cur[0] = T_l;
-            cout << "dsfsd" << h << "\n";
-            cout << "x0" << " " << r[0] << endl;
+            cout << "r0" << " " << r[0] << "\n";
             h = h_min;
+            //r[1] = r[0] + h / 2.;
+            //T_cur[1] = T_l;
+            //cout << "r1" << " " << r[1] << "\n";
             int j = 1;
-            //Grid for droplet
-            for (j; j < Nd + 1; j++)
+            //Uniform grid
+            for (j; j < N_uni_near_center + 1; j++)
             {
                 r[j] = r[j - 1] + h;
-                T_cur[j] = T_l;
-
-                cout << "T" << j << " " << T_cur[j] << endl;
+                if (j < Nd + 1)
+                    T_cur[j] = T_l;
+                else
+                    T_cur[j] = T_r;
+                //cout << "T" << j << " " << T_cur[j] << endl;
                 OutX << j << " " << h << " " << "\n";
                 cout << "h" << h << " r" << j << " " << r[j] << endl;
             }
-            for (j = Nd + 1; j < N + 1; j++)
+            h = 2 * h;
+            for (j + 1; j < N_uni + 1; j++)
+            {
+                r[j] = r[j - 1] + h;
+                if(j < Nd + 1)
+                    T_cur[j] = T_l;
+                else
+                    T_cur[j] = T_r;
+                //cout << "T" << j << " " << T_cur[j] << endl;
+                OutX << j << " " << h << " " << "\n";
+                cout << "h" << h << " r" << j << " " << r[j] << endl;
+            }
+            //Non-uniform grid
+            for (j + 1; j < N + 1; j++)
             {
                 r[j] = r[j - 1] + h;
                 h = h * q;
                 T_cur[j] = T_r;
-                cout << "T" << j << " " << T_cur[j] << endl;
+                //cout << "T" << j << " " << T_cur[j] << endl;
                 OutX << j << " " << h << " " << "\n";
                 cout << "h" << h << " r" << j << " " << r[j] << endl;
             }
@@ -754,32 +866,35 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
 
 int main()
 {
-    const int const_params = 1;          // 0 - r нестац, 1 - r нестац капля и газ, 2 - r нестац адиабатич слева  
-    const double dt = 0.01;
-    const double dtau = 0.1;
-    const int total_time = 200;
-    const int power_of = 5;
+    const int const_params = 1;          // 0 - Non-uniform grid, 1 - Mixed
+    const double dt = 0.001;
+    const double dtau = 0.0005;
+    int m_max = 1000000;
+    const int total_time = 10000;
+    const int power_of = 0;              //const if a < pow(10, -8)
     const double a = pow(10, -(power_of + 3)), b = pow(10, -power_of), c = pow(10, -(power_of - 3));
     const double d = 0.1;                          //коэффициент диффузии
     const double T_l = 300;
     const double T_r = 1500;
     double h = 0.2;
     //зададим минимальный возможный размер ячейки
-    const double h_min = 0.000025;                 //0.0005 / 20 = 0.000025 = 25 мкр ;  
+    const double h_min = 0.0000138888888889;                                        //0.0005 / (5 + 15.5 * 2) = 0.0000138888888889= 13.8888888889 мкр ;  
     //Number of cells
     int N = 100;
     const int Nd = 20;
+    const int N_uni = 2 * Nd;
+    const int N_uni_near_center = 5;
     const double x_l = 0.0;
-    //const double R = 0.05;                       //примерно 0.5 мм
-    const double x_r = 1.0;                        //1 примерно равен 10 мм
-    double R = x_l + Nd * h_min;                   //зададим радиус капли
-    double q = DefineQ(N - Nd, h_min, x_r, R);
+    //const double R = 0.0005 м = 500 мкр
+    const double x_r = 0.2; //зададим область = 20 см
+    double x_uni = x_l + N_uni_near_center * h_min + (N_uni - N_uni_near_center) * 2 * h_min;
+    double q = DefineQ(N - N_uni, 2 * h_min, x_r, x_uni);
     vector <double> r;
     vector <double> T_cur;
     vector <double> T_next;
-    InitialGrid(N, x_l, x_r, T_l, T_r, r, T_cur, T_next, h, q, h_min, total_time, const_params, Nd);
+    InitialGrid(N, x_l, x_r, T_l, T_r, r, T_cur, T_next, h, q, h_min, total_time, const_params, Nd, N_uni, N_uni_near_center);
     cout << "N" << N << endl;
-    Solver(N, r, T_cur, T_next, d, a, b, c, total_time, dt, const_params, T_l, T_r, dtau, Nd);
+    Solver(N, r, T_cur, T_next, d, a, b, c, total_time, dt, const_params, T_l, T_r, dtau, Nd, m_max);
 }
 
 //helping parts from solid/liquid interface program
