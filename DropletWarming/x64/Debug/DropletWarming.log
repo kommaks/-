@@ -3,18 +3,13 @@ C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.c
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(52,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(287,9): warning C4552: '+': result of expression not used
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(308,10): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(353,16): warning C4101: 'term2': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(353,23): warning C4101: 'term3': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(353,9): warning C4101: 'term1': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(353,30): warning C4101: 'term4': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(435,17): warning C4101: 'T_temp': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(435,9): warning C4101: 'r_temp': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(648,9): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(648,18): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(650,8): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(650,22): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(650,39): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(652,7): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(652,25): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(661,9): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(661,18): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(663,8): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(663,22): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(663,39): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(665,7): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(665,25): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(847,11): warning C4552: '+': result of expression not used
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(204): warning C4715: 'Lambda': not all control paths return a value
   DropletWarming.vcxproj -> C:\Users\user\source\Научная работа\DropletWarming\x64\Debug\DropletWarming.exe
