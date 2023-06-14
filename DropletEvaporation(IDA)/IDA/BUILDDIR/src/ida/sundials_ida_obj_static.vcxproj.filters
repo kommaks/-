@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_bbdpre.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_direct.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_ic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_ls.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_nls.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\ida\ida_spils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\IDA\ida-6.5.1\src\ida\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{69340953-F8E6-3E5A-AEAB-CA75BF720DF7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

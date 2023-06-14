@@ -1,18 +1,17 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (DropletEvaporation(IDA).vcxproj).  This can lead to incorrect clean and rebuild behavior.
   DropletEvaporation(IDA).cpp
 C:\IDA\ida-6.5.1\include\sunnonlinsol\sunnonlinsol_newton.h(121,1): warning C4141: 'dllimport': used more than once
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(135,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(136,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(375,12): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(396,16): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(490,19): warning C4101: 'term2': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(578,19): warning C4101: 'term2': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(578,26): warning C4101: 'term3': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(578,12): warning C4101: 'term1': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(766,20): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(791,23): warning C4101: 'retvalr': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1019,21): warning C4101: 'q_d': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1019,16): warning C4101: 'q_g': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1019,36): warning C4101: 'Lambda_g': unreferenced local variable
-C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1019,26): warning C4101: 'Lambda_d': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(137,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(138,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(377,12): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(398,16): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(492,19): warning C4101: 'term2': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(771,20): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(796,23): warning C4101: 'retvalr': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1025,21): warning C4101: 'q_d': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1025,16): warning C4101: 'q_g': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1025,36): warning C4101: 'Lambda_g': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1025,26): warning C4101: 'Lambda_d': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1168,12): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\DropletEvaporation(IDA).cpp(1181,12): warning C4552: '+': result of expression not used
   DanilErshov.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\DropletEvaporation(IDA).exe

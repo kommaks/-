@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmatrix/band/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunmatrixband.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunmatrixband.exp
+  sundials_sunmatrixband_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunmatrixband.dll

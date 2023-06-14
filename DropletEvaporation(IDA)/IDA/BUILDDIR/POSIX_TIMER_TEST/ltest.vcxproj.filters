@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\IDA\BUILDDIR\POSIX_TIMER_TEST\ltest.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\IDA\BUILDDIR\POSIX_TIMER_TEST\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E946D883-8885-35CE-8AF8-8B3785FAD47D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

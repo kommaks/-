@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/nvector/manyvector/CMakeLists.txt
+  nvector_manyvector.c
+  sundials_nvecmanyvector_obj_static.vcxproj -> C:\IDA\BUILDDIR\src\nvector\manyvector\sundials_nvecmanyvector_obj_static.dir\Debug\sundials_nvecmanyvector_obj_static.lib

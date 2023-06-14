@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/nvector/serial/CMakeLists.txt
+  test_nvector_serial.c
+  test_nvector_serial.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_nvector_serial.exe

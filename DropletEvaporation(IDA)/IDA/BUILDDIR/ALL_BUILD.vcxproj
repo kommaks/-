@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F1C9D953-A8AF-3177-8628-525E3DDCFDE4}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\IDA\ida-6.5.1\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/IDA/ida-6.5.1/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/IDA/ida-6.5.1 -BC:/IDA/BUILDDIR --check-stamp-file C:/IDA/BUILDDIR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeRCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeSystem.cmake;C:\IDA\ida-6.5.1\cmake\SUNDIALSConfig.cmake.in;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPost.cmake;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPre.cmake;C:\IDA\ida-6.5.1\cmake\SundialsDeprecated.cmake;C:\IDA\ida-6.5.1\cmake\SundialsExampleOptions.cmake;C:\IDA\ida-6.5.1\cmake\SundialsIndexSize.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupCompilers.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupConfig.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTPLs.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTesting.cmake;C:\IDA\ida-6.5.1\cmake\SundialsTPLOptions.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExecutable.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddLibrary.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTest.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTestInstall.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsCMakeMacros.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamples.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsOption.cmake;C:\IDA\ida-6.5.1\cmake\tpl\SundialsPOSIXTimers.cmake;C:\IDA\ida-6.5.1\include\sundials\sundials_config.in;C:\Program Files\CMake\share\cmake-3.26\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePrintHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestTargets.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.26\Modules\DartConfiguration.tcl.in;C:\Program Files\CMake\share\cmake-3.26\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\WriteBasicConfigVersionFile.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\IDA\BUILDDIR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/IDA/ida-6.5.1/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/IDA/ida-6.5.1 -BC:/IDA/BUILDDIR --check-stamp-file C:/IDA/BUILDDIR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeRCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeSystem.cmake;C:\IDA\ida-6.5.1\cmake\SUNDIALSConfig.cmake.in;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPost.cmake;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPre.cmake;C:\IDA\ida-6.5.1\cmake\SundialsDeprecated.cmake;C:\IDA\ida-6.5.1\cmake\SundialsExampleOptions.cmake;C:\IDA\ida-6.5.1\cmake\SundialsIndexSize.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupCompilers.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupConfig.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTPLs.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTesting.cmake;C:\IDA\ida-6.5.1\cmake\SundialsTPLOptions.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExecutable.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddLibrary.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTest.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTestInstall.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsCMakeMacros.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamples.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsOption.cmake;C:\IDA\ida-6.5.1\cmake\tpl\SundialsPOSIXTimers.cmake;C:\IDA\ida-6.5.1\include\sundials\sundials_config.in;C:\Program Files\CMake\share\cmake-3.26\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePrintHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestTargets.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.26\Modules\DartConfiguration.tcl.in;C:\Program Files\CMake\share\cmake-3.26\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\WriteBasicConfigVersionFile.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\IDA\BUILDDIR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/IDA/ida-6.5.1/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/IDA/ida-6.5.1 -BC:/IDA/BUILDDIR --check-stamp-file C:/IDA/BUILDDIR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeRCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeSystem.cmake;C:\IDA\ida-6.5.1\cmake\SUNDIALSConfig.cmake.in;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPost.cmake;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPre.cmake;C:\IDA\ida-6.5.1\cmake\SundialsDeprecated.cmake;C:\IDA\ida-6.5.1\cmake\SundialsExampleOptions.cmake;C:\IDA\ida-6.5.1\cmake\SundialsIndexSize.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupCompilers.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupConfig.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTPLs.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTesting.cmake;C:\IDA\ida-6.5.1\cmake\SundialsTPLOptions.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExecutable.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddLibrary.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTest.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTestInstall.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsCMakeMacros.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamples.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsOption.cmake;C:\IDA\ida-6.5.1\cmake\tpl\SundialsPOSIXTimers.cmake;C:\IDA\ida-6.5.1\include\sundials\sundials_config.in;C:\Program Files\CMake\share\cmake-3.26\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePrintHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestTargets.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.26\Modules\DartConfiguration.tcl.in;C:\Program Files\CMake\share\cmake-3.26\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\WriteBasicConfigVersionFile.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\IDA\BUILDDIR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/IDA/ida-6.5.1/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/IDA/ida-6.5.1 -BC:/IDA/BUILDDIR --check-stamp-file C:/IDA/BUILDDIR/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeRCCompiler.cmake;C:\IDA\BUILDDIR\CMakeFiles\3.26.4\CMakeSystem.cmake;C:\IDA\ida-6.5.1\cmake\SUNDIALSConfig.cmake.in;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPost.cmake;C:\IDA\ida-6.5.1\cmake\SundialsBuildOptionsPre.cmake;C:\IDA\ida-6.5.1\cmake\SundialsDeprecated.cmake;C:\IDA\ida-6.5.1\cmake\SundialsExampleOptions.cmake;C:\IDA\ida-6.5.1\cmake\SundialsIndexSize.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupCompilers.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupConfig.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTPLs.cmake;C:\IDA\ida-6.5.1\cmake\SundialsSetupTesting.cmake;C:\IDA\ida-6.5.1\cmake\SundialsTPLOptions.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddExecutable.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddLibrary.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTest.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsAddTestInstall.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsCMakeMacros.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamples.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsInstallExamplesGinkgo.cmake;C:\IDA\ida-6.5.1\cmake\macros\SundialsOption.cmake;C:\IDA\ida-6.5.1\cmake\tpl\SundialsPOSIXTimers.cmake;C:\IDA\ida-6.5.1\include\sundials\sundials_config.in;C:\Program Files\CMake\share\cmake-3.26\Modules\BasicConfigVersion-SameMajorVersion.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCCompilerABI.c;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCompilerIdDetection.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompileFeatures.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerABI.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineCompilerId.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeDetermineSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeFindBinUtils.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePackageConfigHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitIncludeInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseImplicitLinkInfo.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeParseLibraryArchitecture.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakePrintHelpers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCCompiler.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystem.cmake.in;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestCompilerCommon.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeTestRCCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTest.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestTargets.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CTestUseLaunchers.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ADSP-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMCC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\ARMClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\AppleClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Borland-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Bruce-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Clang-DetermineCompilerInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Compaq-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Cray-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Embarcadero-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Fujitsu-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\FujitsuClang-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GHS-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\GNU-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\HP-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IAR-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMCPP-C-DetermineVersionInternal.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IBMClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Intel-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\IntelLLVM-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\LCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVHPC-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\NVIDIA-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\OpenWatcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PGI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\PathScale-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SCO-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SDCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\SunPro-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TI-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Tasking-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\TinyCC-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\VisualAge-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\Watcom-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XL-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\XLClang-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\zOS-C-DetermineCompiler.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CompilerId\VS-10.vcxproj.in;C:\Program Files\CMake\share\cmake-3.26\Modules\DartConfiguration.tcl.in;C:\Program Files\CMake\share\cmake-3.26\Modules\FindGit.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\GNUInstallDirs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\FeatureTesting.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\WriteBasicConfigVersionFile.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\IDA\BUILDDIR\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\IDA\BUILDDIR\ZERO_CHECK.vcxproj">
+      <Project>{E2DF4BEC-5DB5-3769-B3F9-0D4700002DDE}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaAnalytic_mels.vcxproj">
+      <Project>{2C33AE16-8FBC-3527-848D-DCB611ACC71E}</Project>
+      <Name>idaAnalytic_mels</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaFoodWeb_bnd.vcxproj">
+      <Project>{3C4FB168-9259-3FE4-8FDD-475431B74456}</Project>
+      <Name>idaFoodWeb_bnd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaFoodWeb_kry.vcxproj">
+      <Project>{9217BEE2-0681-3CAF-94ED-A05E7B1BD571}</Project>
+      <Name>idaFoodWeb_kry</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaHeat2D_bnd.vcxproj">
+      <Project>{2E0E3F67-1445-38F7-AE5D-9CF988254DD4}</Project>
+      <Name>idaHeat2D_bnd</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaHeat2D_kry.vcxproj">
+      <Project>{67A20548-8E3E-37C7-9328-BD45B133AF93}</Project>
+      <Name>idaHeat2D_kry</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaKrylovDemo_ls.vcxproj">
+      <Project>{1F2C4E10-EEA8-3188-ABD5-3CAAC6E99F8C}</Project>
+      <Name>idaKrylovDemo_ls</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaRoberts_dns.vcxproj">
+      <Project>{11537816-FD23-337D-83DE-4443BC977023}</Project>
+      <Name>idaRoberts_dns</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\ida\serial\idaSlCrank_dns.vcxproj">
+      <Project>{AEC58D80-8FE2-3B18-88EB-30C1FEDBF1C0}</Project>
+      <Name>idaSlCrank_dns</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sundials\sundials_generic_obj_shared.vcxproj">
+      <Project>{C578DFC7-C846-361E-B179-9F3FE74EA67B}</Project>
+      <Name>sundials_generic_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sundials\sundials_generic_obj_static.vcxproj">
+      <Project>{33CDDA42-7A2C-35D9-942F-7378904932E2}</Project>
+      <Name>sundials_generic_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sundials\sundials_generic_shared.vcxproj">
+      <Project>{23740A18-E812-31CB-AD0E-EA10FF3F5998}</Project>
+      <Name>sundials_generic_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sundials\sundials_generic_static.vcxproj">
+      <Project>{6A3D839C-3F6A-35DA-984F-E3AF63E9CEA1}</Project>
+      <Name>sundials_generic_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\ida\sundials_ida_obj_shared.vcxproj">
+      <Project>{4904C682-5FCC-3E99-B93E-2C02E5456ADD}</Project>
+      <Name>sundials_ida_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\ida\sundials_ida_obj_static.vcxproj">
+      <Project>{AACAEADA-3FA4-37DF-809A-6914CCF3FD08}</Project>
+      <Name>sundials_ida_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\ida\sundials_ida_shared.vcxproj">
+      <Project>{F0C52209-9582-34CE-AC4C-D52F26264FFB}</Project>
+      <Name>sundials_ida_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\ida\sundials_ida_static.vcxproj">
+      <Project>{A3596CC5-80B2-34E2-AB7D-B52F06AE59C3}</Project>
+      <Name>sundials_ida_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\manyvector\sundials_nvecmanyvector_obj_shared.vcxproj">
+      <Project>{274AED52-08F1-3BB3-8FFF-0AF2374D4528}</Project>
+      <Name>sundials_nvecmanyvector_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\manyvector\sundials_nvecmanyvector_obj_static.vcxproj">
+      <Project>{97EBF665-B735-3319-B482-8EC189376600}</Project>
+      <Name>sundials_nvecmanyvector_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\manyvector\sundials_nvecmanyvector_shared.vcxproj">
+      <Project>{0932E621-92CB-3F88-9D19-8DDE60025F1C}</Project>
+      <Name>sundials_nvecmanyvector_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\manyvector\sundials_nvecmanyvector_static.vcxproj">
+      <Project>{13204349-13E9-3BD8-905C-F85DE8F27AEC}</Project>
+      <Name>sundials_nvecmanyvector_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\serial\sundials_nvecserial_obj_shared.vcxproj">
+      <Project>{ACA0974B-3E1A-3F97-B7EB-0F4C8C4A3E96}</Project>
+      <Name>sundials_nvecserial_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\serial\sundials_nvecserial_obj_static.vcxproj">
+      <Project>{DD550528-4031-3276-8BAC-F0CB6153B952}</Project>
+      <Name>sundials_nvecserial_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\serial\sundials_nvecserial_shared.vcxproj">
+      <Project>{8CE01EAF-B90D-3C9F-B44E-B05E6ACD0BD3}</Project>
+      <Name>sundials_nvecserial_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\nvector\serial\sundials_nvecserial_static.vcxproj">
+      <Project>{77B612BF-2EFA-3668-9271-E063D372B664}</Project>
+      <Name>sundials_nvecserial_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\band\sundials_sunlinsolband_obj_shared.vcxproj">
+      <Project>{14B9D5E0-7E11-332F-B987-26E4D6113E1D}</Project>
+      <Name>sundials_sunlinsolband_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\band\sundials_sunlinsolband_obj_static.vcxproj">
+      <Project>{07845C03-55A5-3B1D-8981-59CA3011ED55}</Project>
+      <Name>sundials_sunlinsolband_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\band\sundials_sunlinsolband_shared.vcxproj">
+      <Project>{442ECBCA-CB82-3BC4-826A-D1515A86695C}</Project>
+      <Name>sundials_sunlinsolband_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\band\sundials_sunlinsolband_static.vcxproj">
+      <Project>{879331F2-A647-3640-8C8D-70BA4E122B53}</Project>
+      <Name>sundials_sunlinsolband_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\dense\sundials_sunlinsoldense_obj_shared.vcxproj">
+      <Project>{066D6C3B-BD2A-35F3-BD8E-006FA822B015}</Project>
+      <Name>sundials_sunlinsoldense_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\dense\sundials_sunlinsoldense_obj_static.vcxproj">
+      <Project>{D3812373-A72F-3EB3-87A4-E9A3E4914508}</Project>
+      <Name>sundials_sunlinsoldense_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\dense\sundials_sunlinsoldense_shared.vcxproj">
+      <Project>{527DA284-A663-3BA2-8D67-012250FB689A}</Project>
+      <Name>sundials_sunlinsoldense_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\dense\sundials_sunlinsoldense_static.vcxproj">
+      <Project>{9586248C-8B6D-340F-83E8-C27DA800B8DE}</Project>
+      <Name>sundials_sunlinsoldense_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\pcg\sundials_sunlinsolpcg_obj_shared.vcxproj">
+      <Project>{3C1871A0-4908-3FD6-96A3-0DD76BF3DB6A}</Project>
+      <Name>sundials_sunlinsolpcg_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\pcg\sundials_sunlinsolpcg_obj_static.vcxproj">
+      <Project>{FA8EAF4E-FE22-33DE-B617-E0678C1FAE59}</Project>
+      <Name>sundials_sunlinsolpcg_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\pcg\sundials_sunlinsolpcg_shared.vcxproj">
+      <Project>{A737F402-B51A-3FED-B337-7B5BCE1ABDBE}</Project>
+      <Name>sundials_sunlinsolpcg_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\pcg\sundials_sunlinsolpcg_static.vcxproj">
+      <Project>{BB9C35BF-08F0-3603-87CE-07A84905CCAB}</Project>
+      <Name>sundials_sunlinsolpcg_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spbcgs\sundials_sunlinsolspbcgs_obj_shared.vcxproj">
+      <Project>{E9FDE5D6-D27C-3E5F-9050-FC508214E74C}</Project>
+      <Name>sundials_sunlinsolspbcgs_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spbcgs\sundials_sunlinsolspbcgs_obj_static.vcxproj">
+      <Project>{E194C5EB-6535-3D0F-9451-0CACCDFD231F}</Project>
+      <Name>sundials_sunlinsolspbcgs_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spbcgs\sundials_sunlinsolspbcgs_shared.vcxproj">
+      <Project>{515152A8-CA46-38C2-B3ED-D27564726ADE}</Project>
+      <Name>sundials_sunlinsolspbcgs_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spbcgs\sundials_sunlinsolspbcgs_static.vcxproj">
+      <Project>{1DD7CFEF-13A5-335C-AE68-646342B71136}</Project>
+      <Name>sundials_sunlinsolspbcgs_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spfgmr\sundials_sunlinsolspfgmr_obj_shared.vcxproj">
+      <Project>{78DAAB47-FF06-3128-96D2-719EAD13DFFC}</Project>
+      <Name>sundials_sunlinsolspfgmr_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spfgmr\sundials_sunlinsolspfgmr_obj_static.vcxproj">
+      <Project>{5C8542FD-5BD8-32D1-9A1E-5C3CCFA1B81F}</Project>
+      <Name>sundials_sunlinsolspfgmr_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spfgmr\sundials_sunlinsolspfgmr_shared.vcxproj">
+      <Project>{765B3A68-EE0E-33AD-AF78-B3FDBE244988}</Project>
+      <Name>sundials_sunlinsolspfgmr_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spfgmr\sundials_sunlinsolspfgmr_static.vcxproj">
+      <Project>{3CFEB123-14BC-33D3-B425-F60595A54B8C}</Project>
+      <Name>sundials_sunlinsolspfgmr_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spgmr\sundials_sunlinsolspgmr_obj_shared.vcxproj">
+      <Project>{EF6909F5-8AC8-3530-89D2-D114FBA26427}</Project>
+      <Name>sundials_sunlinsolspgmr_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spgmr\sundials_sunlinsolspgmr_obj_static.vcxproj">
+      <Project>{A04D5B6C-3CE9-341C-AE30-B92F52C2BFFC}</Project>
+      <Name>sundials_sunlinsolspgmr_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spgmr\sundials_sunlinsolspgmr_shared.vcxproj">
+      <Project>{75979598-3815-3178-A2E2-0914C2898F57}</Project>
+      <Name>sundials_sunlinsolspgmr_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\spgmr\sundials_sunlinsolspgmr_static.vcxproj">
+      <Project>{0F42E192-5D50-3845-A224-13F609160EA8}</Project>
+      <Name>sundials_sunlinsolspgmr_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\sptfqmr\sundials_sunlinsolsptfqmr_obj_shared.vcxproj">
+      <Project>{047BA96E-167D-3D33-8B1B-6C31AE851BAC}</Project>
+      <Name>sundials_sunlinsolsptfqmr_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\sptfqmr\sundials_sunlinsolsptfqmr_obj_static.vcxproj">
+      <Project>{1BC6CAEA-AE49-326C-AA52-791CB1CBE2F9}</Project>
+      <Name>sundials_sunlinsolsptfqmr_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\sptfqmr\sundials_sunlinsolsptfqmr_shared.vcxproj">
+      <Project>{727C5E3E-F6FC-3320-A372-DD5FB1427C5E}</Project>
+      <Name>sundials_sunlinsolsptfqmr_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunlinsol\sptfqmr\sundials_sunlinsolsptfqmr_static.vcxproj">
+      <Project>{2CB42EA7-8A65-37B3-97B8-DB8E1AC58A74}</Project>
+      <Name>sundials_sunlinsolsptfqmr_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\band\sundials_sunmatrixband_obj_shared.vcxproj">
+      <Project>{CABC0599-E105-3218-ABE8-6283CB7BD375}</Project>
+      <Name>sundials_sunmatrixband_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\band\sundials_sunmatrixband_obj_static.vcxproj">
+      <Project>{586EF5A2-8C8A-30B0-8C7A-FEE195A1D6F5}</Project>
+      <Name>sundials_sunmatrixband_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\band\sundials_sunmatrixband_shared.vcxproj">
+      <Project>{FB2BDEEE-D800-383C-9AE7-CF1F125FB87C}</Project>
+      <Name>sundials_sunmatrixband_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\band\sundials_sunmatrixband_static.vcxproj">
+      <Project>{17D26AFE-A968-3A73-9F85-F1A358B93B96}</Project>
+      <Name>sundials_sunmatrixband_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\dense\sundials_sunmatrixdense_obj_shared.vcxproj">
+      <Project>{E18C5BC2-1C00-35F4-AF9C-1D331DDFCBA0}</Project>
+      <Name>sundials_sunmatrixdense_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\dense\sundials_sunmatrixdense_obj_static.vcxproj">
+      <Project>{C2924D4F-893C-33E6-82CE-75A1C5861E0C}</Project>
+      <Name>sundials_sunmatrixdense_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\dense\sundials_sunmatrixdense_shared.vcxproj">
+      <Project>{594225A6-8D3C-31E1-9749-86052833395B}</Project>
+      <Name>sundials_sunmatrixdense_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\dense\sundials_sunmatrixdense_static.vcxproj">
+      <Project>{F105900E-7E5F-317D-847D-976D66A3F152}</Project>
+      <Name>sundials_sunmatrixdense_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\sparse\sundials_sunmatrixsparse_obj_shared.vcxproj">
+      <Project>{5F9585DD-7F8E-3873-BDF1-A56BD3E72147}</Project>
+      <Name>sundials_sunmatrixsparse_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\sparse\sundials_sunmatrixsparse_obj_static.vcxproj">
+      <Project>{9063F1E5-3EA9-3E34-805E-C9754271D86D}</Project>
+      <Name>sundials_sunmatrixsparse_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\sparse\sundials_sunmatrixsparse_shared.vcxproj">
+      <Project>{95AE11FB-7A86-377C-A3FD-9A5A42372876}</Project>
+      <Name>sundials_sunmatrixsparse_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmatrix\sparse\sundials_sunmatrixsparse_static.vcxproj">
+      <Project>{20023E47-980C-3BDA-B451-F6007A9AF6A6}</Project>
+      <Name>sundials_sunmatrixsparse_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmemory\system\sundials_sunmemsys_obj_shared.vcxproj">
+      <Project>{8C34A473-5365-35EE-B735-101CB6A9DD11}</Project>
+      <Name>sundials_sunmemsys_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunmemory\system\sundials_sunmemsys_obj_static.vcxproj">
+      <Project>{1CB7773B-718A-38F5-9F57-0A4ED1AC294F}</Project>
+      <Name>sundials_sunmemsys_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\fixedpoint\sundials_sunnonlinsolfixedpoint_obj_shared.vcxproj">
+      <Project>{3C0A4B95-2A80-3C7A-A400-A871AC1D718B}</Project>
+      <Name>sundials_sunnonlinsolfixedpoint_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\fixedpoint\sundials_sunnonlinsolfixedpoint_obj_static.vcxproj">
+      <Project>{FFF2BDD9-93C6-3897-B004-072B06D75E4B}</Project>
+      <Name>sundials_sunnonlinsolfixedpoint_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\fixedpoint\sundials_sunnonlinsolfixedpoint_shared.vcxproj">
+      <Project>{C6714678-CE07-3FF1-B398-2E14623BA464}</Project>
+      <Name>sundials_sunnonlinsolfixedpoint_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\fixedpoint\sundials_sunnonlinsolfixedpoint_static.vcxproj">
+      <Project>{6538E40C-DAE1-3112-B62E-1D0D6AC69D7C}</Project>
+      <Name>sundials_sunnonlinsolfixedpoint_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\newton\sundials_sunnonlinsolnewton_obj_shared.vcxproj">
+      <Project>{819CBE90-E588-34C5-92BE-E91A241850FC}</Project>
+      <Name>sundials_sunnonlinsolnewton_obj_shared</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\newton\sundials_sunnonlinsolnewton_obj_static.vcxproj">
+      <Project>{B59B2908-F86C-332F-98D6-890D469DA46F}</Project>
+      <Name>sundials_sunnonlinsolnewton_obj_static</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\newton\sundials_sunnonlinsolnewton_shared.vcxproj">
+      <Project>{8584242D-23D9-39DF-8CA0-B8D34D6493CC}</Project>
+      <Name>sundials_sunnonlinsolnewton_shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\src\sunnonlinsol\newton\sundials_sunnonlinsolnewton_static.vcxproj">
+      <Project>{896C9067-D3E8-37B8-8753-7B9822254C4B}</Project>
+      <Name>sundials_sunnonlinsolnewton_static</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\nvector\manyvector\test_nvector_manyvector.vcxproj">
+      <Project>{0FA923E4-5EAE-3CF6-9857-83174A22A07C}</Project>
+      <Name>test_nvector_manyvector</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\nvector\test_nvector_obj.vcxproj">
+      <Project>{1E8F8724-0328-3AD4-BCE3-FCA422DA2631}</Project>
+      <Name>test_nvector_obj</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\nvector\serial\test_nvector_serial.vcxproj">
+      <Project>{3017E2AF-B6DB-3BB4-BFFB-48D3B4E3B39C}</Project>
+      <Name>test_nvector_serial</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\band\test_sunlinsol_band.vcxproj">
+      <Project>{8CBC261D-DBD1-3095-BA51-7CEE7855A648}</Project>
+      <Name>test_sunlinsol_band</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\dense\test_sunlinsol_dense.vcxproj">
+      <Project>{1F43CED5-6054-3DC8-A850-A470D7F473E1}</Project>
+      <Name>test_sunlinsol_dense</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\test_sunlinsol_obj.vcxproj">
+      <Project>{CC37E24F-AB0B-306C-AFF2-A6C859214382}</Project>
+      <Name>test_sunlinsol_obj</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\pcg\serial\test_sunlinsol_pcg_serial.vcxproj">
+      <Project>{429C69B0-0341-3C02-8760-ADDC57F43235}</Project>
+      <Name>test_sunlinsol_pcg_serial</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\spbcgs\serial\test_sunlinsol_spbcgs_serial.vcxproj">
+      <Project>{BBC2BCD4-737B-33FA-B484-BEC0C9ACAF19}</Project>
+      <Name>test_sunlinsol_spbcgs_serial</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\spfgmr\serial\test_sunlinsol_spfgmr_serial.vcxproj">
+      <Project>{92BF08A3-D23B-3889-82CD-0CD9DB81AA2A}</Project>
+      <Name>test_sunlinsol_spfgmr_serial</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\spgmr\serial\test_sunlinsol_spgmr_serial.vcxproj">
+      <Project>{21AF0D54-208C-3453-BAED-88E923FDE913}</Project>
+      <Name>test_sunlinsol_spgmr_serial</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunlinsol\sptfqmr\serial\test_sunlinsol_sptfqmr_serial.vcxproj">
+      <Project>{E28712BD-951B-310E-A5FC-39A90D9A732A}</Project>
+      <Name>test_sunlinsol_sptfqmr_serial</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunmatrix\band\test_sunmatrix_band.vcxproj">
+      <Project>{93FD9A36-0563-32DE-BD40-4D775AF40EE7}</Project>
+      <Name>test_sunmatrix_band</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunmatrix\dense\test_sunmatrix_dense.vcxproj">
+      <Project>{CB52E0A7-548B-35B0-B143-A135308EB443}</Project>
+      <Name>test_sunmatrix_dense</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunmatrix\test_sunmatrix_obj.vcxproj">
+      <Project>{F46F15D6-0FA8-386A-9F1C-E670F9D8B24F}</Project>
+      <Name>test_sunmatrix_obj</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunmatrix\sparse\test_sunmatrix_sparse.vcxproj">
+      <Project>{14F852CA-0EC1-3689-8286-7B0C4766EE5B}</Project>
+      <Name>test_sunmatrix_sparse</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunnonlinsol\fixedpoint\test_sunnonlinsol_fixedpoint.vcxproj">
+      <Project>{2E7FB907-A715-373A-A2E4-B78685086CFB}</Project>
+      <Name>test_sunnonlinsol_fixedpoint</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\IDA\BUILDDIR\examples\sunnonlinsol\newton\test_sunnonlinsol_newton.vcxproj">
+      <Project>{DB336B77-8A45-3631-9342-93F111D824C7}</Project>
+      <Name>test_sunnonlinsol_newton</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

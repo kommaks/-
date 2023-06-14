@@ -1,0 +1,10 @@
+^C:\IDA\BUILDDIR\POSIX_TIMER_TEST\CMAKEFILES\2B7458FDA7EC457BE336A25094DAAB3D\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/IDA/BUILDDIR/POSIX_TIMER_TEST -BC:/IDA/BUILDDIR/POSIX_TIMER_TEST --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/IDA/BUILDDIR/POSIX_TIMER_TEST/ltest.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

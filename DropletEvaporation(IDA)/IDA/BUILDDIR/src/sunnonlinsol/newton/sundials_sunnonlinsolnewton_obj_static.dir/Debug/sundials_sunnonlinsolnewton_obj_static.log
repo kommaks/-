@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunnonlinsol/newton/CMakeLists.txt
+  sunnonlinsol_newton.c
+C:\IDA\ida-6.5.1\src\sundials\sundials_hashmap.h(26,48): warning C4305: 'initializing': truncation from 'unsigned __int64' to 'const unsigned long'
+C:\IDA\ida-6.5.1\src\sundials\sundials_hashmap.h(27,48): warning C4305: 'initializing': truncation from 'unsigned __int64' to 'const unsigned long'
+  sundials_sunnonlinsolnewton_obj_static.vcxproj -> C:\IDA\BUILDDIR\src\sunnonlinsol\newton\sundials_sunnonlinsolnewton_obj_static.dir\Debug\sundials_sunnonlinsolnewton_obj_static.lib

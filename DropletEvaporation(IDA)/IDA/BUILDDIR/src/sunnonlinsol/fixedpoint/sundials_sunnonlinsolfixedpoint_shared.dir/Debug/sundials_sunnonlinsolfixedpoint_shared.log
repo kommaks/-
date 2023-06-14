@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunnonlinsol/fixedpoint/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunnonlinsolfixedpoint.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunnonlinsolfixedpoint.exp
+  sundials_sunnonlinsolfixedpoint_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunnonlinsolfixedpoint.dll

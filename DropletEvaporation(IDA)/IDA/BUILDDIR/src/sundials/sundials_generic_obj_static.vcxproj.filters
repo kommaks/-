@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_band.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_dense.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_direct.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_iterative.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_linearsolver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_logger.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_math.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_matrix.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_memory.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_nonlinearsolver.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_nvector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_nvector_senswrapper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\IDA\ida-6.5.1\src\sundials\sundials_version.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\IDA\ida-6.5.1\src\sundials\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{69340953-F8E6-3E5A-AEAB-CA75BF720DF7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

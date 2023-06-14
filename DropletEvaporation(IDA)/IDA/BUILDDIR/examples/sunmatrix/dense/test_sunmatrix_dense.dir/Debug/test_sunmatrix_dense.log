@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunmatrix/dense/CMakeLists.txt
+  test_sunmatrix_dense.c
+C:\IDA\ida-6.5.1\examples\sunmatrix\dense\test_sunmatrix_dense.c(103,35): warning C4244: '=': conversion from 'sunindextype' to 'realtype', possible loss of data
+  test_sunmatrix.c
+  Generating Code...
+  test_sunmatrix_dense.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_sunmatrix_dense.exe

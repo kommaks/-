@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmatrix/band/CMakeLists.txt
+  sunmatrix_band.c
+C:\IDA\ida-6.5.1\src\sunmatrix\band\sunmatrix_band.c(411,28): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
+C:\IDA\ida-6.5.1\src\sunmatrix\band\sunmatrix_band.c(412,14): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
+  sundials_sunmatrixband_obj_shared.vcxproj -> C:\IDA\BUILDDIR\src\sunmatrix\band\sundials_sunmatrixband_obj_shared.dir\Debug\sundials_sunmatrixband_obj_shared.lib

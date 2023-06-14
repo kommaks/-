@@ -1,0 +1,26 @@
+^C:\IDA\BUILDDIR\CMAKEFILES\E9C235435424CE6006B98DD1403C6A91\TEST_INSTALL_ALL_IDA_SERIAL.RULE
+setlocal
+cd C:\IDA\BUILDDIR\Testing_Install_All\ida\serial
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" "C:/Program Files (x86)/SUNDIALS/examples/ida/serial" > cmake.out
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" --build C:/IDA/BUILDDIR/Testing_Install_All/ida/serial > make.out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\IDA\IDA-6.5.1\EXAMPLES\IDA\SERIAL\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/IDA/ida-6.5.1 -BC:/IDA/BUILDDIR --check-stamp-file C:/IDA/BUILDDIR/examples/ida/serial/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

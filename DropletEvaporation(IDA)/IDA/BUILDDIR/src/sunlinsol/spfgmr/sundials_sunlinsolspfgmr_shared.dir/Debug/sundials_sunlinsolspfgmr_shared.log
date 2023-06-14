@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/spfgmr/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunlinsolspfgmr.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunlinsolspfgmr.exp
+  sundials_sunlinsolspfgmr_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunlinsolspfgmr.dll

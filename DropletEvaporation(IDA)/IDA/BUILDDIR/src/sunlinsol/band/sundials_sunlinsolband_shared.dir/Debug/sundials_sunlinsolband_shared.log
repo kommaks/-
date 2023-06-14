@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/band/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunlinsolband.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunlinsolband.exp
+  sundials_sunlinsolband_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunlinsolband.dll

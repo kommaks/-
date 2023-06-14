@@ -1,0 +1,1 @@
+C:\IDA\BUILDDIR\examples\nvector\test_nvector_obj.dir\Debug\test_nvector_obj.lib

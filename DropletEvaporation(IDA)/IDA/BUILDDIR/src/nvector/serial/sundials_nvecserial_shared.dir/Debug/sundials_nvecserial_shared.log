@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/nvector/serial/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_nvecserial.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_nvecserial.exp
+  sundials_nvecserial_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_nvecserial.dll

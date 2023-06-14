@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunmatrix/sparse/CMakeLists.txt
+  test_sunmatrix_sparse.c
+C:\IDA\ida-6.5.1\examples\sunmatrix\sparse\test_sunmatrix_sparse.c(200,22): warning C4244: '=': conversion from 'sunindextype' to 'realtype', possible loss of data
+  test_sunmatrix.c
+  Generating Code...
+  test_sunmatrix_sparse.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_sunmatrix_sparse.exe

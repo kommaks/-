@@ -1,0 +1,4 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/band/CMakeLists.txt
+  sunlinsol_band.c
+C:\IDA\ida-6.5.1\src\sunlinsol\band\sunlinsol_band.c(216,16): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
+  sundials_sunlinsolband_obj_shared.vcxproj -> C:\IDA\BUILDDIR\src\sunlinsol\band\sundials_sunlinsolband_obj_shared.dir\Debug\sundials_sunlinsolband_obj_shared.lib

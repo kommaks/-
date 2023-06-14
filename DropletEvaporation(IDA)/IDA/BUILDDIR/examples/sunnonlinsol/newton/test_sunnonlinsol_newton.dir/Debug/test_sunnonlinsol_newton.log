@@ -1,0 +1,4 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunnonlinsol/newton/CMakeLists.txt
+  test_sunnonlinsol_newton.c
+C:\IDA\ida-6.5.1\include\sunnonlinsol/sunnonlinsol_newton.h(121,1): warning C4141: 'dllimport': used more than once
+  test_sunnonlinsol_newton.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_sunnonlinsol_newton.exe

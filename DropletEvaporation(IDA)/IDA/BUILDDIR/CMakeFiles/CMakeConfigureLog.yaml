@@ -1,0 +1,860 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:26 (project)"
+    message: |
+      The system is: Windows - 10.0.19044 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:26 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.4.1+9a89d02ff for .NET Framework
+      ‘Ў®аЄ  ­ з в  08.06.2023 19:43:05.
+      Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\3.26.4\\CompilerIdC\\CompilerIdC.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+      PrepareForBuild:
+        ‘®§¤ ­ЁҐ Є в «®Ј  "Debug\\".
+        ‘®§¤ ­ЁҐ Є в «®Ј  "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        ‘®§¤ ­ЁҐ "Debug\\CompilerIdC.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\3.26.4\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        ” ©« "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+        ЋЎа йҐ­ЁҐ Є "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\3.26.4\\CompilerIdC\\CompilerIdC.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+      
+      ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+          ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+          ЋиЁЎ®Є: 0
+      
+      Џа®и«® ўаҐ¬Ґ­Ё 00:00:01.01
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/IDA/BUILDDIR/CMakeFiles/3.26.4/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:26 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-y8sc4s"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-y8sc4s"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-y8sc4s
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_22d3e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:06.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-y8sc4s\\cmTC_22d3e.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_22d3e.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-y8sc4s\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_22d3e.dir\\Debug\\cmTC_22d3e.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_22d3e.dir\\Debug\\cmTC_22d3e.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_22d3e.dir\\Debug\\\\" /Fd"cmTC_22d3e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          CMakeCCompilerABI.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_22d3e.dir\\Debug\\\\" /Fd"cmTC_22d3e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-y8sc4s\\Debug\\cmTC_22d3e.exe" /INCREMENTAL /ILK:"cmTC_22d3e.dir\\Debug\\cmTC_22d3e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-y8sc4s/Debug/cmTC_22d3e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-y8sc4s/Debug/cmTC_22d3e.lib" /MACHINE:X64  /machine:x64 cmTC_22d3e.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_22d3e.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-y8sc4s\\Debug\\cmTC_22d3e.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_22d3e.dir\\Debug\\cmTC_22d3e.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_22d3e.dir\\Debug\\cmTC_22d3e.tlog\\cmTC_22d3e.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-y8sc4s\\cmTC_22d3e.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.71
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckIncludeFile.cmake:95 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckTypeSize.cmake:252 (check_include_file)"
+      - "cmake/SundialsIndexSize.cmake:36 (check_type_size)"
+      - "cmake/SundialsSetupCompilers.cmake:21 (include)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-j58l03"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-j58l03"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-j58l03
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_76ec0.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:07.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\cmTC_76ec0.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_76ec0.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_76ec0.dir\\Debug\\cmTC_76ec0.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_76ec0.dir\\Debug\\cmTC_76ec0.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_76ec0.dir\\Debug\\\\" /Fd"cmTC_76ec0.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_76ec0.dir\\Debug\\\\" /Fd"cmTC_76ec0.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\Debug\\cmTC_76ec0.exe" /INCREMENTAL /ILK:"cmTC_76ec0.dir\\Debug\\cmTC_76ec0.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-j58l03/Debug/cmTC_76ec0.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-j58l03/Debug/cmTC_76ec0.lib" /MACHINE:X64  /machine:x64 cmTC_76ec0.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_76ec0.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\Debug\\cmTC_76ec0.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_76ec0.dir\\Debug\\cmTC_76ec0.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_76ec0.dir\\Debug\\cmTC_76ec0.tlog\\cmTC_76ec0.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-j58l03\\cmTC_76ec0.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.70
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckIncludeFile.cmake:95 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckTypeSize.cmake:253 (check_include_file)"
+      - "cmake/SundialsIndexSize.cmake:36 (check_type_size)"
+      - "cmake/SundialsSetupCompilers.cmake:21 (include)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-ebfcia"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-ebfcia"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-ebfcia
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_9e689.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:08.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\cmTC_9e689.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_9e689.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_9e689.dir\\Debug\\cmTC_9e689.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_9e689.dir\\Debug\\cmTC_9e689.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9e689.dir\\Debug\\\\" /Fd"cmTC_9e689.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9e689.dir\\Debug\\\\" /Fd"cmTC_9e689.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\Debug\\cmTC_9e689.exe" /INCREMENTAL /ILK:"cmTC_9e689.dir\\Debug\\cmTC_9e689.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-ebfcia/Debug/cmTC_9e689.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-ebfcia/Debug/cmTC_9e689.lib" /MACHINE:X64  /machine:x64 cmTC_9e689.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_9e689.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\Debug\\cmTC_9e689.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_9e689.dir\\Debug\\cmTC_9e689.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_9e689.dir\\Debug\\cmTC_9e689.tlog\\cmTC_9e689.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-ebfcia\\cmTC_9e689.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.70
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckIncludeFile.cmake:95 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckTypeSize.cmake:254 (check_include_file)"
+      - "cmake/SundialsIndexSize.cmake:36 (check_type_size)"
+      - "cmake/SundialsSetupCompilers.cmake:21 (include)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-r6sm0p"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-r6sm0p"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-r6sm0p
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_4cb01.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:09.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\cmTC_4cb01.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_4cb01.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_4cb01.dir\\Debug\\cmTC_4cb01.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_4cb01.dir\\Debug\\cmTC_4cb01.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4cb01.dir\\Debug\\\\" /Fd"cmTC_4cb01.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_4cb01.dir\\Debug\\\\" /Fd"cmTC_4cb01.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\Debug\\cmTC_4cb01.exe" /INCREMENTAL /ILK:"cmTC_4cb01.dir\\Debug\\cmTC_4cb01.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-r6sm0p/Debug/cmTC_4cb01.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-r6sm0p/Debug/cmTC_4cb01.lib" /MACHINE:X64  /machine:x64 cmTC_4cb01.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_4cb01.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\Debug\\cmTC_4cb01.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_4cb01.dir\\Debug\\cmTC_4cb01.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_4cb01.dir\\Debug\\cmTC_4cb01.tlog\\cmTC_4cb01.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-r6sm0p\\cmTC_4cb01.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.69
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckTypeSize.cmake:148 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckTypeSize.cmake:273 (__check_type_size_impl)"
+      - "cmake/SundialsIndexSize.cmake:36 (check_type_size)"
+      - "cmake/SundialsSetupCompilers.cmake:21 (include)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Check size of int64_t"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-6rfvys"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-6rfvys"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "HAVE_HAS_int64_t"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-6rfvys
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_1de01.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:10.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\cmTC_1de01.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_1de01.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_1de01.dir\\Debug\\cmTC_1de01.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_1de01.dir\\Debug\\cmTC_1de01.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1de01.dir\\Debug\\\\" /Fd"cmTC_1de01.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\HAS_int64_t.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          HAS_int64_t.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1de01.dir\\Debug\\\\" /Fd"cmTC_1de01.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\HAS_int64_t.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\Debug\\cmTC_1de01.exe" /INCREMENTAL /ILK:"cmTC_1de01.dir\\Debug\\cmTC_1de01.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-6rfvys/Debug/cmTC_1de01.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-6rfvys/Debug/cmTC_1de01.lib" /MACHINE:X64  /machine:x64 cmTC_1de01.dir\\Debug\\HAS_int64_t.obj
+          cmTC_1de01.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\Debug\\cmTC_1de01.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_1de01.dir\\Debug\\cmTC_1de01.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_1de01.dir\\Debug\\cmTC_1de01.tlog\\cmTC_1de01.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-6rfvys\\cmTC_1de01.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.69
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "cmake/SundialsSetupCompilers.cmake:136 (check_c_source_compiles)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Performing Test SUNDIALS_C_COMPILER_HAS_SNPRINTF_AND_VA_COPY"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-2q2pi7"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-2q2pi7"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "SUNDIALS_C_COMPILER_HAS_SNPRINTF_AND_VA_COPY"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-2q2pi7
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_afd56.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:11.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\cmTC_afd56.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_afd56.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_afd56.dir\\Debug\\cmTC_afd56.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_afd56.dir\\Debug\\cmTC_afd56.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_SNPRINTF_AND_VA_COPY /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_afd56.dir\\Debug\\\\" /Fd"cmTC_afd56.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_SNPRINTF_AND_VA_COPY /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_afd56.dir\\Debug\\\\" /Fd"cmTC_afd56.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\src.c"
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\src.c(8): warning C4700: uninitialized local variable 'args' used [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\cmTC_afd56.vcxproj]
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\Debug\\cmTC_afd56.exe" /INCREMENTAL /ILK:"cmTC_afd56.dir\\Debug\\cmTC_afd56.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-2q2pi7/Debug/cmTC_afd56.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-2q2pi7/Debug/cmTC_afd56.lib" /MACHINE:X64  /machine:x64 cmTC_afd56.dir\\Debug\\src.obj
+          cmTC_afd56.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\Debug\\cmTC_afd56.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_afd56.dir\\Debug\\cmTC_afd56.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_afd56.dir\\Debug\\cmTC_afd56.tlog\\cmTC_afd56.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\cmTC_afd56.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+        
+        "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\cmTC_afd56.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\src.c(8): warning C4700: uninitialized local variable 'args' used [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-2q2pi7\\cmTC_afd56.vcxproj]
+        
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 1
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.71
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "cmake/SundialsSetupCompilers.cmake:158 (check_c_source_compiles)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Performing Test SUNDIALS_C_COMPILER_HAS_MATH_PRECISIONS"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-f3j66z"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-f3j66z"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "SUNDIALS_C_COMPILER_HAS_MATH_PRECISIONS"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-f3j66z
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_766c9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:12.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\cmTC_766c9.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_766c9.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_766c9.dir\\Debug\\cmTC_766c9.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_766c9.dir\\Debug\\cmTC_766c9.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_MATH_PRECISIONS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_766c9.dir\\Debug\\\\" /Fd"cmTC_766c9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_MATH_PRECISIONS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_766c9.dir\\Debug\\\\" /Fd"cmTC_766c9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\src.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\Debug\\cmTC_766c9.exe" /INCREMENTAL /ILK:"cmTC_766c9.dir\\Debug\\cmTC_766c9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-f3j66z/Debug/cmTC_766c9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-f3j66z/Debug/cmTC_766c9.lib" /MACHINE:X64  /machine:x64 cmTC_766c9.dir\\Debug\\src.obj
+          cmTC_766c9.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\Debug\\cmTC_766c9.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_766c9.dir\\Debug\\cmTC_766c9.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_766c9.dir\\Debug\\cmTC_766c9.tlog\\cmTC_766c9.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-f3j66z\\cmTC_766c9.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.70
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "cmake/SundialsSetupCompilers.cmake:187 (check_c_source_compiles)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Performing Test SUNDIALS_C_COMPILER_HAS_ISINF_ISNAN"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-1bbua9"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-1bbua9"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "SUNDIALS_C_COMPILER_HAS_ISINF_ISNAN"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-1bbua9
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_dca93.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:13.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\cmTC_dca93.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_dca93.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_dca93.dir\\Debug\\cmTC_dca93.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_dca93.dir\\Debug\\cmTC_dca93.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_ISINF_ISNAN /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dca93.dir\\Debug\\\\" /Fd"cmTC_dca93.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_ISINF_ISNAN /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dca93.dir\\Debug\\\\" /Fd"cmTC_dca93.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\src.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\Debug\\cmTC_dca93.exe" /INCREMENTAL /ILK:"cmTC_dca93.dir\\Debug\\cmTC_dca93.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-1bbua9/Debug/cmTC_dca93.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-1bbua9/Debug/cmTC_dca93.lib" /MACHINE:X64  /machine:x64 cmTC_dca93.dir\\Debug\\src.obj
+          cmTC_dca93.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\Debug\\cmTC_dca93.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_dca93.dir\\Debug\\cmTC_dca93.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_dca93.dir\\Debug\\cmTC_dca93.tlog\\cmTC_dca93.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-1bbua9\\cmTC_dca93.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.69
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "cmake/SundialsSetupCompilers.cmake:201 (check_c_source_compiles)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Performing Test SUNDIALS_C_COMPILER_HAS_INLINE"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-skuq22"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-skuq22"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "SUNDIALS_C_COMPILER_HAS_INLINE"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-skuq22
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_6f5e4.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:13.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\cmTC_6f5e4.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_6f5e4.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_6f5e4.dir\\Debug\\cmTC_6f5e4.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_6f5e4.dir\\Debug\\cmTC_6f5e4.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_INLINE /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6f5e4.dir\\Debug\\\\" /Fd"cmTC_6f5e4.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D SUNDIALS_C_COMPILER_HAS_INLINE /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6f5e4.dir\\Debug\\\\" /Fd"cmTC_6f5e4.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\src.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\Debug\\cmTC_6f5e4.exe" /INCREMENTAL /ILK:"cmTC_6f5e4.dir\\Debug\\cmTC_6f5e4.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-skuq22/Debug/cmTC_6f5e4.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-skuq22/Debug/cmTC_6f5e4.lib" /MACHINE:X64  /machine:x64 cmTC_6f5e4.dir\\Debug\\src.obj
+          cmTC_6f5e4.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\Debug\\cmTC_6f5e4.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_6f5e4.dir\\Debug\\cmTC_6f5e4.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_6f5e4.dir\\Debug\\cmTC_6f5e4.tlog\\cmTC_6f5e4.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-skuq22\\cmTC_6f5e4.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.68
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "cmake/tpl/SundialsPOSIXTimers.cmake:69 (try_compile)"
+      - "cmake/tpl/SundialsPOSIXTimers.cmake:78 (posix_timers_test)"
+      - "cmake/SundialsSetupCompilers.cmake:217 (include)"
+      - "CMakeLists.txt:164 (include)"
+    directories:
+      source: "C:/IDA/BUILDDIR/POSIX_TIMER_TEST"
+      binary: "C:/IDA/BUILDDIR/POSIX_TIMER_TEST"
+    buildResult:
+      variable: "COMPILE_OK"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/POSIX_TIMER_TEST
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe ALL_BUILD.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:14.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" (1) ўлЇ®«­пҐв бЎ®аЄг "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ZERO_CHECK.vcxproj" (2) ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "x64\\Debug\\ZERO_CHECK\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        CustomBuild:
+          Checking Build System
+        FinalizeBuildStatus:
+          ” ©« "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\ZERO_CHECK.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ZERO_CHECK.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" (1) ўлЇ®«­пҐв бЎ®аЄг "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj" (3) ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "ltest.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "ltest.dir\\Debug\\ltest.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "ltest.dir\\Debug\\ltest.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        CustomBuild:
+          Building Custom Rule C:/IDA/BUILDDIR/POSIX_TIMER_TEST/CMakeLists.txt
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"ltest.dir\\Debug\\\\" /Fd"ltest.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          ltest.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"ltest.dir\\Debug\\\\" /Fd"ltest.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c
+        C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c(2,10): fatal  error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj]
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо) б ®иЁЎЄ®©.
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо) б ®иЁЎЄ®©.
+        
+        ЋиЁЎЄ  бЎ®аЄЁ.
+        
+        "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (3) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c(2,10): fatal  error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj]
+        
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 1
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:01.04
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "cmake/tpl/SundialsPOSIXTimers.cmake:69 (try_compile)"
+      - "cmake/tpl/SundialsPOSIXTimers.cmake:85 (posix_timers_test)"
+      - "cmake/SundialsSetupCompilers.cmake:217 (include)"
+      - "CMakeLists.txt:164 (include)"
+    directories:
+      source: "C:/IDA/BUILDDIR/POSIX_TIMER_TEST"
+      binary: "C:/IDA/BUILDDIR/POSIX_TIMER_TEST"
+    buildResult:
+      variable: "COMPILE_OK"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/POSIX_TIMER_TEST
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe ALL_BUILD.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:16.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" (1) ўлЇ®«­пҐв бЎ®аЄг "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ZERO_CHECK.vcxproj" (2) ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        CustomBuild:
+          „«п ўбҐе ўле®¤­ле ¤ ­­ле ®Ў­®ў«Ґ­Ёп ­Ґ ваҐЎгҐвбп.
+        FinalizeBuildStatus:
+          ” ©« "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "x64\\Debug\\ZERO_CHECK\\ZERO_CHECK.tlog\\ZERO_CHECK.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ZERO_CHECK.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" (1) ўлЇ®«­пҐв бЎ®аЄг "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj" (3) ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        InitializeBuildStatus:
+          ЋЎа йҐ­ЁҐ Є "ltest.dir\\Debug\\ltest.tlog\\unsuccessfulbuild".
+        CustomBuild:
+          „«п ўбҐе ўле®¤­ле ¤ ­­ле ®Ў­®ў«Ґ­Ёп ­Ґ ваҐЎгҐвбп.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _POSIX_C_SOURCE=199309L /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"ltest.dir\\Debug\\\\" /Fd"ltest.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          ltest.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _POSIX_C_SOURCE=199309L /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"ltest.dir\\Debug\\\\" /Fd"ltest.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c
+        C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c(2,10): fatal  error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj]
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо) б ®иЁЎЄ®©.
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо) б ®иЁЎЄ®©.
+        
+        ЋиЁЎЄ  бЎ®аЄЁ.
+        
+        "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ALL_BUILD.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        "C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (3) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.c(2,10): fatal  error C1083: Cannot open include file: 'unistd.h': No such file or directory [C:\\IDA\\BUILDDIR\\POSIX_TIMER_TEST\\ltest.vcxproj]
+        
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 0
+            ЋиЁЎ®Є: 1
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.58
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "cmake/SundialsSetupCompilers.cmake:242 (check_c_source_compiles)"
+      - "CMakeLists.txt:164 (include)"
+    checks:
+      - "Performing Test COMPILER_HAS_DEPRECATED_MSG"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-dj9epp"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-dj9epp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "COMPILER_HAS_DEPRECATED_MSG"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-dj9epp
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_76260.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:16.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\cmTC_76260.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_76260.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_76260.dir\\Debug\\cmTC_76260.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_76260.dir\\Debug\\cmTC_76260.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_HAS_DEPRECATED_MSG /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_76260.dir\\Debug\\\\" /Fd"cmTC_76260.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\src.c(4,23): warning C4996: 'somefunc': test [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\cmTC_76260.vcxproj]
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_HAS_DEPRECATED_MSG /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_76260.dir\\Debug\\\\" /Fd"cmTC_76260.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\src.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\Debug\\cmTC_76260.exe" /INCREMENTAL /ILK:"cmTC_76260.dir\\Debug\\cmTC_76260.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-dj9epp/Debug/cmTC_76260.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-dj9epp/Debug/cmTC_76260.lib" /MACHINE:X64  /machine:x64 cmTC_76260.dir\\Debug\\src.obj
+          cmTC_76260.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\Debug\\cmTC_76260.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_76260.dir\\Debug\\cmTC_76260.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_76260.dir\\Debug\\cmTC_76260.tlog\\cmTC_76260.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\cmTC_76260.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+        
+        "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\cmTC_76260.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\src.c(4,23): warning C4996: 'somefunc': test [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-dj9epp\\cmTC_76260.vcxproj]
+        
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 1
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.69
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/GenerateExportHeader.cmake:213 (check_c_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/GenerateExportHeader.cmake:273 (_check_c_compiler_attribute)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/GenerateExportHeader.cmake:420 (_test_compiler_has_deprecated)"
+      - "src/sundials/CMakeLists.txt:143 (generate_export_header)"
+    checks:
+      - "Performing Test COMPILER_HAS_DEPRECATED_ATTR"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-xqqz77"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-xqqz77"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "COMPILER_HAS_DEPRECATED_ATTR"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-xqqz77
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_784b5.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:17.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_784b5.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_784b5.dir\\Debug\\cmTC_784b5.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_784b5.dir\\Debug\\cmTC_784b5.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_HAS_DEPRECATED_ATTR /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_784b5.dir\\Debug\\\\" /Fd"cmTC_784b5.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,15): error C2143: syntax error: missing ')' before '(' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,30): error C2059: syntax error: ')' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,31): error C2059: syntax error: ')' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,37): error C2143: syntax error: missing ')' before 'type' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,37): error C2091: function returns function [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,48): error C2085: 'somefunc': not in formal parameter list [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,48): error C2143: syntax error: missing ';' before '{' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(2,25): warning C4013: 'somefunc' undefined; assuming extern returning int [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_HAS_DEPRECATED_ATTR /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_784b5.dir\\Debug\\\\" /Fd"cmTC_784b5.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c"
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо) б ®иЁЎЄ®©.
+        
+        ЋиЁЎЄ  бЎ®аЄЁ.
+        
+        "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(2,25): warning C4013: 'somefunc' undefined; assuming extern returning int [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        
+        
+        "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,15): error C2143: syntax error: missing ')' before '(' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,30): error C2059: syntax error: ')' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,31): error C2059: syntax error: ')' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,37): error C2143: syntax error: missing ')' before 'type' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,37): error C2091: function returns function [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,48): error C2085: 'somefunc': not in formal parameter list [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\src.c(1,48): error C2143: syntax error: missing ';' before '{' [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-xqqz77\\cmTC_784b5.vcxproj]
+        
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 1
+            ЋиЁЎ®Є: 7
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.42
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/GenerateExportHeader.cmake:213 (check_c_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/GenerateExportHeader.cmake:279 (_check_c_compiler_attribute)"
+      - "C:/Program Files/CMake/share/cmake-3.26/Modules/GenerateExportHeader.cmake:420 (_test_compiler_has_deprecated)"
+      - "src/sundials/CMakeLists.txt:143 (generate_export_header)"
+    checks:
+      - "Performing Test COMPILER_HAS_DEPRECATED"
+    directories:
+      source: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-n98ybb"
+      binary: "C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-n98ybb"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/IDA/ida-6.5.1/cmake;C:/IDA/ida-6.5.1/cmake/macros;C:/IDA/ida-6.5.1/cmake/tpl"
+    buildResult:
+      variable: "COMPILER_HAS_DEPRECATED"
+      cached: true
+      stdout: |
+        Change Dir: C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-n98ybb
+        
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_50943.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.4.1+9a89d02ff for .NET Framework
+        ‘Ў®аЄ  ­ з в  08.06.2023 19:43:18.
+        Џа®ҐЄв "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\cmTC_50943.vcxproj" ў г§«Ґ 1 (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        PrepareForBuild:
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_50943.dir\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\Debug\\".
+          ‘®§¤ ­ЁҐ Є в «®Ј  "cmTC_50943.dir\\Debug\\cmTC_50943.tlog\\".
+        InitializeBuildStatus:
+          ‘®§¤ ­ЁҐ "cmTC_50943.dir\\Debug\\cmTC_50943.tlog\\unsuccessfulbuild", в Є Є Є Ўл«® § ¤ ­® "AlwaysCreate".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_HAS_DEPRECATED /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_50943.dir\\Debug\\\\" /Fd"cmTC_50943.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.34.31942 for x64
+          src.c
+        C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\src.c(2,25): warning C4996: 'somefunc': was declared deprecated [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\cmTC_50943.vcxproj]
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D COMPILER_HAS_DEPRECATED /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_50943.dir\\Debug\\\\" /Fd"cmTC_50943.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\src.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.34.31933\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\Debug\\cmTC_50943.exe" /INCREMENTAL /ILK:"cmTC_50943.dir\\Debug\\cmTC_50943.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-n98ybb/Debug/cmTC_50943.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/IDA/BUILDDIR/CMakeFiles/CMakeScratch/TryCompile-n98ybb/Debug/cmTC_50943.lib" /MACHINE:X64  /machine:x64 cmTC_50943.dir\\Debug\\src.obj
+          cmTC_50943.vcxproj -> C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\Debug\\cmTC_50943.exe
+        FinalizeBuildStatus:
+          ” ©« "cmTC_50943.dir\\Debug\\cmTC_50943.tlog\\unsuccessfulbuild" г¤ «пҐвбп.
+          ЋЎа йҐ­ЁҐ Є "cmTC_50943.dir\\Debug\\cmTC_50943.tlog\\cmTC_50943.lastbuildstate".
+        ‘Ў®аЄ  Їа®ҐЄв  "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\cmTC_50943.vcxproj" § ўҐаиҐ­  (жҐ«ҐўлҐ ®ЎкҐЄвл Ї® г¬®«з ­Ёо).
+        
+        ‘Ў®аЄ  гбЇҐи­® § ўҐаиҐ­ .
+        
+        "C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\cmTC_50943.vcxproj" (жҐ«Ґў®© ®ЎкҐЄв Ї® г¬®«з ­Ёо) (1) ->
+        (–Ґ«Ґў®© ®ЎкҐЄв ClCompile) -> 
+          C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\src.c(2,25): warning C4996: 'somefunc': was declared deprecated [C:\\IDA\\BUILDDIR\\CMakeFiles\\CMakeScratch\\TryCompile-n98ybb\\cmTC_50943.vcxproj]
+        
+            ЏаҐ¤гЇаҐ¦¤Ґ­Ё©: 1
+            ЋиЁЎ®Є: 0
+        
+        Џа®и«® ўаҐ¬Ґ­Ё 00:00:00.69
+        
+      exitCode: 0
+...

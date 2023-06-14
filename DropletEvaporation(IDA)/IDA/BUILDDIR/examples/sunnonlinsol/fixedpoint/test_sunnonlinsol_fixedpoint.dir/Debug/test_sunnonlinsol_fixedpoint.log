@@ -1,0 +1,4 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunnonlinsol/fixedpoint/CMakeLists.txt
+  test_sunnonlinsol_fixedpoint.c
+C:\IDA\ida-6.5.1\include\sunnonlinsol/sunnonlinsol_fixedpoint.h(130,1): warning C4141: 'dllimport': used more than once
+  test_sunnonlinsol_fixedpoint.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_sunnonlinsol_fixedpoint.exe

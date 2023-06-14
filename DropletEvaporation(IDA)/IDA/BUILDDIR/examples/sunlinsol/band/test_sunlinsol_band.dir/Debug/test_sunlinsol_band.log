@@ -1,0 +1,5 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunlinsol/band/CMakeLists.txt
+  test_sunlinsol_band.c
+  test_sunlinsol.c
+  Generating Code...
+  test_sunlinsol_band.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_sunlinsol_band.exe

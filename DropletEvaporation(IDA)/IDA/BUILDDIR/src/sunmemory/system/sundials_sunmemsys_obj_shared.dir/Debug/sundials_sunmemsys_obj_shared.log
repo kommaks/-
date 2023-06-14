@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmemory/system/CMakeLists.txt
+  sundials_system_memory.c
+  sundials_sunmemsys_obj_shared.vcxproj -> C:\IDA\BUILDDIR\src\sunmemory\system\sundials_sunmemsys_obj_shared.dir\Debug\sundials_sunmemsys_obj_shared.lib

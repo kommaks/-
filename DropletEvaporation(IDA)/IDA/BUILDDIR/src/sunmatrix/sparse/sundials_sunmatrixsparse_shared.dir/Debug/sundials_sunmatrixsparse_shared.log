@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmatrix/sparse/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunmatrixsparse.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunmatrixsparse.exp
+  sundials_sunmatrixsparse_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunmatrixsparse.dll

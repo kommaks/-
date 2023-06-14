@@ -77,13 +77,15 @@ typedef struct UserDataStr{
 //Functions for IDA
 void ExportToArray(double* T_vect, UserData *data, N_Vector yy, int N)
 {
-    T_vect[0] = 1500;
+    realtype* yval;
+    yval = N_VGetArrayPointer(yy);
+    T_vect[0] = 300.;
     for (int i = 1; i < N; i++)
     {
         T_vect[i] = Ith(yy, i);
-        cout << "T_vect  " << i << " =  " << Ith(yy, i) << endl;
+        cout << "yval[" << i << " ]=  " << Ith(yy, i) << endl;
     }
-    T_vect[N] = 1500;
+    T_vect[N] = 1500.;
     //cout << "data->Tr; = " << data->Tr << "\n";
     //T_vect[N] = data->Tr;
     //cout << "MyNx = " << myNx << "\n";
@@ -546,10 +548,12 @@ void F_right_test(vector<double>& f, double* T_vect, double* r, vector <double>&
     const int N, const double a, double dM, int s, double inter, const double Ti, double p, const double L_d)
 {
     double F;
+    /*
     for (int i = 0; i <= N + 1; i++) {
         cout << "r[" << i << "]= " << r[i] << "\n";
         cout << "T[" << i << "]= " << T_vect[i] << "\n";
     }
+    */
     //Nevyazka in Water
     for (int j = 1; j < s + 1; j++)
     {
@@ -573,12 +577,13 @@ void F_right_test(vector<double>& f, double* T_vect, double* r, vector <double>&
         f[j] = F;
         //    / (ACp[j] * ADensity[j] * pow(r[j], 2.));
     }
+    /*
     //cout << "inter= " << inter << "\n";
     //Near interface Nevyazka
     double term1, term2, term3;
     double h = r[s + 1] - r[s];
     cout << "Ti" << Ti << "p" << p << "\n";
-    /*
+
     //To the left of the interface
     double rs_avg = (r[s] + r[s - 1]) / 2.0;
     double rs_diff = inter - rs_avg;
@@ -809,7 +814,7 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
 
     cout << "hey" << "\n";
     // Define the number of equations
-    int NEQ = N + 2;
+    int NEQ = N;
     int k = 0;
 
     data->outNevyaz = new ofstream;
@@ -818,7 +823,7 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
     data->r = new realtype[N + 1];
     data->T = new realtype[N + 1];
     data->NEQ = NEQ;
-    data->Tr = T_vect[N];
+    //data->Tr = T_vect[N];
     data->M = dM;
     data->s = s;
     data->a = a;
@@ -856,17 +861,17 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
 
     /* Integration limits by time */
     t0 = ZERO;
-    tout1 = RCONST(0.000000001);
+    tout1 = RCONST(0.00001);
 
     //cout << NEQ << " = " << Ith(res_vect, NEQ + 1) << endl;
     for (int i = 0; i < N + 1; i++) {
         Ith(avtol, i) = RCONST(0.001);
-        Ith(yy, i) = T_vect[i];
-        cout << "yy " << i << " = " << Ith(yy, i) << "\n";
+        Ith(yy, i) = data->T[i];
+        cout << "yval[ " << i << " ]= " << Ith(yy, i) << "\n";
     }
-    Ith(avtol, N + 1) = RCONST(0.001);
+    //atval[N + 1] = RCONST(0.001);
     //Ith(yy, N + 1) = data->T[N + 1];
-    Ith(avtol, N + 2) = RCONST(0.001);
+    //Ith(avtol, N + 2) = RCONST(0.001);
     //cout << "yy " << N << " = " << Ith(yy, N) << "\n";
     //Calculate Nevyazka's
     ArraysParameters(a, N, data->r, data->T, s, ACp, ADensity, ALambda, data->kp, inter, Ti, p);
@@ -891,22 +896,22 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
         mod_nevyaz += pow(nevyaz[i], 2.0);
     mod_nevyaz = pow(mod_nevyaz, 0.5);
     *(data->outNevyaz) << 0 << " " << mod_nevyaz << "\n";
-    //Ith(yp, 0) = ZERO;
+    
     for (int i = 1; i < N; i++) {
         Ith(yp, i) = nevyaz[i];
-        cout << "Ithypi = " << Ith(yp, i) << "\n";
+        cout << "init_ypval[" << i << "]= " << Ith(yp, i) << "\n";
     }
-    //Ith(yp, N) = ZERO;
     //Ith(yp, N + 1) = nevyaz[N + 1];
     //cout << "Ithypi = " << Ith(yp, N) << "\n";
     //cout << "Ithypi = " << Ith(yp, N + 1) << "\n";
 
     PrintHeader(rtol, avtol, yy);
     //CheckIth
+    /*
     for (int i = 0; i < 2 * N; i++) {
-        cout << "Ith(avtol, " << i << ")= " << Ith(avtol, i) << "\n";
+        cout << "atval[ " << i << "]= " << atval[i] << "\n";
     }
-
+    */
     /* Call IDACreate and IDAInit to initialize IDA memory */
     mem = IDACreate(ctx);
     if (check_retval((void*)mem, "IDACreate", 0)) return(1);
@@ -922,6 +927,7 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
     if (check_retval(&retval, "IDASetUserData", 1)) return(1);
     retval = IDASetMaxNumSteps(mem, 20000);
 
+    cout << "data->NEQ" << data->NEQ << "\n";
     /* Create dense SUNMatrix for use in linear solves */
     A = SUNDenseMatrix(NEQ, NEQ, ctx);
     if (check_retval((void*)A, "SUNDenseMatrix", 0)) return(1);
@@ -954,8 +960,8 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
         cout << "how is it going?" << "\n";
         for (int j = 0; j < N; j++) {
             cout << "nevyaz[" << j << "]= " << nevyaz[j] << "\n";
-            cout << "Ith(yp," << j << ")= " << Ith(yp, j) << "\n";
-            cout << "Ith(yy," << j << ")= " << Ith(yy, j) << "\n";
+            cout << "ypval[" << j << "]= " << Ith(yp, j) << "\n";
+            cout << "yval[" << j << "]= " << Ith(yy, j) << "\n";
         }
         retval = IDASolve(mem, tout, &tret, yy, yp, IDA_NORMAL);
         data->outNevyaz->close();
@@ -965,7 +971,7 @@ int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector
         cout << "M = " << dM << "\n";
 
         //Ith(yp, N) = 0;
-        fout.open("file" + to_string(tout * pow(10, 8)) + ".dat");
+        fout.open("file" + to_string(tout) + ".dat");
         fout << "TITLE=\"" << "Graphics" << "\"" << endl;
         fout << R"(VARIABLES= "x", "T", "lambda")" << endl;
         for (int i = 0; i < N; i++) {
@@ -1027,8 +1033,7 @@ void Solver(int N, vector<double>& r, vector<double>& T_cur, vector<double>& T_n
     int s = Nd;
     double inter = r[s] + (p - 1) * (r[s + 1] - r[s]);
     //Define initial boiling tempereature for surface, K
-    double T_cur_i = 1500.;
-        300.;
+    double T_cur_i = 300.;
     //double q = 20 * pow(10, 3);                  //W / m^2
     double L_d = 2258.2 * pow(10, 3.);              //J / kg 
     //const determination of dM
@@ -1053,11 +1058,10 @@ int main(void)
 {
     const int const_params = 1;          // 0 - Non-uniform grid, 1 - Mixed
     int m_max = 1000;
-    const int total_time = 200000;
+    const int total_time = 2000;
     const int power_of = -3;              //const if a < pow(10, -8)
     const double a = pow(10, -(power_of + 3)), b = pow(10, -power_of), c = pow(10, -(power_of - 3));  //a = 1
-    const double T_l = 1500;
-        //300;
+    const double T_l = 300;
     const double T_r = 1500;
     double h = 0.2;
     //зададим минимальный возможный размер ячейки
@@ -1141,7 +1145,7 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     //cout << "nevyaz[myN]= " << nevyaz[myN] << "\n";
     //cout << "rval[myN + 1]= " << rval[myN + 1] << "\n";
     //cout << "nevyaz[myN + 1]= " << nevyaz[myN + 1] << "\n";
-/*
+
     //Calculate modul of Nevyazka
     double mod_nevyaz = 0;
     for (int i = 0; i < myN; i++)
@@ -1177,7 +1181,7 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     for (i + 1; i < myN + 1; i++)
         OutIterCurrentTemp << r_cells[i] << " " << T_vect[i] << " " << ALambda[i] << "\n";
     OutIterCurrentTemp.close();
-*/
+
     k++;
     data->kp = k;
     return(0);

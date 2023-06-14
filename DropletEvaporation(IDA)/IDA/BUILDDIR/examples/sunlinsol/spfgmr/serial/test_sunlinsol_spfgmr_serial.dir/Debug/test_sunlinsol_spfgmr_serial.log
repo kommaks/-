@@ -1,0 +1,8 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunlinsol/spfgmr/serial/CMakeLists.txt
+  test_sunlinsol_spfgmr_serial.c
+  test_sunlinsol.c
+  Generating Code...
+test_sunlinsol_spfgmr_serial.obj : error LNK2019: unresolved external symbol __imp_SUNLinSol_SPFGMR referenced in function main
+test_sunlinsol_spfgmr_serial.obj : error LNK2019: unresolved external symbol __imp_SUNLinSol_SPFGMRSetPrecType referenced in function main
+test_sunlinsol_spfgmr_serial.obj : error LNK2019: unresolved external symbol __imp_SUNLinSol_SPFGMRSetGSType referenced in function main
+C:\IDA\BUILDDIR\bin\Debug\test_sunlinsol_spfgmr_serial.exe : fatal error LNK1120: 3 unresolved externals

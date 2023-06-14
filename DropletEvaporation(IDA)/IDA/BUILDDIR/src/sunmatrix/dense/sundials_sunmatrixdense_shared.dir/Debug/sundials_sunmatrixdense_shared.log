@@ -1,0 +1,3 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmatrix/dense/CMakeLists.txt
+     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunmatrixdense.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunmatrixdense.exp
+  sundials_sunmatrixdense_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunmatrixdense.dll

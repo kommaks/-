@@ -1,0 +1,2 @@
+﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/dense/CMakeLists.txt
+  sundials_sunlinsoldense_static.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunlinsoldense.lib
