@@ -1,1 +1,1 @@
-C:\Users\user\source\Научная работа\DanilErshov\x64\Debug\DanilErshov.exe
+C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\x64\Debug\DropletEvaporation(IDA).exe

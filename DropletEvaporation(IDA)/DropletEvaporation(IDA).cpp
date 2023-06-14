@@ -34,10 +34,10 @@ using namespace std;
 #define ZERO RCONST(0.0)
 #define ONE  RCONST(1.0)
 
-/* Macro to define dense matrix elements, indexed from 1. */
+/* Macro to define dense matrix elements, indexed from 0. */
 
-#define Ith(v,i)    NV_Ith_S(v,i-1)
-#define IJth(A,i,j) SM_ELEMENT_D(A,i-1 ,j-1)
+#define Ith(v,i)    NV_Ith_S(v,i)
+#define IJth(A,i,j) SM_ELEMENT_D(A,i ,j)
 
 /* Prototypes of functions called by IDA */
 
@@ -75,13 +75,15 @@ typedef struct UserDataStr{
 } UserData;
 
 //Functions for IDA
-void ExportToArray(double* T_vect, double& M, UserData *data, N_Vector yy, int N)
+void ExportToArray(double* T_vect, UserData *data, N_Vector yy, int N)
 {
-    for (int i = 0; i <= N + 1; i++)
+    T_vect[0] = 1500;
+    for (int i = 1; i < N; i++)
     {
         T_vect[i] = Ith(yy, i);
-        //cout << "T_vect  " << i << " =  " << Ith(yy, j - 1 + 1) << endl;
+        cout << "T_vect  " << i << " =  " << Ith(yy, i) << endl;
     }
+    T_vect[N] = 1500;
     //cout << "data->Tr; = " << data->Tr << "\n";
     //T_vect[N] = data->Tr;
     //cout << "MyNx = " << myNx << "\n";
@@ -144,17 +146,18 @@ double LinIntWConductivity(double Tmprtr)
     return Lagrange1(LAGR_T, LAGR_COND_copy, nx, Tmprtr);
 }
 //Formula setting for Heat Capacity and it's derivative, J/(kg*K)
-double Cp(double Tmprtr, const double a)
+double Cp(double T, const double a)
 {
+    /*
     const double Cp_water = 4180.;
     const double Cp_steam = 2000.;
     //Molar mass of water
     const double W = 18 * pow(10, -3);
     const double T_boiling = 373;
     double AA, B, C, D, E;
-    //Polinom for Tmprtr = (K) /1000
-    double T_forCp = Tmprtr / 1000.;
-    if (Tmprtr <= T_boiling)
+    //Polinom for T = (K) /1000
+    double T_forCp = T / 1000.;
+    if (T <= T_boiling)
     {
         AA = -203.6060;
         B = 1523.290;
@@ -173,24 +176,27 @@ double Cp(double Tmprtr, const double a)
     //Get value
     if (a < pow(10, -8))
     {
-        if (Tmprtr <= T_boiling)
+        if (T <= T_boiling)
             return Cp_water;
         else
             return Cp_steam;
     }
     else
         return (AA + B * T_forCp + C * pow(T_forCp, 2.) + D * pow(T_forCp, 3.) + E * pow(T_forCp, -2.)) / W;
+    */
+    return 1.;
 }
 //J/(kg*K^2)
-double DfCp(double Tmprtr, const double a)
+double DfCp(double T, const double a)
 {
+    /*
     //Molar mass of water
     const double W = 18 * pow(10, -3);
     const double T_boiling = 373;
     double AA, B, C, D, E;
-    //Polinom for Tmprtr = (K) /1000
-    double T_forCp = Tmprtr / 1000.;
-    if (Tmprtr <= T_boiling)
+    //Polinom for T = (K) /1000
+    double T_forCp = T / 1000.;
+    if (T <= T_boiling)
     {
         AA = -203.6060;
         B = 1523.290;
@@ -211,10 +217,13 @@ double DfCp(double Tmprtr, const double a)
         return 0;
     else
         return (B + 2. * C * T_forCp + 3. * D * pow(T_forCp, 2.) - 2. * E * pow(T_forCp, -3.)) / 1000. / W;
+    */
+    return 0;
 }
 //Formula setting for Density and it's derivative, kg/m^3
-double Density(double Tmprtr, const double a)
+double Density(double T, const double a)
 {
+    /*
     const double rho_water = 980.;
     const double rho_steam = 0.4;
     const double T_boiling = 373;
@@ -223,20 +232,23 @@ double Density(double Tmprtr, const double a)
     const double W = 18 * pow(10, -3);
     if (a < pow(10, -8))
     {
-        if (Tmprtr <= T_boiling)
+        if (T <= T_boiling)
             return rho_water;
         else
             return rho_steam;
     }
     else
-        if (Tmprtr <= T_boiling)
+        if (T <= T_boiling)
             return rho_water;
         else
-            return p * W / (R * Tmprtr);
+            return p * W / (R * T);
+    */
+    return 1.;
 }
 //kg/(m^3*K)
-double DfDensity(double Tmprtr, const double a)
+double DfDensity(double T, const double a)
 {
+    /*
     const double T_boiling = 373;
     const double R = 8.314462;
     const double p = pow(10, 5);
@@ -245,30 +257,32 @@ double DfDensity(double Tmprtr, const double a)
         return 0;
     else
     {
-        if (Tmprtr <= T_boiling)
+        if (T <= T_boiling)
             return 0;
         else
-            return -p * W / (R * pow(Tmprtr, 2.));
+            return -p * W / (R * pow(T, 2.));
     }
-
+    */
+    return 0;
 }
 //Formula setting for thermal conductivity and it's derivative, Watt/(m*K)
-double Lambda(double Tmprtr, const double a, int flag_phase)
+double Lambda(double T, const double a, int flag_phase)
 {
+    /*
     const double lambda_water = 0.56;
     const double lambda_steam = 0.05;
     const double T_boiling = 373;
     if (a < pow(10, -8))
     {
-        if (Tmprtr <= T_boiling)
+        if (T <= T_boiling)
             return lambda_water;
         else
             return lambda_steam;
     }
     else
     {
-        if (Tmprtr <= T_boiling && flag_phase == 0)
-            LinIntWConductivity(Tmprtr);
+        if (T <= T_boiling && flag_phase == 0)
+            LinIntWConductivity(T);
         else
         {
             //Introduce thermal conductivity INSTEAD of thermal diffusivity
@@ -279,20 +293,23 @@ double Lambda(double Tmprtr, const double a, int flag_phase)
             double L3 = -3.454586 * pow(10, -3.);
             double L4 = 4.096266 * pow(10, -4.);
             double lambda_star = pow(10, -3);
-            double teta = Tmprtr / T_star;
+            double teta = T / T_star;
             return lambda_star * (sqrt(teta) / (L0 + L1 / teta + L2 / pow(teta, 2.) + L3 / pow(teta, 3.) + L4 / pow(teta, 4.)));
         }
     }
+    */
+    return 1.;
 }
 //Watt/(m*K^2)
-double DfLambda(double Tmprtr, const double a, int flag_phase)
+double DfLambda(double T, const double a, int flag_phase)
 {
+    /*
     const double T_boiling = 373;
     if (a < pow(10, -8))
         return 0;
     else
     {
-        if (Tmprtr <= T_boiling && flag_phase == 0)
+        if (T <= T_boiling && flag_phase == 0)
             return 0;
         else
         {
@@ -304,12 +321,14 @@ double DfLambda(double Tmprtr, const double a, int flag_phase)
             double L3 = -3.454586 * pow(10, -3.);
             double L4 = 4.096266 * pow(10, -4.);
             double lambda_star = pow(10, -3);
-            double teta = Tmprtr / T_star;
+            double teta = T / T_star;
             double bracket_sum = L0 + L1 / teta + L2 / pow(teta, 2.) + L3 / pow(teta, 3.) + L4 / pow(teta, 4.);
             return lambda_star / (pow(bracket_sum, 2.0) * sqrt(teta)) * (0.5 * bracket_sum + L1 / teta + 2. * L2 / pow(teta, 2.)
                 + 3. * L3 / pow(teta, 3.) + 4. * L4 / pow(teta, 4.)) / T_star;
         }
     }
+    */
+    return 0;
 }
 //Setting arrays of parametres depending on Tmprtr:
 void ArraysParameters(const double a, const int N, double *r, double *T_next,
@@ -409,38 +428,64 @@ void OpeningFiles(ofstream& OutSurfaceFlow, ofstream& OutLastStepNevyazka, ofstr
     OutFirstStepNevyazka << R"(VARIABLES= "t, s", "F")" << endl;
 }
 
-void F_right(vector<double>& f, double *T_vect, double *r, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
-    const int N, const double a, double dM, int s, double inter, const double Ti, double p, const double L_d)
+
+double F_drop(double T_left, double T_center, double T_right, vector<double> r, vector<double> ALambda, int j)
+{
+    double rj_diff = r[j + 1] - r[j - 1];
+    double rj_avg = pow((r[j + 1] + r[j]) / 2., 2.);
+    double rj_minus_avg = pow((r[j] + r[j - 1]) / 2., 2.);
+    double Lambda_j_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+    double Lambda_j_minus_half = 0.5 * (ALambda[j] + ALambda[j - 1]);
+    return 2. / rj_diff * (rj_avg * Lambda_j_half * (T_right - T_center) / (r[j + 1] - r[j])
+        - rj_minus_avg * Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]));
+}
+
+double F_steam(double T_left, double T_center, double T_right, vector<double> r, vector<double> ALambda, vector<double>ACp,
+    double dM, int j)
+{
+    double rj_diff = r[j + 1] - r[j - 1];
+    double rj_avg = pow((r[j + 1] + r[j]) / 2., 2.);
+    double rj_minus_avg = pow((r[j] + r[j - 1]) / 2., 2.);
+    double Lambda_j_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+    double Lambda_j_minus_half = 0.5 * (ALambda[j] + ALambda[j - 1]);
+    return 2. / rj_diff * (rj_avg * Lambda_j_half * (T_right - T_center) / (r[j + 1] - r[j])
+        - rj_minus_avg * Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]))
+        - ACp[j] * dM * (T_center - T_left) / (r[j] - r[j - 1]);
+}
+
+void F_right(vector<double>& f, vector<double> T_cur, vector<double> T_next, vector<double> r, vector <double> ACp, vector <double> ADensity, vector <double> ALambda,
+    const int N, const double a, const double b, const double c, const double d, const double dt, double dM, int s, double inter,
+    const double Ti, double p, const double L_d, double& mod_nevyaz, int flag_evap)
 {
     double F;
+    /*
     //Nevyazka on the left border
     int l_f_num = 0;
     F = 1. / (r[1] - r[0]) * pow((r[l_f_num + 1] + r[l_f_num]) / 2., 2.) * 0.5 * (ALambda[l_f_num + 1] + ALambda[l_f_num])
-        * (T_vect[l_f_num + 1] - T_vect[l_f_num]) / (r[l_f_num + 1] - r[l_f_num]);
-    f[l_f_num] = F / (ACp[l_f_num] * ADensity[l_f_num] * pow(r[l_f_num + 1], 2.) / 24.); 
-    cout << "f[0]" << f[0] << "\n";
-
+        * (T_next[l_f_num + 1] - T_next[l_f_num]) / (r[l_f_num + 1] - r[l_f_num])
+        - ACp[l_f_num] * ADensity[l_f_num] * pow(r[l_f_num + 1], 2.) / 24. * (T_next[l_f_num] - T_cur[l_f_num]) / dt;
+    f[l_f_num] = -F;
+    //cout << "f[1]" << f[1] << "\n";
+    */
     //Nevyazka in Water
-    for (int j = 1; j < s; j++)
+    for (int j = 1; j < s + 1; j++)
     {
-        F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j])
-            * (T_vect[j + 1] - T_vect[j]) / (r[j + 1] - r[j])
-            - pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1])
-            * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]));
-        f[j] = F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
+        F = F_drop(T_next[j - 1], T_next[j], T_next[j + 1], r, ALambda, j)
+            - ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
+        f[j] = -F;
         //cout << j << " f1_" << j << " " << f[j] << "\n";
     }
     //Nevyazka in Gaze
-    for (int j = s + 2; j < N; j++)
+    for (int j = s + 1; j < N; j++)
     {
-        F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j])
-            * (T_vect[j + 1] - T_vect[j]) / (r[j + 1] - r[j])
-            - pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1])
-            * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]))
-            + ACp[j] * dM * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]);
-        f[j] = F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
+        //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
+        F = F_steam(T_next[j - 1], T_next[j], T_next[j + 1], r, ALambda, ACp, dM, j)
+            - ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
+        f[j] = -F;
+        //cout << j << " f1_" << j << " " << f[j] << "\n";
     }
-    //cout << "inter= " << inter << "\n";
+    cout << "flag_evap= " << flag_evap << "\n";
+    cout << "inter= " << inter << "\n";
     //Near interface Nevyazka
     double term1, term2, term3;
     double h = r[s + 1] - r[s];
@@ -449,33 +494,62 @@ void F_right(vector<double>& f, double *T_vect, double *r, vector <double>& ACp,
     //To the left of the interface
     double rs_avg = (r[s] + r[s - 1]) / 2.0;
     double rs_diff = inter - rs_avg;
-    term1 = (1.0 / rs_diff) * (Lambda(Ti, a, 0) * pow(inter, 2.) * ((p / ((p + 1) * h)) * T_vect[s - 2] - ((p + 1) / (p * h)) * T_vect[s - 1]
-        + ((2 * p + 1) / ((p + 1) * p * h)) * Ti) - pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_vect[s] - T_vect[s - 1]) / (r[s] - r[s - 1]));
-    term3 = ACp[s] * ADensity[s] * pow(r[s], 2.);
-    f[s] = term1 / term3;
+    double q_right = pow(inter, 2.) * Lambda(Ti, a, 0) * (Ti - T_next[s]) / (inter - r[s]);
+    //pow(inter, 2.) * Lambda(Ti, a, 0) * ((p / ((p + 1) * h)) * T_next[s - 2] - ((p + 1) / (p * h)) * T_next[s - 1]
+    //+ ((2 * p + 1) / ((p + 1) * p * h)) * Ti);
+    double q_left = pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]);
+    term1 = (1.0 / rs_diff) * (q_right - q_left);
+    term3 = -ACp[s] * ADensity[s] * pow(r[s], 2.) * (T_next[s] - T_cur[s]) / dt;
+    //cout << "term1= " << term1 << "\n";
+    //cout << "term3= " << term3 << "\n";
+    cout << "q-(s)= " << q_left << "\n";
+    cout << "Lambda_d= " << Lambda(Ti, a, 0) << "\n";
+    cout << "q+(s)= " << q_right << "\n";
+    F = term1 + term3;
+    f[s] = -F;
 
     //On the interface
-    term1 = pow(inter, 2.) * Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_vect[s + 2]
-        + (p - 3.0) / ((4.0 - p) * h) * T_vect[s + 3]);
-    term2 = pow(inter, 2.) * Lambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_vect[s - 2] - (p + 1.0) / (p * h) * T_vect[s - 1]
+    q_right = pow(inter, 2.) * Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2]
+        + (p - 3.0) / ((4.0 - p) * h) * T_next[s + 3]);
+    q_left = pow(inter, 2.) * Lambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_next[s - 2] - (p + 1.0) / (p * h) * T_next[s - 1]
         + (2.0 * p + 1.0) / ((p + 1.0) * p * h) * Ti);
-    f[N + 1] = term1 - term2 + L_d * dM;
+    F = q_right - q_left + L_d * dM;
+    //cout << "term1= " << term1 << "\n";
+    //cout << "term2= " << term2 << "\n";
+    //cout << "L_d * dM " << L_d * dM << "\n";
+    f[N] = -F;
+
     //To the right of the interface
     double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
     double rs_diff_plus = rs_avg_plus - inter;
-    term1 = (1.0 / rs_diff_plus) * (pow(rs_avg_plus, 2.) * 0.5 * (ALambda[s + 2] + ALambda[s + 1]) * (T_vect[s + 2] - T_vect[s + 1]) / (r[s + 2] - r[s + 1])
-        - pow(inter, 2.) * Lambda(Ti, a, 1) * ((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_vect[s + 2]
-            + (p - 3) / ((4 - p) * h) * T_vect[s + 3]));
-    term2 = -ACp[s + 1] * dM * ((T_vect[s + 1] - Ti) / (r[s + 1] - inter));
-    term3 = ACp[s + 1] * ADensity[s + 1] * pow(r[s + 1], 2.);
-    f[s + 1] = (term1 + term2) / term3;
+    q_right = pow(rs_avg_plus, 2.) * 0.5 * (ALambda[s + 2] + ALambda[s + 1]) * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]);
+    q_left = pow(inter, 2.) * Lambda(Ti, a, 1) * (T_next[s + 1] - Ti) / (r[s + 1] - inter);
+    //pow(inter, 2.) * Lambda(Ti, a, 1) * ((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_next[s + 2]
+    //+ (p - 3) / ((4 - p) * h) * T_next[s + 3]);
+    term1 = (1.0 / rs_diff_plus) * (q_right - q_left);
+    term3 = -ACp[s + 1] * (ADensity[s + 1] * pow(r[s + 1], 2.) * (T_next[s + 1] - T_cur[s + 1]) / dt + dM * ((T_next[s + 1] - Ti) / (r[s + 1] - inter)));
+    //cout << "term1= " << term1 << "\n";
+    //cout << "term3= " << term3 << "\n";
+    cout << "Lambda_g= " << Lambda(Ti, a, 1) << "\n";
+    cout << "q-(s+1)= " << q_left << "\n";
+    cout << "q+(s+1)= " << q_right << "\n";
+    F = term1 + term3;
+    f[s + 1] = -F;
+    //Calculate modul of Nevyazka
+    for (int i = 1; i <= N; i++)
+        mod_nevyaz += pow(f[i], 2.0);
+    mod_nevyaz = pow(mod_nevyaz, 0.5);
+
 }
 
 void F_right_test(vector<double>& f, double* T_vect, double* r, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
     const int N, const double a, double dM, int s, double inter, const double Ti, double p, const double L_d)
 {
     double F;
-
+    for (int i = 0; i <= N + 1; i++) {
+        cout << "r[" << i << "]= " << r[i] << "\n";
+        cout << "T[" << i << "]= " << T_vect[i] << "\n";
+    }
     //Nevyazka in Water
     for (int j = 1; j < s + 1; j++)
     {
@@ -483,40 +557,43 @@ void F_right_test(vector<double>& f, double* T_vect, double* r, vector <double>&
             * (T_vect[j + 1] - T_vect[j]) / (r[j + 1] - r[j])
             - pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1])
             * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]));
-        f[j] = F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
+        f[j] = F;
+        //    / (ACp[j] * ADensity[j] * pow(r[j], 2.));
         //cout << j << " f1_" << j << " " << f[j] << "\n";
     }
+    cout << "f[1]= " << f[1] << "\n";
     //Nevyazka in Gaze
     for (int j = s + 1; j < N; j++)
     {
         F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j])
             * (T_vect[j + 1] - T_vect[j]) / (r[j + 1] - r[j])
             - pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1])
-            * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]))
-            + ACp[j] * dM * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]);
-        f[j] = F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
+            * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]));
+            //+ ACp[j] * dM * (T_vect[j] - T_vect[j - 1]) / (r[j] - r[j - 1]);
+        f[j] = F;
+        //    / (ACp[j] * ADensity[j] * pow(r[j], 2.));
     }
     //cout << "inter= " << inter << "\n";
-    /*
     //Near interface Nevyazka
     double term1, term2, term3;
     double h = r[s + 1] - r[s];
     cout << "Ti" << Ti << "p" << p << "\n";
-
+    /*
     //To the left of the interface
     double rs_avg = (r[s] + r[s - 1]) / 2.0;
     double rs_diff = inter - rs_avg;
     term1 = (1.0 / rs_diff) * (Lambda(Ti, a, 0) * pow(inter, 2.) * ((p / ((p + 1) * h)) * T_vect[s - 2] - ((p + 1) / (p * h)) * T_vect[s - 1]
         + ((2 * p + 1) / ((p + 1) * p * h)) * Ti) - pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_vect[s] - T_vect[s - 1]) / (r[s] - r[s - 1]));
     term3 = ACp[s] * ADensity[s] * pow(r[s], 2.);
-    f[s] = term1 / term3;
+    f[s] = term1;
+        //   / term3;
 
     //On the interface
     term1 = pow(inter, 2.) * Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_vect[s + 2]
         + (p - 3.0) / ((4.0 - p) * h) * T_vect[s + 3]);
     term2 = pow(inter, 2.) * Lambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_vect[s - 2] - (p + 1.0) / (p * h) * T_vect[s - 1]
         + (2.0 * p + 1.0) / ((p + 1.0) * p * h) * Ti);
-    f[N] = term1 - term2 + L_d * dM;
+    f[N + 1] = term1 - term2 + L_d * dM;
 
     //To the right of the interface
     double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
@@ -526,7 +603,9 @@ void F_right_test(vector<double>& f, double* T_vect, double* r, vector <double>&
             + (p - 3) / ((4 - p) * h) * T_vect[s + 3]));
     term2 = -ACp[s + 1] * dM * ((T_vect[s + 1] - Ti) / (r[s + 1] - inter));
     term3 = ACp[s + 1] * ADensity[s + 1] * pow(r[s + 1], 2.);
-    f[s + 1] = (term1 + term2) / term3;
+    f[s + 1] = term1;
+        //+ term2);
+        //  / term3;
     */
 }
 
@@ -580,8 +659,8 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
     vector<double>& T_cur, vector<double>& T_next, double h, const double q, const double h_min, const int big_number, const int const_params,
     const int Nd, const int N_uni, const int N_uni_near_center)
 {
-    T_cur.resize(N + 2);
-    T_next.resize(N + 2);
+    T_cur.resize(N + 1);
+    T_next.resize(N + 1);
     r.resize(N + 1);
     ofstream OutX;
     OutX.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/X_grid.dat");
@@ -687,7 +766,7 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
             for (j + 1; j < N + 1; j++)
             {
                 r[j] = r[j - 1] + h;
-                h = h * q;
+                //h = h * q;
                 T_cur[j] = T_r;
                 //cout << "T" << j << " " << T_cur[j] << endl;
                 OutX << j << " " << h << " " << "\n";
@@ -702,7 +781,7 @@ void InitialGrid(int& N, const double x_l, const double x_r, const double T_l, c
  * Main Program
  *--------------------------------------------------------------------
  */
-int Integrate_IDA(int N, vector<double>& r_vect, vector<double>& T_vect, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
+int Integrate_IDA (int N, vector<double>& r_vect, vector<double>& T_vect, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
     vector<double>& nevyaz, double a, double& dM, int s, double inter, double Ti, double p, double L_d)
 {
     void* mem;
@@ -736,8 +815,8 @@ int Integrate_IDA(int N, vector<double>& r_vect, vector<double>& T_vect, vector 
     data->outNevyaz = new ofstream;
     data->N = N;
     data->kp = k;
-    data->r = new realtype[N + 2];
-    data->T = new realtype[N + 2];
+    data->r = new realtype[N + 1];
+    data->T = new realtype[N + 1];
     data->NEQ = NEQ;
     data->Tr = T_vect[N];
     data->M = dM;
@@ -752,7 +831,8 @@ int Integrate_IDA(int N, vector<double>& r_vect, vector<double>& T_vect, vector 
         data->T[i] = T_vect[i];
         //cout << i << " = " << Ith(res_vect, i) << endl;
     }
-    data->T[N + 1] = Ti;
+    //data->T[N + 1] = Ti;
+    //data->r[N + 1] = inter;
     cout << "N= " << N << "p= " << p << "inter= " << inter << "L_d= " << L_d << "\n";
 
     /* Create SUNDIALS context */
@@ -776,22 +856,20 @@ int Integrate_IDA(int N, vector<double>& r_vect, vector<double>& T_vect, vector 
 
     /* Integration limits by time */
     t0 = ZERO;
-    tout1 = RCONST(0.01);
+    tout1 = RCONST(0.000000001);
 
     //cout << NEQ << " = " << Ith(res_vect, NEQ + 1) << endl;
-    for (int i = 0; i < N; i++) {
-        Ith(avtol, i) = RCONST(1.0);
+    for (int i = 0; i < N + 1; i++) {
+        Ith(avtol, i) = RCONST(0.001);
         Ith(yy, i) = T_vect[i];
         cout << "yy " << i << " = " << Ith(yy, i) << "\n";
     }
-    Ith(avtol, N) = RCONST(1.0);
-    Ith(yy, N) = data->T[N];
-    Ith(avtol, N + 1) = RCONST(1.0);
-    Ith(yy, N + 1) = data->T[N + 1];
-    Ith(avtol, N + 2) = RCONST(1.0);
+    Ith(avtol, N + 1) = RCONST(0.001);
+    //Ith(yy, N + 1) = data->T[N + 1];
+    Ith(avtol, N + 2) = RCONST(0.001);
     //cout << "yy " << N << " = " << Ith(yy, N) << "\n";
     //Calculate Nevyazka's
-    ArraysParameters(a, N, data->r, data->T, s, ACp, ADensity, ALambda, 0, inter, Ti, p);
+    ArraysParameters(a, N, data->r, data->T, s, ACp, ADensity, ALambda, data->kp, inter, Ti, p);
     F_right_test(nevyaz, data->T, data->r, ACp, ADensity, ALambda, N, a, dM, s, inter, Ti, p, L_d);
     //Opening file for Nevyazka
     cout << "Отладочная информация: адрес переменной = " << &data << endl;
@@ -813,16 +891,21 @@ int Integrate_IDA(int N, vector<double>& r_vect, vector<double>& T_vect, vector 
         mod_nevyaz += pow(nevyaz[i], 2.0);
     mod_nevyaz = pow(mod_nevyaz, 0.5);
     *(data->outNevyaz) << 0 << " " << mod_nevyaz << "\n";
-
-    for (int i = 0; i < N; i++) {
+    //Ith(yp, 0) = ZERO;
+    for (int i = 1; i < N; i++) {
         Ith(yp, i) = nevyaz[i];
         cout << "Ithypi = " << Ith(yp, i) << "\n";
     }
-    Ith(yp, N) = nevyaz[N];
-    Ith(yp, N + 1) = 0;
-    cout << "Ithypi = " << Ith(yp, N) << "\n";
+    //Ith(yp, N) = ZERO;
+    //Ith(yp, N + 1) = nevyaz[N + 1];
+    //cout << "Ithypi = " << Ith(yp, N) << "\n";
+    //cout << "Ithypi = " << Ith(yp, N + 1) << "\n";
 
     PrintHeader(rtol, avtol, yy);
+    //CheckIth
+    for (int i = 0; i < 2 * N; i++) {
+        cout << "Ith(avtol, " << i << ")= " << Ith(avtol, i) << "\n";
+    }
 
     /* Call IDACreate and IDAInit to initialize IDA memory */
     mem = IDACreate(ctx);
@@ -869,11 +952,14 @@ int Integrate_IDA(int N, vector<double>& r_vect, vector<double>& T_vect, vector 
     ofstream fout;
     while (iout < 10) {
         cout << "how is it going?" << "\n";
+        for (int j = 0; j < N; j++) {
+            cout << "nevyaz[" << j << "]= " << nevyaz[j] << "\n";
+            cout << "Ith(yp," << j << ")= " << Ith(yp, j) << "\n";
+            cout << "Ith(yy," << j << ")= " << Ith(yy, j) << "\n";
+        }
         retval = IDASolve(mem, tout, &tret, yy, yp, IDA_NORMAL);
         data->outNevyaz->close();
-        cout << "how is it going2?" << "\n";
-        ExportToArray(data->T, dM, data, yy, N);
-        cout << "how is it going3?" << "\n";
+        ExportToArray(data->T, data, yy, N);
         //PrintOutput(mem, tret, yy);
         cout << "t = " << tout << "\n";
         cout << "M = " << dM << "\n";
@@ -933,7 +1019,7 @@ void Solver(int N, vector<double>& r, vector<double>& T_cur, vector<double>& T_n
     double dM, q_g, q_d, Lambda_d, Lambda_g, Ti;
     const int N_minus = N - 1;
     int retval;
-    vector <double> nevyaz(N + 2);
+    vector <double> nevyaz(N);
     vector <double> ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda;
     int flag_evap = 0;
     //Define initial surface position and mass flow on surface
@@ -941,7 +1027,8 @@ void Solver(int N, vector<double>& r, vector<double>& T_cur, vector<double>& T_n
     int s = Nd;
     double inter = r[s] + (p - 1) * (r[s + 1] - r[s]);
     //Define initial boiling tempereature for surface, K
-    double T_cur_i = 300.;
+    double T_cur_i = 1500.;
+        300.;
     //double q = 20 * pow(10, 3);                  //W / m^2
     double L_d = 2258.2 * pow(10, 3.);              //J / kg 
     //const determination of dM
@@ -965,17 +1052,16 @@ void Solver(int N, vector<double>& r, vector<double>& T_cur, vector<double>& T_n
 int main(void)
 {
     const int const_params = 1;          // 0 - Non-uniform grid, 1 - Mixed
-    const double dt = 0.0001;
-    const double dtau = 0.0001;
     int m_max = 1000;
     const int total_time = 200000;
     const int power_of = -3;              //const if a < pow(10, -8)
     const double a = pow(10, -(power_of + 3)), b = pow(10, -power_of), c = pow(10, -(power_of - 3));  //a = 1
-    const double T_l = 300;
+    const double T_l = 1500;
+        //300;
     const double T_r = 1500;
     double h = 0.2;
     //зададим минимальный возможный размер ячейки
-    const double h_min = 0.0000243902439024;                                        //0.0005 * 2 / 41 = 0.0000243902439024= 24.3902439024 мкр;  
+    const double h_min = 0.000025;                                        //0.0005 * 2 / 41 = 0.0000243902439024= 24.3902439024 мкр;  
     //Number of cells
     int N = 100;
     const int Nd = 20;
@@ -983,7 +1069,7 @@ int main(void)
     const int N_uni_near_center = 5;
     const double x_l = 0.001;
     //const double R = 0.0005 м = 500 мкр
-    const double x_r = 0.201; //зададим область = 20 см
+    const double x_r = 0.0035; //зададим область = 20 см
     double x_uni = x_l + N_uni * h_min;
     double q = DefineQ(N - N_uni, h_min, x_r, x_uni);
     vector <double> r;
@@ -1019,7 +1105,6 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
         cout << "handle null pointer error" << "\n";
     }
     data = (UserData*)user_data;
-
     T_vect = data->T;
     r_cells = data->r;
     s = data->s;
@@ -1030,31 +1115,33 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     L_d = data->L_d;
     k = data->kp;
 
-    int j;
     yval = N_VGetArrayPointer(yy);
     ypval = N_VGetArrayPointer(yp);
     rval = N_VGetArrayPointer(rr);
     //cout << "ypvalres0 = " << yval[0] << "\n";
     int myN = data->N;
-    ExportToArray(T_vect, data->M, data, yy, data->N);
-    vector <double> nevyaz(myN + 2);
+    cout << "\ndata->kp" << data->kp << "\n";
+    ExportToArray(data->T, data, yy, data->N);
+    vector <double> nevyaz(myN);
     vector <double> ACp, ADensity, ALambda;
     ArraysParameters(a, myN, data->r, data->T, s, ACp, ADensity, ALambda, 0, inter, data->T[myN + 1], p);
     //Calculate Nevyazka's
     F_right_test(nevyaz, data->T, data->r, ACp, ADensity, ALambda, myN, a, dM, s, inter, data->T[myN + 1], p, L_d);
-    for (j = 0; j < myN; j++) {
-        rval[j] = nevyaz[j] - ypval[j];
+    //rval[0] = ZERO;
+    for (int j = 1; j < myN; j++) {
+        rval[j - 1] = nevyaz[j] - ypval[j];
         cout << "nevyaz[" << j << "]= " << nevyaz[j] << "\n";
-        cout << "rval[" << j << "]= " << rval[j] << "\n";
+        cout << "ypval[" << j << "]= " << ypval[j] << "\n";
+        cout << "rval[" << j - 1 << "]= " << rval[j - 1] << "\n";
     }
-   
-    cout << "nevyaz[0]= " << nevyaz[0] << "ypval[0]= " << ypval[0] << "\n";
-    rval[myN] = 0;
-    rval[myN + 1] = nevyaz[myN + 1];
-    cout << "rval[myN + 1]= " << rval[myN + 1] << "\n";
-    //Opening file for T on iteration
-    k++;
-    data->kp = k;
+    //rval[myN] = ZERO;
+        //nevyaz[myN];
+    //rval[myN + 1] = nevyaz[myN + 1];
+    //cout << "rval[myN]= " << rval[myN] << "\n";
+    //cout << "nevyaz[myN]= " << nevyaz[myN] << "\n";
+    //cout << "rval[myN + 1]= " << rval[myN + 1] << "\n";
+    //cout << "nevyaz[myN + 1]= " << nevyaz[myN + 1] << "\n";
+/*
     //Calculate modul of Nevyazka
     double mod_nevyaz = 0;
     for (int i = 0; i < myN; i++)
@@ -1062,6 +1149,8 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     mod_nevyaz = pow(mod_nevyaz, 0.5);
     //
     *(data->outNevyaz) << k << " " << mod_nevyaz << "\n";
+
+    //Opening file for T on iteration
     //Define nevyazkas on each iteration
     ofstream OutIterNevyazka;
     OutIterNevyazka.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/IterNevyazka/IterNevyazka_" + to_string(k) + ".dat");
@@ -1088,6 +1177,9 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     for (i + 1; i < myN + 1; i++)
         OutIterCurrentTemp << r_cells[i] << " " << T_vect[i] << " " << ALambda[i] << "\n";
     OutIterCurrentTemp.close();
+*/
+    k++;
+    data->kp = k;
     return(0);
 }
 

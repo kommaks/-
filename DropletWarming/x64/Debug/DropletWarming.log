@@ -1,15 +1,15 @@
 ﻿  DropletWarming.cpp
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(51,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(52,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(287,9): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(308,10): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(661,9): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(661,18): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(663,8): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(663,22): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(663,39): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(665,7): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(665,25): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(847,11): warning C4552: '+': result of expression not used
-C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(204): warning C4715: 'Lambda': not all control paths return a value
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(304,9): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(325,10): warning C4552: '+': result of expression not used
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(628,16): warning C4101: 'term2': unreferenced local variable
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(788,9): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(788,18): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(790,8): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(790,22): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(790,39): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(792,7): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(792,25): warning C4244: 'argument': conversion from 'double' to 'const unsigned __int64', possible loss of data
+C:\Users\user\source\Научная работа\DropletWarming\DropletWarming.cpp(976,11): warning C4552: '+': result of expression not used
   DropletWarming.vcxproj -> C:\Users\user\source\Научная работа\DropletWarming\x64\Debug\DropletWarming.exe

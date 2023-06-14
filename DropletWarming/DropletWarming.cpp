@@ -64,6 +64,7 @@ double LinIntWConductivity(double T)
 //Formula setting for Heat Capacity and it's derivative, J/(kg*K)
 double Cp(double T, const double a)
 {
+	/*
 	const double Cp_water = 4180.;
 	const double Cp_steam = 2000.;
 	//Molar mass of water
@@ -98,10 +99,13 @@ double Cp(double T, const double a)
 	}
 	else
 		return (AA + B * T_forCp + C * pow(T_forCp, 2.) + D * pow(T_forCp, 3.) + E * pow(T_forCp, -2.)) / W;
+	*/
+	return 1.;
 }
 //J/(kg*K^2)
 double DfCp(double T, const double a)
 {
+	/*
 	//Molar mass of water
 	const double W = 18 * pow(10, -3);
 	const double T_boiling = 373;
@@ -129,10 +133,13 @@ double DfCp(double T, const double a)
 		return 0;
 	else
 		return (B + 2. * C * T_forCp + 3. * D * pow(T_forCp, 2.) - 2. * E * pow(T_forCp, -3.)) / 1000. / W;
+	*/
+	return 0;
 }
 //Formula setting for Density and it's derivative, kg/m^3
 double Density(double T, const double a)
 {
+	/*
 	const double rho_water = 980.;
 	const double rho_steam = 0.4;
 	const double T_boiling = 373;
@@ -151,10 +158,13 @@ double Density(double T, const double a)
 			return rho_water;
 		else
 			return p * W / (R * T);
+	*/
+	return 1.;
 }
 //kg/(m^3*K)
 double DfDensity(double T, const double a)
 {
+	/*
 	const double T_boiling = 373;
 	const double R = 8.314462;
 	const double p = pow(10, 5);
@@ -168,11 +178,13 @@ double DfDensity(double T, const double a)
 		else
 			return -p * W / (R * pow(T, 2.));
 	}
-
+	*/
+	return 0;
 }
 //Formula setting for thermal conductivity and it's derivative, Watt/(m*K)
 double Lambda(double T, const double a, int flag_phase)
 {
+	/*
 	const double lambda_water = 0.56;
 	const double lambda_steam = 0.05;
 	const double T_boiling = 373;
@@ -201,10 +213,13 @@ double Lambda(double T, const double a, int flag_phase)
 			return lambda_star * (sqrt(teta) / (L0 + L1 / teta + L2 / pow(teta, 2.) + L3 / pow(teta, 3.) + L4 / pow(teta, 4.)));
 		}
 	}
+	*/
+	return 1.;
 }
 //Watt/(m*K^2)
 double DfLambda(double T, const double a, int flag_phase)
 {
+	/*
 	const double T_boiling = 373;
 	if (a < pow(10, -8))
 		return 0;
@@ -228,6 +243,8 @@ double DfLambda(double T, const double a, int flag_phase)
 				+ 3. * L3 / pow(teta, 3.) + 4. * L4 / pow(teta, 4.)) / T_star;
 		}
 	}
+	*/
+	return 0;
 }
 //Setting arrays of parametres depending on T:
 void ArraysParameters(const double a, const double b, const double c, const int N, vector <double>& r, vector <double>& T_next,
@@ -347,21 +364,83 @@ double LambdaBetween(vector<double>& r, vector<double>& ALambda, int j, double r
 }
 */
 //Setting j-1 element of matrix
-void DfInterface(vector<double>& r, vector<double>& T_next, vector<vector<double>>& J, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
-	vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda, const int N, const double a, double dt, double dtau, double dM,
+/*
+void DfInterface(vector<double>& r, vector<double>& T_cur, vector<double>& T_next, vector<vector<double>>& J, vector <double>& ACp,
+	vector <double>& ADfCp, vector <double>& ADensity, vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda,
+	const int N, const double a, double dt, double dtau, double dM,
 	double inter, double Ti, double p, int s)
 {
 	double h = r[s + 1] - r[s];
-
+	double q_right = pow(inter, 2.) * Lambda(Ti, a, 0) * (Ti - T_next[s]) / (inter - r[s]);
+	double q_left = pow(inter, 2.) * Lambda(Ti, a, 1) * (T_next[s + 1] - Ti) / (r[s + 1] - inter);
 	//To the left of the interface
 	double rs_avg = (r[s] + r[s - 1]) / 2.0;
 	double rs_diff = inter - rs_avg;
+	double Lambda_s_half = 0.5 * (ALambda[s] + ALambda[s - 1]);
+	double DfLambda_s_half = 0.5 * (ADfLambda[s] + ADfLambda[s - 1]);
+	double dt_coeff = (ACp[s] * ADensity[s] + (ADfCp[s] * ADensity[s] + ACp[s] * ADfDensity[s]) * (T_next[s] - T_cur[s]));
+
+	J[s][s - 1] = (1.0 / rs_diff) * (pow(rs_avg, 2.) * (Lambda_s_half / (r[s] - r[s - 1]) - DfLambda_s_half * 
+		(T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1])));
+	J[s][s] = -(1.0 / rs_diff) * (pow(inter, 2.) * DfLambda(Ti, a, 0) / (inter - r[s]) +
+		pow(rs_avg, 2.) * (Lambda_s_half / (r[s] - r[s - 1]) + DfLambda_s_half * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1])))
+		- dt_coeff * pow(r[s], 2.) / dt
+		- ACp[s] * ADensity[s] * pow(r[s], 2.) / dtau;
+	J[s][N] = (1.0 / rs_diff) * pow(inter, 2.) * (DfLambda(Ti, a, 0) / (inter - r[s])
+		+ DfLambda(Ti, a, 0) * (Ti - T_next[s]) / (inter - r[s]));
+
+	//On the interface(i = N)
+	double term_pg = pow(inter, 2.) * DfLambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2]
+		+ (p - 3.0) / ((4.0 - p) * h) * T_next[s + 3]);
+	double term_pd = pow(inter, 2.) * DfLambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_next[s - 2] - (p + 1.0) / (p * h) * T_next[s - 1]
+		+ (2.0 * p + 1.0) / ((p + 1.0) * p * h) * Ti);
+	J[N][s - 2] = -pow(inter, 2.) / h * Lambda(Ti, a, 0) * (p / (p + 1.0));
+	J[N][s - 1] = pow(inter, 2.) / h * Lambda(Ti, a, 0) * (p + 1.0) / p;
+	J[N][N] = pow(inter, 2.) / h * (Lambda(Ti, a, 1) * (2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0))
+		- Lambda(Ti, a, 0) * (2.0 * p + 1.0) / ((p + 1.0) * p)) + term_pg - term_pd;
+	J[N][s + 2] = pow(inter, 2.) / h * Lambda(Ti, a, 1) * (p - 4.0) / (p - 3.0);
+	J[N][s + 3] = pow(inter, 2.) / h * Lambda(Ti, a, 1) * (p - 3.0) / (4.0 - p);
+
+	//To the right of the interface
+	double rs_plus_avg = (r[s + 1] + r[s + 2]) / 2.0;
+	double rs_plus_diff = rs_plus_avg - inter;
+	double Lambda_s_plus_half = 0.5 * (ALambda[s + 2] + ALambda[s + 1]);
+	double DfLambda_s_plus_half = 0.5 * (ADfLambda[s + 2] + ADfLambda[s + 1]);
+	double dt_plus_coeff = (ACp[s + 1] * ADensity[s + 1] + (ADfCp[s + 1] * ADensity[s + 1] + ACp[s + 1] * ADfDensity[s + 1])
+		* (T_next[s + 1] - T_cur[s + 1]));
+	J[s + 1][N] = -(1.0 / rs_plus_diff) * pow(inter, 2.) * (DfLambda(Ti, a, 1) * (T_next[s + 1] - inter) / (r[s + 1] - inter)
+		- Lambda(Ti, a, 1) / (r[s + 1] - inter))
+		+ ACp[s + 1] * dM / (r[s + 1] - inter);
+	J[s + 1][s + 1] = -(1.0 / rs_plus_diff) * (pow(rs_plus_avg, 2) * (Lambda_s_plus_half / (r[s + 2] - r[s + 1])
+		- DfLambda_s_plus_half * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]))
+		+ pow(inter, 2.) * Lambda(Ti, a, 1) / (r[s + 1] - inter))
+		- dt_plus_coeff * pow(r[s + 1], 2.) / dt
+		- ACp[s + 1] * dM / (r[s + 1] - inter)
+		- ACp[s + 1] * ADensity[s + 1] * pow(r[s + 1], 2.) / dtau;
+	J[s + 1][s + 2] = (1.0 / rs_plus_diff) * pow(rs_plus_avg, 2) * (Lambda_s_plus_half / (r[s + 2] - r[s + 1])
+		+ DfLambda_s_plus_half * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]));
+}
+*/
+void PrevDfInterface(vector<double>& r, vector<double>& T_cur, vector<double>& T_next, vector<vector<double>>& J, vector <double>& ACp,
+	vector <double>& ADfCp, vector <double>& ADensity, vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda,
+	const int N, const double a, double dt, double dtau, double dM,
+	double inter, double Ti, double p, int s)
+{
+	double h = r[s + 1] - r[s];
+	double q_right = pow(inter, 2.) * Lambda(Ti, a, 0) * (Ti - T_next[s]) / (inter - r[s]);
+	double q_left = pow(inter, 2.) * Lambda(Ti, a, 1) * (T_next[s + 1] - Ti) / (r[s + 1] - inter);
+	//To the left of the interface
+	double rs_avg = (r[s] + r[s - 1]) / 2.0;
+	double rs_diff = inter - rs_avg;
+	double Lambda_s_half = 0.5 * (ALambda[s] + ALambda[s - 1]);
+	double DfLambda_s_half = 0.5 * (ADfLambda[s] + ADfLambda[s - 1]);
+	double DtCoeff = (ACp[s] * ADensity[s] + (ADfCp[s] * ADensity[s] + ACp[s] * ADfDensity[s]) * (T_next[s] - T_cur[s]));
 	J[s][s - 2] = (1.0 / rs_diff) * pow(inter, 2.) * Lambda(Ti, a, 0) * (p / ((p + 1.0) * h));
-	J[s][s - 1] = (1.0 / rs_diff) * (-pow(inter, 2.) * Lambda(Ti, a, 0) * (p + 1.0) / (p * h) + pow(rs_avg, 2.) * (0.5 * (ALambda[s] + ALambda[s - 1])
-		/ (r[s] - r[s - 1]) - 0.5 * (ADfLambda[s] + ADfLambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1])));
-	J[s][s] = -(1.0 / rs_diff) * pow(rs_avg, 2.) * (0.5 * (ALambda[s] + ALambda[s - 1]) / (r[s] - r[s - 1])
-		+ 0.5 * (ADfLambda[s] + ADfLambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]))
-		- (ACp[s] * ADensity[s] + (ADfCp[s] * ADensity[s] + ACp[s] * ADfDensity[s]) * T_next[s]) * pow(r[s], 2.) / dt
+	J[s][s - 1] = (1.0 / rs_diff) * (-pow(inter, 2.) * Lambda(Ti, a, 0) * (p + 1.0) / (p * h) + pow(rs_avg, 2.)
+		* (Lambda_s_half / (r[s] - r[s - 1]) - DfLambda_s_half * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1])));
+	J[s][s] = -(1.0 / rs_diff) * pow(rs_avg, 2.) * (Lambda_s_half / (r[s] - r[s - 1])
+		+ DfLambda_s_half * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]))
+		- DtCoeff * pow(r[s], 2.) / dt
 		- ACp[s] * ADensity[s] * pow(r[s], 2.) / dtau;
 	J[s][N] = (1.0 / rs_diff) * pow(inter, 2.) * ((DfLambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_next[s - 2] - (p + 1.0) / (p * h) * T_next[s - 1] + (2.0 * p + 1.0)
 		/ ((p + 1.0) * p * h) * Ti)) + Lambda(Ti, a, 0) * (2.0 * p + 1.0) / ((p + 1.0) * p * h));
@@ -382,11 +461,13 @@ void DfInterface(vector<double>& r, vector<double>& T_next, vector<vector<double
 	double rs_plus_avg = (r[s + 1] + r[s + 2]) / 2.0;
 	double rs_plus_diff = rs_plus_avg - inter;
 	J[s + 1][N] = -(1.0 / rs_plus_diff) * pow(inter, 2.) * ((DfLambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti
-		+ (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2] + (p - 3.0) / ((4.0 - p) * h) * T_next[s + 3])) + Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h)))
+		+ (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2] + (p - 3.0) / ((4.0 - p) * h) * T_next[s + 3]))
+		+ Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h)))
 		+ ACp[s + 1] * dM * (1.0 / (r[s + 1] - inter));
 	J[s + 1][s + 1] = -(1.0 / rs_plus_diff) * pow(rs_plus_avg, 2) * (0.5 * (ALambda[s + 2] + ALambda[s + 1]) / (r[s + 2] - r[s + 1])
 		- 0.5 * (ADfLambda[s + 2] + ADfLambda[s + 1]) * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]))
-		- (ACp[s + 1] * ADensity[s + 1] + (ADfCp[s + 1] * ADensity[s + 1] + ACp[s + 1] * ADfDensity[s + 1]) * T_next[s + 1]) * pow(r[s + 1], 2.) / dt
+		- (ACp[s + 1] * ADensity[s + 1] + (ADfCp[s + 1] * ADensity[s + 1] + ACp[s + 1] * ADfDensity[s + 1]) * (T_next[s + 1] - T_cur[s + 1]))
+		* pow(r[s + 1], 2.) / dt
 		- ACp[s + 1] * dM / (r[s + 1] - inter)
 		- ACp[s + 1] * ADensity[s + 1] * pow(r[s + 1], 2.) / dtau;
 	J[s + 1][s + 2] = (1.0 / rs_plus_diff) * (pow(rs_plus_avg, 2) * (0.5 * (ALambda[s + 2] + ALambda[s + 1]) / (r[s + 2] - r[s + 1])
@@ -394,82 +475,128 @@ void DfInterface(vector<double>& r, vector<double>& T_next, vector<vector<double
 		- pow(inter, 2.) * Lambda(Ti, a, 1) * (p - 4.0) / ((p - 3.0) * h));
 	J[s + 1][s + 3] = -(1.0 / rs_plus_diff) * pow(inter, 2.) * Lambda(Ti, a, 1) * (p - 3.0) / ((4.0 - p) * h);
 }
+
 double DfLeft(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda,
 	const double a, const double b, const double c, int j)
 {
-	return 2. / (r[j + 1] - r[j - 1]) * pow((r[j] + r[j - 1]) / 2., 2.) * (-0.5 * (ADfLambda[j] + ADfLambda[j - 1])
-		* (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]) + 0.5 * (ALambda[j] + ALambda[j - 1]) / (r[j] - r[j - 1]));
+	double Lambda_j_half = 0.5 * (ALambda[j] + ALambda[j - 1]);
+	double DfLambda_j_half = 0.5 * (ADfLambda[j] + ADfLambda[j - 1]);
+	return 2. / (r[j + 1] - r[j - 1]) * pow((r[j] + r[j - 1]) / 2., 2.) 
+		* ( - DfLambda_j_half * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]) + Lambda_j_half / (r[j] - r[j - 1]));
 }
 //Setting j element of matrix
-double DfCenter(vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
+double DfCenter(vector<double>& r, vector<double>& T_cur, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
 	vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda, const double a, const double b, const double c,
 	const double d, int j, const double dt, const double dtau)
 {
-	return 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * (0.5 * (ADfLambda[j + 1] + ADfLambda[j])
-		* (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - 0.5 * (ALambda[j + 1] + ALambda[j]) / (r[j + 1] - r[j]))
-		- pow((r[j] + r[j - 1]) / 2., 2.) * (0.5 * (ADfLambda[j] + ADfLambda[j - 1]) * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
-			+ 0.5 * (ALambda[j] + ALambda[j - 1]) / (r[j] - r[j - 1])))
-		- (ACp[j] * ADensity[j] + (ADfCp[j] * ADensity[j] + ACp[j] * ADfDensity[j]) * T_next[j]) * pow(r[j], 2.) / dt
+	double Lambda_j_plus_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+	double DfLambda_j_plus_half = 0.5 * (ADfLambda[j + 1] + ADfLambda[j]);
+	double Lambda_j_half = 0.5 * (ALambda[j] + ALambda[j - 1]);
+	double DfLambda_j_half = 0.5 * (ADfLambda[j] + ADfLambda[j - 1]);
+	double dt_coef = (ACp[j] * ADensity[j] + (ADfCp[j] * ADensity[j] + ACp[j] * ADfDensity[j]) * (T_next[j] - T_cur[j]));
+	return 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * (DfLambda_j_plus_half
+		* (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) - Lambda_j_plus_half / (r[j + 1] - r[j]))
+		- pow((r[j] + r[j - 1]) / 2., 2.) * (DfLambda_j_half * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1])
+			+ Lambda_j_half / (r[j] - r[j - 1])))
+		- dt_coef * pow(r[j], 2.) / dt
 		- ACp[j] * ADensity[j] * pow(r[j], 2.) / dtau;
 }
+
 //Setting j+1 element of matrix
 double DfRight(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda,
 	const double a, const double b, const double c, int j)
 {
-	return 2. / (r[j + 1] - r[j - 1]) * pow((r[j + 1] + r[j]) / 2., 2.) * (0.5 * (ADfLambda[j + 1] + ADfLambda[j])
-		* (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) + 0.5 * (ALambda[j + 1] + ALambda[j]) / (r[j + 1] - r[j]));
+	double Lambda_j_plus_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+	double DfLambda_j_plus_half = 0.5 * (ADfLambda[j + 1] + ADfLambda[j]);
+	return 2. / (r[j + 1] - r[j - 1]) * pow((r[j + 1] + r[j]) / 2., 2.)
+		* (DfLambda_j_plus_half * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) + Lambda_j_plus_half / (r[j + 1] - r[j]));
 }
 //Df for Adiabatic left boundary
-double AdiabaticBoundaryDfCenter(vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp, vector <double>& ADensity,
-	vector <double>& ADfDensity, vector <double>& ALambda, vector <double>& ADfLambda,
-	const double a, const double b, const double c, const double dt, const double dtau)
+double AdiabaticBoundaryDfCenter(vector<double>& r, vector<double>& T_cur, vector<double>& T_next, vector <double>& ACp,
+	vector <double>& ADfCp, vector <double>& ADensity, vector <double>& ADfDensity, vector <double>& ALambda,
+	vector <double>& ADfLambda, const double a, const double b, const double c, const double dt, const double dtau)
 {
 	int l_f_num = 0;
-	return 1. / (r[1] - r[0]) * (pow((r[l_f_num + 1] + r[l_f_num]) / 2., 2.) * (0.5 * (ADfLambda[l_f_num + 1] + ADfLambda[l_f_num])
+	double Lambda_j_plus_half = 0.5 * (ALambda[l_f_num + 1] + ALambda[l_f_num]);
+	double DfLambda_j_plus_half = 0.5 * (ADfLambda[l_f_num + 1] + ADfLambda[l_f_num]);
+	double dt_coef = ACp[l_f_num] * ADensity[l_f_num] + (ADfCp[l_f_num] * ADensity[l_f_num] + ACp[l_f_num] * ADfDensity[l_f_num])
+		* (T_next[l_f_num] - T_cur[l_f_num]);
+
+	return 1. / (r[1] - r[0]) * (pow((r[l_f_num + 1] + r[l_f_num]) / 2., 2.) * (DfLambda_j_plus_half
 		* (T_next[l_f_num + 1] - T_next[l_f_num]) / (r[l_f_num + 1] - r[l_f_num])
-		- 0.5 * (ALambda[l_f_num + 1] + ALambda[l_f_num]) / (r[l_f_num + 1] - r[l_f_num])))
-		- (ACp[l_f_num] * ADensity[l_f_num] + (ADfCp[l_f_num] * ADensity[l_f_num] + ACp[l_f_num] * ADfDensity[l_f_num]) * T_next[l_f_num])
-		* pow(r[l_f_num + 1], 2.) / 24. / dt
+		- Lambda_j_plus_half / (r[l_f_num + 1] - r[l_f_num])))
+		- dt_coef * pow(r[l_f_num + 1], 2.) / 24. / dt
 		- ACp[l_f_num] * ADensity[l_f_num] * pow(r[l_f_num + 1], 2.) / 24. / dtau;
 }
 double AdiabaticBoundaryDfRight(vector<double>& r, vector<double>& T_next, vector<double>& ALambda, vector<double>& ADfLambda,
 	const double a, const double b, const double c, int j)
 {
-	return 2. / (r[2] - r[0]) * pow((r[j + 1] + r[j]) / 2., 2.) * (0.5 * (ADfLambda[j + 1] + ADfLambda[j])
-		* (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) + 0.5 * (ALambda[j + 1] + ALambda[j]) / (r[j + 1] - r[j]));
+	double Lambda_j_plus_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+	double DfLambda_j_plus_half = 0.5 * (ADfLambda[j + 1] + ADfLambda[j]);
+	return 2. / (r[2] - r[0]) * pow((r[j + 1] + r[j]) / 2., 2.) * 
+		(DfLambda_j_plus_half * (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j]) + Lambda_j_plus_half / (r[j + 1] - r[j]));
 }
 
-void Jacobian(vector<vector<double>>& J, vector<double>& r, vector<double>& T_next, vector <double>& ACp, vector <double>& ADfCp,
-	vector <double>& AD, vector <double>& ADfD, vector <double>& AL, vector <double>& ADfL, const int N_minus,
-	const double a, const double b, const double c, const double d, const double dt, const double dtau, double dM, int s, double inter, double Ti, double p,
-	int flag_evap)
+void Jacobian(vector<vector<double>>& J, vector<double>& r, vector<double>& T_cur, vector<double>& T_next, vector <double>& ACp,
+	vector <double>& ADfCp, vector <double>& AD, vector <double>& ADfD, vector <double>& AL, vector <double>& ADfL, const int N_minus,
+	const double a, const double b, const double c, const double d, const double dt, const double dtau, double dM, int s, double inter,
+	double Ti, double p, int flag_evap)
 {
-	int l_f_num = 0;
+	int l_f_num = 1;
 	//Jacobians for Water
-	J[l_f_num][l_f_num] = AdiabaticBoundaryDfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, dt, dtau);
-	J[l_f_num][l_f_num + 1] = AdiabaticBoundaryDfRight(r, T_next, AL, ADfL, a, b, c, l_f_num);
-	for (int j = 1; j < s; j++) {
+	J[l_f_num][l_f_num] = DfCenter(r, T_cur, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, l_f_num, dt, dtau);
+		//AdiabaticBoundaryDfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, dt, dtau);
+	J[l_f_num][l_f_num + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, l_f_num);
+		//AdiabaticBoundaryDfRight(r, T_next, AL, ADfL, a, b, c, l_f_num);
+
+	for (int j = 2; j < s + 1; j++) {
 		J[j][j - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, j);
-		J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau);
+		J[j][j] = DfCenter(r, T_cur, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau);
 		J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j);
 	}
 	//Jacobians for Gaze
-	for (int j = s + 2; j < N_minus; j++) {
+	for (int j = s + 1; j < N_minus; j++) {
 		J[j][j - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, j) + ACp[j] * dM / (r[j] - r[j - 1]);
-		J[j][j] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau) - ACp[j] * dM / (r[j] - r[j - 1]);
+		J[j][j] = DfCenter(r, T_cur, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, j, dt, dtau) - ACp[j] * dM / (r[j] - r[j - 1]);
 		J[j][j + 1] = DfRight(r, T_next, AL, ADfL, a, b, c, j);
 	}
 	J[N_minus][N_minus - 1] = DfLeft(r, T_next, AL, ADfL, a, b, c, N_minus) + ACp[N_minus] * dM / (r[N_minus] - r[N_minus - 1]);
-	J[N_minus][N_minus] = DfCenter(r, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, N_minus, dt, dtau)
+	J[N_minus][N_minus] = DfCenter(r, T_cur, T_next, ACp, ADfCp, AD, ADfD, AL, ADfL, a, b, c, d, N_minus, dt, dtau)
 		- ACp[N_minus] * dM / (r[N_minus] - r[N_minus - 1]);
 	//Define J[s], J[i], J[s + 1]
-	DfInterface(r, T_next, J, ACp, ADfCp, AD, ADfD, AL, ADfL, N_minus + 1, a, dt, dtau, dM, inter, Ti, p, s);
+
+	PrevDfInterface(r, T_cur, T_next, J, ACp, ADfCp, AD, ADfD, AL, ADfL, N_minus + 1, a, dt, dtau, dM, inter, Ti, p, s);
 }
-void F(vector<double>& f, vector<double>& T_cur, vector<double>& T_next, vector<double>& r, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
+double F_drop (double T_left, double T_center, double T_right, vector<double> r, vector<double> ALambda, int j)
+{
+	double rj_diff = r[j + 1] - r[j - 1];
+	double rj_avg = pow((r[j + 1] + r[j]) / 2., 2.);
+	double rj_minus_avg = pow((r[j] + r[j - 1]) / 2., 2.);
+	double Lambda_j_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+	double Lambda_j_minus_half = 0.5 * (ALambda[j] + ALambda[j - 1]);
+	return 2. / rj_diff * (rj_avg * Lambda_j_half * (T_right - T_center) / (r[j + 1] - r[j])
+		- rj_minus_avg * Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]));
+}
+
+double F_steam (double T_left, double T_center, double T_right, vector<double> r, vector<double> ALambda, vector<double>ACp,
+	double dM, int j)
+{
+	double rj_diff = r[j + 1] - r[j - 1];
+	double rj_avg = pow((r[j + 1] + r[j]) / 2., 2.);
+	double rj_minus_avg = pow((r[j] + r[j - 1]) / 2., 2.);
+	double Lambda_j_half = 0.5 * (ALambda[j + 1] + ALambda[j]);
+	double Lambda_j_minus_half = 0.5 * (ALambda[j] + ALambda[j - 1]);
+	return 2. / rj_diff * (rj_avg * Lambda_j_half * (T_right - T_center) / (r[j + 1] - r[j])
+		- rj_minus_avg * Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]))
+		- ACp[j] * dM * (T_center - T_left) / (r[j] - r[j - 1]);
+}
+
+void F(vector<double>& f, vector<double> T_cur, vector<double> T_next, vector<double> r, vector <double> ACp, vector <double> ADensity, vector <double> ALambda,
 	const int N, const double a, const double b, const double c, const double d, const double dt, double dM, int s, double inter,
 	const double Ti, double p, const double L_d, double& mod_nevyaz, int flag_evap)
 {
 	double F;
+	/*
 	//Nevyazka on the left border
 	int l_f_num = 0;
 	F = 1. / (r[1] - r[0]) * pow((r[l_f_num + 1] + r[l_f_num]) / 2., 2.) * 0.5 * (ALambda[l_f_num + 1] + ALambda[l_f_num])
@@ -477,26 +604,21 @@ void F(vector<double>& f, vector<double>& T_cur, vector<double>& T_next, vector<
 		- ACp[l_f_num] * ADensity[l_f_num] * pow(r[l_f_num + 1], 2.) / 24. * (T_next[l_f_num] - T_cur[l_f_num]) / dt;
 	f[l_f_num] = -F;
 	//cout << "f[1]" << f[1] << "\n";
+	*/
 	//Nevyazka in Water
-	for (int j = 1; j < s; j++)
+	for (int j = 1; j < s + 1; j++)
 	{
-		F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j])
-			* (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
-			- pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1])
-			* (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
+		F = F_drop(T_next[j - 1], T_next[j], T_next[j + 1], r, ALambda, j)
 			- ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
 		f[j] = -F;
 		//cout << j << " f1_" << j << " " << f[j] << "\n";
 	}
 	//Nevyazka in Gaze
-	for (int j = s + 2; j < N; j++)
+	for (int j = s + 1; j < N; j++)
 	{
 		//cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
-		F = 2. / (r[j + 1] - r[j - 1]) * (pow((r[j + 1] + r[j]) / 2., 2.) * 0.5 * (ALambda[j + 1] + ALambda[j])
-			* (T_next[j + 1] - T_next[j]) / (r[j + 1] - r[j])
-			- pow((r[j] + r[j - 1]) / 2., 2.) * 0.5 * (ALambda[j] + ALambda[j - 1])
-			* (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]))
-			- ACp[j] * (ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt + dM * (T_next[j] - T_next[j - 1]) / (r[j] - r[j - 1]));
+		F = F_steam(T_next[j - 1], T_next[j], T_next[j + 1], r, ALambda, ACp, dM, j)
+			- ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
 		f[j] = -F;
 		//cout << j << " f1_" << j << " " << f[j] << "\n";
 	}
@@ -510,24 +632,27 @@ void F(vector<double>& f, vector<double>& T_cur, vector<double>& T_next, vector<
 	//To the left of the interface
 	double rs_avg = (r[s] + r[s - 1]) / 2.0;
 	double rs_diff = inter - rs_avg;
-	term1 = (1.0 / rs_diff) * (Lambda(Ti, a, 0) * pow(inter, 2.) * ((p / ((p + 1) * h)) * T_next[s - 2] - ((p + 1) / (p * h)) * T_next[s - 1]
-		+ ((2 * p + 1) / ((p + 1) * p * h)) * Ti) - pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]));
+	double q_right = pow(inter, 2.) * Lambda(Ti, a, 0) * ((p / ((p + 1) * h)) * T_next[s - 2] - ((p + 1) / (p * h)) * T_next[s - 1]
+		+ ((2 * p + 1) / ((p + 1) * p * h)) * Ti);
+		//pow(inter, 2.) * Lambda(Ti, a, 0) * (Ti - T_next[s]) / (inter - r[s]);
+
+	double q_left = pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]);
+	term1 = (1.0 / rs_diff) * (q_right - q_left);
 	term3 = -ACp[s] * ADensity[s] * pow(r[s], 2.) * (T_next[s] - T_cur[s]) / dt;
 	//cout << "term1= " << term1 << "\n";
 	//cout << "term3= " << term3 << "\n";
-	cout << "q-(s)= " << -pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]) << "\n";
+	cout << "q-(s)= " << q_left << "\n";
 	cout << "Lambda_d= " << Lambda(Ti, a, 0) << "\n";
-	cout << "q+(s)= " << ((p / ((p + 1) * h)) * T_next[s - 2] - ((p + 1) / (p * h)) * T_next[s - 1]
-		+ ((2 * p + 1) / ((p + 1) * p * h)) * Ti) << "\n";
+	cout << "q+(s)= " << q_right << "\n";
 	F = term1 + term3;
 	f[s] = -F;
 
 	//On the interface
-	term1 = pow(inter, 2.) * Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2]
+	q_right = pow(inter, 2.) * Lambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2]
 		+ (p - 3.0) / ((4.0 - p) * h) * T_next[s + 3]);
-	term2 = pow(inter, 2.) * Lambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_next[s - 2] - (p + 1.0) / (p * h) * T_next[s - 1]
+	q_left = pow(inter, 2.) * Lambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_next[s - 2] - (p + 1.0) / (p * h) * T_next[s - 1]
 		+ (2.0 * p + 1.0) / ((p + 1.0) * p * h) * Ti);
-	F = term1 - term2 + L_d * dM;
+	F = q_right - q_left + L_d * dM;
 	//cout << "term1= " << term1 << "\n";
 	//cout << "term2= " << term2 << "\n";
 	//cout << "L_d * dM " << L_d * dM << "\n";
@@ -536,23 +661,24 @@ void F(vector<double>& f, vector<double>& T_cur, vector<double>& T_next, vector<
 	//To the right of the interface
 	double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
 	double rs_diff_plus = rs_avg_plus - inter;
-	term1 = (1.0 / rs_diff_plus) * (pow(rs_avg_plus, 2.) * 0.5 * (ALambda[s + 2] + ALambda[s + 1]) * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1])
-		-pow(inter, 2.) * Lambda(Ti, a, 1) * ((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_next[s + 2]
-			+ (p - 3) / ((4 - p) * h) * T_next[s + 3]));
+	q_right = pow(rs_avg_plus, 2.) * 0.5 * (ALambda[s + 2] + ALambda[s + 1]) * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]);
+	q_left = pow(inter, 2.) * Lambda(Ti, a, 1) * ((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_next[s + 2]
+		+ (p - 3) / ((4 - p) * h) * T_next[s + 3]);
+		//pow(inter, 2.) * Lambda(Ti, a, 1) * (T_next[s + 1] - Ti) / (r[s + 1] - inter);
+	term1 = (1.0 / rs_diff_plus) * (q_right - q_left);
 	term3 = -ACp[s + 1] * (ADensity[s + 1] * pow(r[s + 1], 2.) * (T_next[s + 1] - T_cur[s + 1]) / dt + dM * ((T_next[s + 1] - Ti) / (r[s + 1] - inter)));
 	//cout << "term1= " << term1 << "\n";
 	//cout << "term3= " << term3 << "\n";
 	cout << "Lambda_g= " << Lambda(Ti, a, 1) << "\n";
-	cout << "q-(s+1)= " << -((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_next[s + 2]
-		+ (p - 3) / ((4 - p) * h) * T_next[s + 3]) << "\n";
-	cout << "q+(s+1)= " << pow(rs_avg_plus, 2.) * 0.5 * (ALambda[s + 2] + ALambda[s + 1]) * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]) << "\n";
+	cout << "q-(s+1)= " << q_left << "\n";
+	cout << "q+(s+1)= " << q_right << "\n";
 	F = term1 + term3;
 	f[s + 1] = -F;
-
 	//Calculate modul of Nevyazka
 	for (int i = 1; i <= N; i++)
 		mod_nevyaz += pow(f[i], 2.0);
 	mod_nevyaz = pow(mod_nevyaz, 0.5);
+
 }
 /*
 void ThreeTies(vector<double>& r, vector<double>& T_cur, vector<double>& T_next, vector <double>& ACp, vector <double>& ADensity, vector <double>& ALambda,
@@ -597,8 +723,9 @@ void ThreeTies(vector<double>& r, vector<double>& T_cur, vector<double>& T_next,
 void Gauss(vector<double>& T_next, vector<double>& dT, vector<double>& nevyaz, vector < vector <double> >& J, double& Ti,
 	const int N_minus, const int s, int& flag_evap)
 {
+	int l_f_num = 1;
 	const int N = N_minus + 1;
-	const double T_boiling = 373.0;
+	const double T_boiling = 100000000.0;
 	//Cчитаем коэффициенты для всех узлов
 	int i, j, k;
 	/*
@@ -612,7 +739,7 @@ void Gauss(vector<double>& T_next, vector<double>& dT, vector<double>& nevyaz, v
 	}
 	*/
 	double d, sum, to_right;
-	for (k = 0; k <= N; k++) // прямой ход
+	for (k = l_f_num; k <= N; k++) // прямой ход
 	{
 		for (j = k + 1; j <= N; j++) //на каждой итерации 3 формулы, чтобы привести к трапециевидной матрице
 		{
@@ -624,7 +751,7 @@ void Gauss(vector<double>& T_next, vector<double>& dT, vector<double>& nevyaz, v
 			nevyaz[j] = nevyaz[j] - d * nevyaz[k]; // формула (3)
 		}
 	}
-	for (k = N; k >= 0; k--) // обратный ход
+	for (k = N; k >= l_f_num; k--) // обратный ход
 	{
 		sum = 0;
 		for (j = k + 1; j <= N; j++)
@@ -638,12 +765,12 @@ void Gauss(vector<double>& T_next, vector<double>& dT, vector<double>& nevyaz, v
 	for (i = 0; i <= N_minus; i++)
 	{
 		T_next[i] += dT[i];
-		if (i < s + 1 && T_next[i] > T_boiling)
-			T_next[i] = T_boiling;
+		//if (i < s + 1 && T_next[i] > T_boiling)
+			//T_next[i] = T_boiling;
 	}
 	Ti += dT[N];
-	if (Ti > T_boiling)
-		Ti = T_boiling;
+	//if (Ti > T_boiling)
+		//Ti = T_boiling;
 	//T_next[20] = T_next[21];
 	//T_next[0] = T_next[1];
 	//cout << "T[0][k]" << T[0][k] << "\n";
@@ -751,8 +878,8 @@ void Solver(const int N, vector<double>& r, vector<double>& T_cur, vector<double
 	for (int n = 1; n < total_time; n++)
 	{
 		//Check for flag_evap
-		if (Ti >= 373.)
-			flag_evap = 1;
+		//if (Ti >= 373.)
+		//	flag_evap = 1;
 		cout << "flag_evap= " << flag_evap << "\n";
 		//Write Nevyazka on the last m-iteration
 		OutLastStepNevyazka << (n - 1) * dt << " " << mod_nevyaz_cur << "\n";
@@ -831,7 +958,8 @@ void Solver(const int N, vector<double>& r, vector<double>& T_cur, vector<double
 			OutNevyazka << m << " " << mod_nevyaz_cur << "\n";
 			if (m == 1)
 				OutFirstStepNevyazka << n * dt << " " << mod_nevyaz_cur << "\n";
-			Jacobian(J, r, T_next, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, N_minus, a, b, c, d, dt, dtau, dM, s, inter, Ti, p, flag_evap);
+			Jacobian(J, r, T_cur, T_next, ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda, N_minus,
+				a, b, c, d, dt, dtau, dM, s, inter, Ti, p, flag_evap);
 			cout << "m " << m << endl;
 			//МЕТОД Гаусса: T_next change from m to m+1
 		
@@ -1054,7 +1182,7 @@ int main()
 	const double dt = 0.0001;
 	const double dtau = 0.0001;
 	int m_max = 100;
-	const int total_time = 200000;
+	const int total_time = 2000;
 	const int power_of = -3;              //const if a < pow(10, -8)
 	const double a = pow(10, -(power_of + 3)), b = pow(10, -power_of), c = pow(10, -(power_of - 3));  //a = 1
 	const double d = 0.1;                          //коэффициент диффузии
@@ -1062,15 +1190,15 @@ int main()
 	const double T_r = 1500;
 	double h = 0.2;
 	//зададим минимальный возможный размер ячейки
-	const double h_min = 0.0000243902439024;                                        //0.0005 * 2 / 41 = 0.0000243902439024= 24.3902439024 мкр;  
+	const double h_min = 0.000025;                                        //0.0005 * 2 / 41 = 0.0000243902439024= 24.3902439024 мкр;  
 	//Number of cells
-	int N = 205;
+	int N = 100;
 	const int Nd = 20;
 	const int N_uni = 2 * Nd;
 	const int N_uni_near_center = 5;
-	const double x_l = 0.0;
+	const double x_l = 0.000;
 	//const double R = 0.0005 м = 500 мкр
-	const double x_r = 0.005; //зададим область = 20 см
+	const double x_r = 0.0025; //зададим область = 20 см
 	double x_uni = x_l + N_uni * h_min;
 	double q = DefineQ(N - N_uni, h_min, x_r, x_uni);
 	vector <double> r;
