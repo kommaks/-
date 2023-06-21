@@ -1,7 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/sunmatrix/band/CMakeLists.txt
-  test_sunmatrix_band.c
-C:\IDA\ida-6.5.1\examples\sunmatrix\band\test_sunmatrix_band.c(115,19): warning C4244: '=': conversion from 'sunindextype' to 'realtype', possible loss of data
-C:\IDA\ida-6.5.1\examples\sunmatrix\band\test_sunmatrix_band.c(122,16): warning C4244: '=': conversion from 'sunindextype' to 'realtype', possible loss of data
-  test_sunmatrix.c
-  Generating Code...
-  test_sunmatrix_band.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\test_sunmatrix_band.exe

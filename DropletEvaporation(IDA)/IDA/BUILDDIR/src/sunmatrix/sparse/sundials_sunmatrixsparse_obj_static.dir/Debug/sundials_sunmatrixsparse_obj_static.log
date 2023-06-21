@@ -1,5 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmatrix/sparse/CMakeLists.txt
-  sunmatrix_sparse.c
-C:\IDA\ida-6.5.1\src\sunmatrix\sparse\sunmatrix_sparse.c(1025,12): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-C:\IDA\ida-6.5.1\src\sunmatrix\sparse\sunmatrix_sparse.c(1026,28): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-  sundials_sunmatrixsparse_obj_static.vcxproj -> C:\IDA\BUILDDIR\src\sunmatrix\sparse\sundials_sunmatrixsparse_obj_static.dir\Debug\sundials_sunmatrixsparse_obj_static.lib

@@ -1,7 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/spfgmr/CMakeLists.txt
-  sunlinsol_spfgmr.c
-C:\IDA\ida-6.5.1\src\sundials\sundials_hashmap.h(26,48): warning C4305: 'initializing': truncation from 'unsigned __int64' to 'const unsigned long'
-C:\IDA\ida-6.5.1\src\sundials\sundials_hashmap.h(27,48): warning C4305: 'initializing': truncation from 'unsigned __int64' to 'const unsigned long'
-C:\IDA\ida-6.5.1\src\sunlinsol\spfgmr\sunlinsol_spfgmr.c(759,50): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-C:\IDA\ida-6.5.1\src\sunlinsol\spfgmr\sunlinsol_spfgmr.c(760,18): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-  sundials_sunlinsolspfgmr_obj_shared.vcxproj -> C:\IDA\BUILDDIR\src\sunlinsol\spfgmr\sundials_sunlinsolspfgmr_obj_shared.dir\Debug\sundials_sunlinsolspfgmr_obj_shared.lib

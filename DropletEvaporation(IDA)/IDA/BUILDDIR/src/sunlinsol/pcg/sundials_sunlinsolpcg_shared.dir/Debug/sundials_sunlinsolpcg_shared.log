@@ -1,3 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/pcg/CMakeLists.txt
-     Creating library C:/IDA/BUILDDIR/bin/Debug/sundials_sunlinsolpcg.lib and object C:/IDA/BUILDDIR/bin/Debug/sundials_sunlinsolpcg.exp
-  sundials_sunlinsolpcg_shared.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\sundials_sunlinsolpcg.dll

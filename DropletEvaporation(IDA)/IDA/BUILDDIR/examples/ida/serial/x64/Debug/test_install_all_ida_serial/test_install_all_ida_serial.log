@@ -1,4 +1,0 @@
-﻿  Running ida installation tests
-CUSTOMBUILD : CMake error : The source directory "C:/Program Files (x86)/SUNDIALS/examples/ida/serial" does not exist.
-  Specify --help for usage, or press the help button on the CMake GUI.
-C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(247,5): error MSB8066: Custom build for 'C:\IDA\BUILDDIR\CMakeFiles\e9c235435424ce6006b98dd1403c6a91\test_install_all_ida_serial.rule;C:\IDA\ida-6.5.1\examples\ida\serial\CMakeLists.txt' exited with code 1.

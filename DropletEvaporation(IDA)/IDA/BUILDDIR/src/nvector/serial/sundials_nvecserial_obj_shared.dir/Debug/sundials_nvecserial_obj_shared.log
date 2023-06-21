@@ -1,3 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/nvector/serial/CMakeLists.txt
-  nvector_serial.c
-  sundials_nvecserial_obj_shared.vcxproj -> C:\IDA\BUILDDIR\src\nvector\serial\sundials_nvecserial_obj_shared.dir\Debug\sundials_nvecserial_obj_shared.lib

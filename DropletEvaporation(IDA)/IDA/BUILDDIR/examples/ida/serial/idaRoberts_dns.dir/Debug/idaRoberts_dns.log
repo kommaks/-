@@ -1,4 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/ida/serial/CMakeLists.txt
-  idaRoberts_dns.c
-C:\IDA\ida-6.5.1\include\sunnonlinsol/sunnonlinsol_newton.h(121,1): warning C4141: 'dllimport': used more than once
-  idaRoberts_dns.vcxproj -> C:\IDA\BUILDDIR\bin\Debug\idaRoberts_dns.exe

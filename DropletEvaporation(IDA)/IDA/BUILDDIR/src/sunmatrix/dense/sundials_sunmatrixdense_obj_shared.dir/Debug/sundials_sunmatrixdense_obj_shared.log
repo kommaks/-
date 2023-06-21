@@ -1,5 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunmatrix/dense/CMakeLists.txt
-  sunmatrix_dense.c
-C:\IDA\ida-6.5.1\src\sunmatrix\dense\sunmatrix_dense.c(323,12): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-C:\IDA\ida-6.5.1\src\sunmatrix\dense\sunmatrix_dense.c(324,14): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-  sundials_sunmatrixdense_obj_shared.vcxproj -> C:\IDA\BUILDDIR\src\sunmatrix\dense\sundials_sunmatrixdense_obj_shared.dir\Debug\sundials_sunmatrixdense_obj_shared.lib

@@ -1,4 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/dense/CMakeLists.txt
-  sunlinsol_dense.c
-C:\IDA\ida-6.5.1\src\sunlinsol\dense\sunlinsol_dense.c(199,16): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-  sundials_sunlinsoldense_obj_static.vcxproj -> C:\IDA\BUILDDIR\src\sunlinsol\dense\sundials_sunlinsoldense_obj_static.dir\Debug\sundials_sunlinsoldense_obj_static.lib

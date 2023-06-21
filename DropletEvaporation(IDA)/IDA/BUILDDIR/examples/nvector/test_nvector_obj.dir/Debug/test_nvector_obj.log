@@ -1,5 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/examples/nvector/CMakeLists.txt
-  test_nvector.c
-C:\IDA\ida-6.5.1\examples\nvector\test_nvector.c(4980,14): warning C4244: 'function': conversion from 'sunindextype' to 'double', possible loss of data
-C:\IDA\ida-6.5.1\examples\nvector\test_nvector.c(5020,14): warning C4244: 'function': conversion from 'sunindextype' to 'double', possible loss of data
-  test_nvector_obj.vcxproj -> C:\IDA\BUILDDIR\examples\nvector\test_nvector_obj.dir\Debug\test_nvector_obj.lib

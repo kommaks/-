@@ -1,7 +1,0 @@
-﻿  Building Custom Rule C:/IDA/ida-6.5.1/src/sunlinsol/pcg/CMakeLists.txt
-  sunlinsol_pcg.c
-C:\IDA\ida-6.5.1\src\sundials\sundials_hashmap.h(26,48): warning C4305: 'initializing': truncation from 'unsigned __int64' to 'const unsigned long'
-C:\IDA\ida-6.5.1\src\sundials\sundials_hashmap.h(27,48): warning C4305: 'initializing': truncation from 'unsigned __int64' to 'const unsigned long'
-C:\IDA\ida-6.5.1\src\sunlinsol\pcg\sunlinsol_pcg.c(547,16): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-C:\IDA\ida-6.5.1\src\sunlinsol\pcg\sunlinsol_pcg.c(548,16): warning C4244: '=': conversion from 'sunindextype' to 'long', possible loss of data
-  sundials_sunlinsolpcg_obj_static.vcxproj -> C:\IDA\BUILDDIR\src\sunlinsol\pcg\sundials_sunlinsolpcg_obj_static.dir\Debug\sundials_sunlinsolpcg_obj_static.lib
