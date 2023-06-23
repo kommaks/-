@@ -106,9 +106,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\kinsol\kinsol-6.5.1\include;C:\kinsol\BUILDDIR\include;C:\kinsol\kinsol-6.5.1\src\sundials;C:\IDA\ida-6.5.1\include;C:\IDA\BUILDDIR\include;C:\IDA\ida-6.5.1\src\sundials;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\kinsol\kinsol-6.5.1\include;C:\kinsol\BUILDDIR\include;C:\kinsol\kinsol-6.5.1\src\sundials;C:\Users\user\source\Научная работа\IDA\ida-6.5.1\include;C:\Users\user\source\Научная работа\IDA\BUILDDIR\include;C:\Users\user\source\Научная работа\IDA\ida-6.5.1\src\sundials;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

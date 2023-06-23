@@ -1,7 +1,7 @@
 ﻿
 #include <iostream>
 #include <fstream>
-#include <C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\consts.cpp>
+//#include <C:\Users\user\source\Научная работа\DropletEvaporation(IDA)\consts.cpp>
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@
 using namespace std;
 
 #include <ida/ida.h>   
-#include <kinsol/kinsol.h>             /* access to KINSOL func., consts. */
+//#include <kinsol/kinsol.h>             /* access to KINSOL func., consts. */
 #include <nvector/nvector_serial.h>    /* access to serial N_Vector       */
 #include <sunmatrix/sunmatrix_dense.h> /* access to dense SUNMatrix       */
 #include <sunlinsol/sunlinsol_dense.h> /* access to dense SUNLinearSolver */
@@ -33,6 +33,11 @@ using namespace std;
 #define PI     RCONST(3.1415926)
 #define E      RCONST(2.7182818)
 
+#define M_PI (3.141592653589793)
+#define M_2PI (2.*M_PI)
+
+#define T_BOILING RCONST(373.)
+
 
 typedef struct {
     realtype* x;
@@ -43,14 +48,17 @@ typedef struct {
     int NEQ;
     int Np_inter;
     int n_tout;
+    int flag_evapp;
+    int Nd;
     realtype pp;
+    realtype p_oldp;
     realtype L_dp;
     realtype dMp;
     realtype ap;
     realtype Tl;
     realtype Tr;
-    realtype M;
     realtype Tp_inter;
+    realtype tout1p;
     ofstream* outNevyaz;
     int kp;
     void* mykmem;
@@ -66,58 +74,66 @@ typedef struct {
 
 /* Functions Called by the IDA Solver */
 static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* user_data);
+static int grob(realtype t, N_Vector yy, N_Vector yp,
+    realtype* gout, void* user_data);
 
-void ExportToArray(vector<double>& T_vect, double& M, UserData data, N_Vector yy, int N_x)
+void ExportToArray(vector<double>& T_vect, double& dM, UserData data, N_Vector yy, int N_x)
 {
+    int s = data->Np_inter;
+    int flag_evap = data->flag_evapp;
     //cout << "data->Tl; = " << data->Tl << "\n";
     //T_vect[0] = data->Tl;
-    for (int i = 0; i < N_x - 1; i++)
+    if (flag_evap == 0)
     {
-        T_vect[i] = Ith(yy, i);
+        for (int i = 0; i < N_x - 1; i++)
+        {
+            T_vect[i] = Ith(yy, i);
+        }
+        T_vect[N_x - 1] = data->Tr;
+        cout << "check\n";
     }
-    T_vect[N_x - 1] = data->Tr;
-    //cout << "MyNx = " << myNx << "\n";
-    //cout << "MyNm = " << myNm << "\n";
-    /*
-    M = Ith(yy, data->N_m + 1);
-    j = 1;
-    Y_vect[0] = 0.;
-    Y_vect[0] = 0.;tout
-    //cout << "M = " << M << "\n";
-    for (int i = data->N_m + 1; i < data->NEQ; i++)
+    if (flag_evap == 1)
     {
-        Y_vect[j] = Ith(yy, i + 1);
-        //cout << "Y_vect  " << j << " =  " << Y_vect[j] << endl;
-        j++;
+        for (int i = 0; i < N_x - 1; i++)
+        {
+            if (i == s)
+                i++;
+            T_vect[i] = Ith(yy, i);
+        }
+        T_vect[s] = data->T[s];
+        dM = Ith(yy, s);
+        cout << "Ith(yy,s)(in while)= " << Ith(yy, s) << "\n";
+        T_vect[N_x - 1] = data->Tr;
     }
-    Y_vect[j] = Y_vect[j - 1];
-    */
 }
 
-void ExportToArray(double* T_vect, double& M, UserData data, N_Vector yy, int N_x)
+void ExportToArrayResrob(double* T_vect, double& dM, UserData data, N_Vector yy, int N_x)
 {
+    int s = data->Np_inter;
+    int flag_evap = data->flag_evapp;
     //cout << "data->Tl; = " << data->Tl << "\n";
     //T_vect[0] = data->Tl;
-    for (int i = 0; i < N_x - 1; i++)
+    if (flag_evap == 0)
     {
-        T_vect[i] = Ith(yy, i);
+        for (int i = 0; i < N_x - 1; i++)
+        {
+            T_vect[i] = Ith(yy, i);
+        }
+        T_vect[N_x - 1] = data->Tr;
     }
-    T_vect[N_x - 1] = data->Tr;
-    //cout << "MyNx = " << myNx << "\n";
-    //cout << "MyNm = " << myNm << "\n";
-    //data->M = Ith(yy, data->N_m + 1);
-    /*
-    j = 1;
-    Y_vect[0] = 0.;
-    //cout << "M = " << M << "\n";
-    for (int i = data->N_m + 1; i < data->NEQ; i++)
+    if (flag_evap == 1)
     {
-        Y_vect[j] = Ith(yy, i + 1);
-        //cout << "Y_vect  " << j << " =  " << Y_vect[j] << endl;
-        j++;
+        for (int i = 0; i < N_x - 1; i++)
+        {
+            if (i == s)
+                i++;
+            T_vect[i] = Ith(yy, i);
+        }
+        T_vect[s] = data->T[s];
+        cout << "Ith(yy,s)" << Ith(yy, s) << "\n";
+        dM = Ith(yy, s);
+        T_vect[N_x - 1] = data->Tr;
     }
-    Y_vect[j] = Y_vect[j - 1];
-    */
 }
 
 /* Private Helper Functions */
@@ -166,6 +182,25 @@ static int check_ans(N_Vector y, realtype t, realtype rtol, N_Vector atol)
     return(passfail);
 }
 
+/*
+ * Root function routine. Compute functions g_i(t,y) for i = 0,1.
+ */
+
+static int grob(realtype t, N_Vector yy, N_Vector yp, realtype* gout,
+    void* user_data)
+{
+    realtype* yval, Ti;
+    UserData data;
+    data = (UserData)user_data;
+
+    int s = data->Np_inter;
+
+    yval = N_VGetArrayPointer(yy);
+    Ti = yval[s];
+    gout[0] = Ti - T_BOILING;
+
+    return(0);
+}
 ///////////////////////////////////////////////////////////////
 //MyFunctions
 ///////////////////////////////////////////////////////////////
@@ -221,18 +256,14 @@ double LinIntWConductivity(double Tmprtr)
     }
     return Lagrange1(LAGR_T, LAGR_COND_copy, nx, Tmprtr);
 }
-//Formula setting for Heat Capacity and it's derivative, J/(kg*K)= m^2/(s^2*K)
+//Formula setting for Heat Capacity and it's derivative, J/(kg*K)= cm^2/(s^2*K)
 double Cp(double T, const double a)
 {
     double Res;
     const double Cp_water = 4180.;
     const double Cp_steam = 2000.;
     const double T_boiling = 373;
-    if (T <= T_boiling)
-        Res = Cp_water;
-    else
-        Res = Cp_steam;
-    /*
+
     //Molar mass of water
     const double W = 18 * pow(10, -3);
     double AA, B, C, D, EE;
@@ -257,11 +288,13 @@ double Cp(double T, const double a)
     //Get value
     if (a < pow(10, -8))
     {
-
+        if (T <= T_boiling)
+            Res = Cp_water;
+        else
+            Res = Cp_steam;
     }
     else
         Res = (AA + B * T_forCp + C * pow(T_forCp, 2.) + D * pow(T_forCp, 3.) + EE * pow(T_forCp, -2.)) / W;
-    */
     //!cm
     return Res;
 }
@@ -300,7 +333,7 @@ double DfCp(double T, const double a)
 
     return 0;
 }
-//Formula setting for Density and it's derivative, kg/m^3
+//Formula setting for Density and it's derivative, kg/cm^3
 double Density(double T, const double a)
 {
 
@@ -308,30 +341,27 @@ double Density(double T, const double a)
     const double rho_water = 980.;
     const double rho_steam = 0.4;
     const double T_boiling = 373;
-    if (T <= T_boiling)
-        Res = rho_water;
-    else
-        Res = rho_steam;
-    /*
+
     const double R = 8.314462;
     const double pressure = pow(10, 5);
     const double W = 18 * pow(10, -3);
     if (a < pow(10, -8))
     {
-
+        if (T <= T_boiling)
+            Res = rho_water;
+        else
+            Res = rho_steam;
     }
-
     else {
         if (T <= T_boiling)
             Res = rho_water;
         else
             Res = pressure * W / (R * T);
     }
-    */
     //!cm
     return Res * pow(10, -6);
 }
-//kg/(m^3*K)
+//kg/(cm^3*K)
 double DfDensity(double T, const double a)
 {
     /*
@@ -351,7 +381,7 @@ double DfDensity(double T, const double a)
     */
     return 0;
 }
-//Formula setting for thermal conductivity and it's derivative, Watt/(m*K)
+//Formula setting for thermal conductivity and it's derivative, Watt/(cm*K)
 double Lyambda(double T, const double a, int flag_phase)
 {
 
@@ -394,7 +424,7 @@ double Lyambda(double T, const double a, int flag_phase)
     //!cm
     return Res * 0.01;
 }
-//Watt/(m*K^2)
+//Watt/(cm*K^2)
 double DfLambda(double T, const double a, int flag_phase)
 {
     /*
@@ -446,6 +476,8 @@ void ArraysParameters(const double a, const int N, realtype* r, realtype* T_next
         ALambda[i] = Lyambda(T_next[i], a, 0);
         //ADfLambda[i] = DfLambda(T_next[i], a, 0);
     }
+    ACp[s] = Cp(T_next[s], a);
+    ADensity[s] = Density(T_next[s], a);
     for (int i = s + 1; i < r_size; i++) {
         //cout << r[i] << endl;
         ACp[i] = Cp(T_next[i], a);
@@ -460,16 +492,16 @@ void ArraysParameters(const double a, const int N, realtype* r, realtype* T_next
     ofstream Parameters;
     Parameters.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/Parameters/Parameters_" + to_string(n) + ".dat");
     Parameters << "TITLE=\"" << "Graphics" << "\"" << endl;
-    Parameters << R"(VARIABLES= "rj, m", "T, K", "Cp, J/kg*K", "rho, kg/m^3", "Lambda, Watt/m*K")" << "\n";
+    Parameters << R"(VARIABLES= "rj, cm", "T, K", "Cp, J/kg*K", "rho, kg/cm^3", "Lambda, Watt/cm*K")" << "\n";
     int j = 0;
     for (j; j < s; j++)
         Parameters << r[j] << " " << T_next[j] << " " << ACp[j] << " " << ADensity[j] << " " << ALambda[j] << "\n";
     //Interface
     //Left side
-    Parameters << r[s] << " " << T_next[s] << " " << Cp(T_next[s], a) << " " << Density(T_next[s], a) << " "
+    Parameters << r[s] << " " << T_next[s] << " " << ACp[s] << " " << ADensity[s] << " "
         << Lyambda(T_next[s], a, 0) << "\n";
     //Right side
-    Parameters << r[s] << " " << T_next[s] << " " << Cp(T_next[s], a) << " " << Density(T_next[s], a) << " "
+    Parameters << r[s] << " " << T_next[s] << " " << ACp[s] << " " << ADensity[s] << " "
         << Lyambda(T_next[s], a, 1) << "\n";
     for (j = s + 1; j < r_size; j++)
         Parameters << r[j] << " " << T_next[j] << " " << ACp[j] << " " << ADensity[j] << " " << ALambda[j] << "\n";
@@ -487,7 +519,7 @@ void GraphicsSystEqu(int n, double* r, double* T_next, vector<double>& ALambda, 
     {
         OutCurrentTemp.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/Temp/Temp_" + to_string(n) + ".dat");
         OutCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << "\n";
-        OutCurrentTemp << R"(VARIABLES= "rj, m", "T, K", "Lambda, W/m*K" )" << "\n";
+        OutCurrentTemp << R"(VARIABLES= "rj, cm", "T, K", "Lambda, W/cm*K" )" << "\n";
         int i = 0;
         for (i; i < s + 1; i++)
             OutCurrentTemp << r[i] << " " << T_next[i] << " " << ALambda[i] << "\n";
@@ -500,7 +532,7 @@ void GraphicsSystEqu(int n, double* r, double* T_next, vector<double>& ALambda, 
     //Get flow movement
     OutFlow.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/Flow/Flow_" + to_string(n) + ".dat");
     OutFlow << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutFlow << R"(VARIABLES= "rj, m", "q, W", "rho, kg/m^3", "u_r, m/s" )" << "\n";
+    OutFlow << R"(VARIABLES= "rj, cm", "q, W", "rho, kg/cm^3", "u_r, cm/s" )" << "\n";
     //Поток газа выводим
     double u_r;
     for (int j = s + 1; j < N; j++)
@@ -516,8 +548,8 @@ void OpeningFiles(ofstream& OutSurfaceFlow, ofstream& OutLastStepNevyazka, ofstr
     //Collecting mass flow on interface
     OutSurfaceFlow.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/SurfaceFlow.dat");
     OutSurfaceFlow << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutSurfaceFlow << R"(VARIABLES= "t, s", "T0, K", "Ts, K", "Ti, K", "Ts+1, K", "gradT_d, K/m", "gradT_g, K/m", "q_d, W", "q_g, W", "dM, kg/s",
- "rho, kg/m^3", "u_r, m/s", "p, m/(cell size) ", "inter, m" )" << "\n";
+    OutSurfaceFlow << R"(VARIABLES= "t, s", "T0, K", "Ts, K", "Ti, K", "Ts+1, K", "gradT_d, K/cm", "gradT_g, K/cm", "q_d, W", "q_g, W", "dM, kg/s",
+ "rho, kg/cm^3", "u_r, cm/s", "p, cm/(cell size) ", "inter, cm" )" << "\n";
     //Collecting Last Step Nevyazka
     OutLastStepNevyazka.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/LastStepNevyazka.dat");
     OutLastStepNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
@@ -527,6 +559,35 @@ void OpeningFiles(ofstream& OutSurfaceFlow, ofstream& OutLastStepNevyazka, ofstr
     OutFirstStepNevyazka << "TITLE=\"" << "Graphics" << "\"" << endl;
     OutFirstStepNevyazka << R"(VARIABLES= "t, s", "F")" << endl;
 }
+
+//Define roots of cubic equation
+int Cubic(double* x, double a, double b, double c) {
+    double q, r, r2, q3;
+    q = (a * a - 3. * b) / 9.; r = (a * (2. * a * a - 9. * b) + 27. * c) / 54.;
+    r2 = r * r; q3 = q * q * q;
+    if (r2 < q3) {
+        double t = acos(r / sqrt(q3));
+        a /= 3.; q = -2. * sqrt(q);
+        x[0] = q * cos(t / 3.) - a;
+        x[1] = q * cos((t + M_2PI) / 3.) - a;
+        x[2] = q * cos((t - M_2PI) / 3.) - a;
+        return(3);
+    }
+    else {
+        double aa, bb;
+        if (r <= 0.) r = -r;
+        aa = -pow(r + sqrt(r2 - q3), 1. / 3.);
+        if (aa != 0.) bb = q / aa;
+        else bb = 0.;
+        a /= 3.; q = aa + bb; r = aa - bb;
+        x[0] = q - a;
+        x[1] = (-0.5) * q - a;
+        x[2] = (sqrt(3.) * 0.5) * fabs(r);
+        if (x[2] == 0.) return(2);
+        return(1);
+    }
+}
+
 double FAdiabatic(double T_center, double T_right, realtype* r, vector<double>& ALambda, vector<double>& ACp,
     vector<double>& ADensity)
 {
@@ -571,21 +632,71 @@ double FMinus(double T_bef_left, double T_left, double T_center, double T_right,
     double rs_avg = (r[s - 1] + r[s - 2]) / 2.0;
     double rs_diff = r[s] - rs_avg;
     double Lambda_s_half = 0.5 * (ALambda[s - 1] + ALambda[s - 2]);
-    double grad_i_left = (T_right - T_center) / (r[s] - r[s - 1]);
-        //(((p / (p + 1.0)) * T_bef_left - ((p + 1.0) / p) * T_left + ((2.0 * p + 1.0) / ((p + 1.0) * p)) * T_right)) / h;
+    double grad_i_left = (((p / (p + 1.0)) * T_bef_left - ((p + 1.0) / p) * T_left + ((2.0 * p + 1.0) / ((p + 1.0) * p)) * T_right)) / h;
     double grad_s_l = (T_center - T_left) / (r[s - 1] - r[s - 2]);
 
     
     qs_g = grad_i_left * Lyambda(T_right, a, 0);
     qs_d = grad_s_l * Lambda_s_half;
     F = (1.0 / rs_diff) * (pow(r[s], 2.) * qs_g - pow(rs_avg, 2.) * qs_d);
-    //F = (1.0 / rs_diff) * (Lyambda(T_right, a, 0) * grad_i_left - Lambda_s_half * grad_s_l);
-    
-    //cout << "T_right= " << T_right << "\n";
-    cout << "grad_i_left= " << grad_i_left << "\n";
-    //cout << "q-(s)= " << Lambda_s_half * grad_s_l << "\n";
-    //cout << "q+(s)= " << Lyambda(T_right, a, 0) * grad_i_left << "\n";
-    //cout << "Lambda_d= " << Lyambda(T_right, a, 0) << "\n";
+
+    return F / (ACp[s - 1] * ADensity[s - 1] * pow(r[s - 1], 2.));
+    //return F / (ACp[s - 1] * ADensity[s - 1]);
+}
+
+double FMinusM(double T_bef_left, double T_left, double T_center, double T_right, realtype* r, vector<double>& ALambda,
+    vector<double>& ACp, vector<double>& ADensity, double a, double dM, int s, double p_old, double& p, double dt, double& qs_g, double& qs_d)
+{
+    //
+    double F;
+    double h = r[s + 1] - r[s - 1];
+    //Redefine p
+    double M_part = (dM * dt) / (4. * M_PI * Density(T_right, a) * pow(h, 3.));
+    cout << "dt= " << dt << "\n";
+    cout << "Density(T_right, a)= " << Density(T_right, a) << "\n";
+    cout << "pow(h, 3.)= " << pow(h, 3.) << "\n";
+    double p_array[3]{ 0 };
+    int s_minus = s - 1; // assign a value to s_minus
+
+    double c1 = (-1. / 4.);
+    double c2 = (1 - p_old / 4. - s_minus);
+    double c3 = (-1 + pow(p_old, 2) / 4. + 2 * s_minus - s_minus * s_minus);
+    double c4 = (p_old - pow(p_old, 2) + pow(p_old, 3) / 4 - 2 * p_old * s_minus + p_old * pow(s_minus, 2) + s_minus * pow(p_old, 2)) - M_part;
+    // the result is now stored in the variable 'result'
+    double a_cubic = c2 / c1;
+    double b = c3 / c1;
+    double c = c4 / c1;
+
+    Cubic(p_array, a_cubic, b, c);
+    //cout << p_array[0] << "\n";
+    //cout << p_array[1] << "\n";
+    //cout << p_array[2] << "\n";
+
+    if (M_part != 0 && dM < 1) {
+        cout << "dM in interface" << dM << "\n";
+        cout << "M_part" << M_part << "\n";
+        cout << "p_before" << p << "\n";
+        if (p_array[0] < 2. && p_array[0] > 1.)
+            p = p_array[0];                      
+        else if (p_array[1] < 2. && p_array[1] > 1.)
+            p = p_array[1];                       //!!!!!!!!!maybe it wont be [1]
+        else if (p_array[2] < 2. && p_array[2] > 1.)
+            p = p_array[2];
+        cout << "p" << p << "\n";
+    }
+
+    ///////////////////////////////////
+    //To the left of the interface
+    double rs_avg = (r[s - 1] + r[s - 2]) / 2.0;
+    double rs_diff = r[s] - rs_avg;
+    double Lambda_s_half = 0.5 * (ALambda[s - 1] + ALambda[s - 2]);
+    double grad_i_left = (((p / (p + 1.0)) * T_bef_left - ((p + 1.0) / p) * T_left + ((2.0 * p + 1.0) / ((p + 1.0) * p)) * T_right)) / h;
+    double grad_s_l = (T_center - T_left) / (r[s - 1] - r[s - 2]);
+
+
+    qs_g = grad_i_left * Lyambda(T_right, a, 0);
+    qs_d = grad_s_l * Lambda_s_half;
+    F = (1.0 / rs_diff) * (pow(r[s], 2.) * qs_g - pow(rs_avg, 2.) * qs_d);
 
     return F / (ACp[s - 1] * ADensity[s - 1] * pow(r[s - 1], 2.));
     //return F / (ACp[s - 1] * ADensity[s - 1]);
@@ -603,34 +714,65 @@ double FInterface(double T_2bef_left, double T_bef_left, double T_center, double
     double grad_i_left = (((p / (p + 1.0)) * T_2bef_left - ((p + 1.0) / p) * T_bef_left + ((2.0 * p + 1.0) / ((p + 1.0) * p)) * T_center)) / h;
     q_i_right = Lyambda(T_center, a, 1) * grad_i_right;
     q_i_left = Lyambda(T_center, a, 0) * grad_i_left;
-    /*
-    cout << "h" << h << "\n";
-    cout << "p" << p << "\n";
-    cout << "Lyambda(T_center, a, 1)" << Lyambda(T_center, a, 1) << "\n";
-    cout << "Lyambda(T_center, a, 0)" << Lyambda(T_center, a, 0) << "\n";
-    cout << "T_bef_left" << T_bef_left << "\n";
-    cout << "T_2bef_left" << T_2bef_left << "\n";
-    cout << "T_center" << T_center << "\n";
-    cout << "T_aft_right" << T_aft_right << "\n";
-    cout << "T_2aft_right" << T_2aft_right << "\n";
 
-    cout << "grad_i_right" << grad_i_right << "\n";
-    cout << "grad_i_left" << grad_i_left << "\n";
-    cout << "q_i_right" << q_i_right << "\n";
-    cout << "q_i_left" << q_i_left << "\n";
-    cout << "Ti" << T_center << "\n";
-    */
-    //return (q_i_right - q_i_left);
     return pow(r[s], 2.) * (q_i_right - q_i_left);
-    //+ L_d * dM;
 }
 
+double FInterfaceM(double T_2bef_left, double T_bef_left, double T_center, double T_aft_right, double T_2aft_right, double dM,
+    realtype* r, vector<double>& ALambda, vector<double>& ACp, vector<double>& ADensity, double L_d, double a, int s, double p_old, double& p, double dt,
+    double& q_i_right, double& q_i_left)
+{
+    double h = r[s + 1] - r[s - 1];
+    //Redefine p
+    double M_part = (dM * dt) / (4. * M_PI * Density(T_center, a) * pow(h, 3.));
+    double p_array[3]{ 0 };
+    int s_minus = s - 1; // assign a value to s_minus
+
+    double c1 = (-1. / 4.);
+    double c2 = (1 - p_old / 4. - s_minus);
+    double c3 = (-1 + pow(p_old, 2) / 4. + 2 * s_minus - s_minus * s_minus);
+    double c4 = (p_old - pow(p_old, 2) + pow(p_old, 3) / 4 - 2 * p_old * s_minus + p_old * pow(s_minus, 2) + s_minus * pow(p_old, 2)) - M_part;
+    // the result is now stored in the variable 'result'
+    double a_cubic = c2 / c1;
+    double b = c3 / c1;
+    double c = c4 / c1;
+
+    Cubic(p_array, a_cubic, b, c);
+    //cout << p_array[0] << "\n";
+    //cout << p_array[1] << "\n";
+    //cout << p_array[2] << "\n";
+
+    if (M_part != 0 && dM < 1) {
+        cout << "dM in interface" << dM << "\n";
+        cout << "M_part" << M_part << "\n";
+        cout << "p_before" << p << "\n";
+        if (p_array[0] < 2. && p_array[0] > 1.)
+            p = p_array[0];
+        else if (p_array[1] < 2. && p_array[1] > 1.)
+            p = p_array[1];                       //!!!!!!!!!maybe it wont be [1]
+        else if (p_array[2] < 2. && p_array[2] > 1.)
+            p = p_array[2];
+        cout << "p" << p << "\n";
+    }
+
+
+    ///////////////////////////////////
+    double grad_i_right = (((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0))) * T_center
+        + ((p - 4.0) / (p - 3.0)) * T_aft_right + ((p - 3.0) / (4.0 - p)) * T_2aft_right) / h;
+    double grad_i_left = (((p / (p + 1.0)) * T_2bef_left - ((p + 1.0) / p) * T_bef_left + ((2.0 * p + 1.0) / ((p + 1.0) * p)) * T_center)) / h;
+    q_i_right = Lyambda(T_center, a, 1) * grad_i_right;
+    q_i_left = Lyambda(T_center, a, 0) * grad_i_left;
+
+    //return pow(r[s], 2.) * (q_i_right - q_i_left);
+    return pow(r[s], 2.) * (q_i_right - q_i_left) - L_d * dM;
+}
 double FPlus(double T_left, double T_center, double T_right, double T_aft_right, realtype* r, vector<double>& ALambda,
     vector<double>& ACp, vector<double>& ADensity, double a, double dM, int s, double p)
 {
     double F;
-    double term1, term2;
+    double term1, term2;   
     double h = r[s + 1] - r[s - 1];
+
     //To the right of the interface
     double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
     double rs_diff_plus = rs_avg_plus - r[s];
@@ -642,9 +784,73 @@ double FPlus(double T_left, double T_center, double T_right, double T_aft_right,
     //term1 = (1.0 / rs_diff_plus) * (Lambda_s_plus_half * grad_s_plus_r - Lyambda(T_left, a, 1) * grad_i_right);
     term1 = (1.0 / rs_diff_plus) * (pow(rs_avg_plus, 2.) * Lambda_s_plus_half * grad_s_plus_r
         - pow(r[s], 2.) * Lyambda(T_left, a, 1) * grad_i_right);
-    //term2 = -dM * ((T_center - T_left) / (r[s + 1] - r[s]));
-    F = term1;
-    //+ term2;
+    term2 = -ACp[s + 1] * dM * ((T_center - T_left) / (r[s + 1] - r[s]));
+    F = term1 + term2;
+
+    //cout << "Lambda_g= " << Lyambda(T_left, a, 1) << "\n";
+    //cout << "T_left= " << T_left << "\n";
+    //cout << "grad_s_plus_r= " << grad_s_plus_r << "\n";
+    //cout << "q-(s+1)= " << Lyambda(T_left, a, 1) * grad_i_right << "\n";
+    //cout << "q+(s+1)= " << Lambda_s_plus_half * grad_s_plus_r << "\n";
+    //cout << "grad_i_right= " << grad_i_right << "\n";
+    //cout << "grad_s_plus_r= " << grad_s_plus_r << "\n";
+    //return F / (ACp[s + 1] * ADensity[s + 1]);
+    return F / (ACp[s + 1] * ADensity[s + 1] * pow(r[s + 1], 2.));
+}
+
+double FPlusM(double T_left, double T_center, double T_right, double T_aft_right, realtype* r, vector<double>& ALambda,
+    vector<double>& ACp, vector<double>& ADensity, double a, double dM, int s, double p_old, double& p, double dt)
+{
+    double F;
+    double term1, term2;
+    double h = r[s + 1] - r[s - 1];
+    //Redefine p
+    double M_part = (dM * dt) / (4. * M_PI * Density(T_left, a) * pow(h, 3.));
+    double p_array[3]{ 0 };
+    int s_minus = s - 1; // assign a value to s_minus
+
+    double c1 = (-1. / 4.);
+    double c2 = (1 - p_old / 4. - s_minus);
+    double c3 = (-1 + pow(p_old, 2) / 4. + 2 * s_minus - s_minus * s_minus);
+    double c4 = (p_old - pow(p_old, 2) + pow(p_old, 3) / 4 - 2 * p_old * s_minus + p_old * pow(s_minus, 2) + s_minus * pow(p_old, 2)) - M_part;
+    // the result is now stored in the variable 'result'
+    double a_cubic = c2 / c1;
+    double b = c3 / c1;
+    double c = c4 / c1;
+
+    Cubic(p_array, a_cubic, b, c);
+    //cout << p_array[0] << "\n";
+    //cout << p_array[1] << "\n";
+    //cout << p_array[2] << "\n";
+
+    if (M_part != 0 && dM < 1) {
+        cout << "dM in interface" << dM << "\n";
+        cout << "M_part" << M_part << "\n";
+        cout << "p_before" << p << "\n";
+        if (p_array[0] < 2. && p_array[0] > 1.)
+            p = p_array[0];
+        else if (p_array[1] < 2. && p_array[1] > 1.)
+            p = p_array[1];                       //!!!!!!!!!maybe it wont be [1]
+        else if (p_array[2] < 2. && p_array[2] > 1.)
+            p = p_array[2];
+        cout << "p" << p << "\n";
+    }
+
+
+    /////////////////////////////
+    //To the right of the interface
+    double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
+    double rs_diff_plus = rs_avg_plus - r[s];
+    double Lambda_s_plus_half = 0.5 * (ALambda[s + 2] + ALambda[s + 1]);
+    double grad_s_plus_r = (T_right - T_center) / (r[s + 2] - r[s + 1]);
+    double grad_i_right = (((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0))) * T_left
+        + ((p - 4.0) / (p - 3.0)) * T_right + ((p - 3.0) / (4.0 - p)) * T_aft_right) / h;
+
+    //term1 = (1.0 / rs_diff_plus) * (Lambda_s_plus_half * grad_s_plus_r - Lyambda(T_left, a, 1) * grad_i_right);
+    term1 = (1.0 / rs_diff_plus) * (pow(rs_avg_plus, 2.) * Lambda_s_plus_half * grad_s_plus_r
+        - pow(r[s], 2.) * Lyambda(T_left, a, 1) * grad_i_right);
+    term2 = -ACp[s + 1] * dM * ((T_center - T_left) / (r[s + 1] - r[s]));
+    F = term1 + term2;
 
     //cout << "Lambda_g= " << Lyambda(T_left, a, 1) << "\n";
     //cout << "T_left= " << T_left << "\n";
@@ -670,214 +876,13 @@ double FSteam(double T_left, double T_center, double T_right, realtype* r, vecto
        // - Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]));
         //- ACp[j] * dM * (T_center - T_left) / (r[j] - r[j - 1]);
     double F = (2. / rj_diff) * (pow(rj_avg, 2.) * Lambda_j_half * (T_right - T_center) / (r[j + 1] - r[j])
-        - pow(rj_minus_avg, 2.) * Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]));
-    // - ACp[j] * dM * (T_center - T_left) / (r[j] - r[j - 1]);
+        - pow(rj_minus_avg, 2.) * Lambda_j_minus_half * (T_center - T_left) / (r[j] - r[j - 1]))
+        - ACp[j] * dM * (T_center - T_left) / (r[j] - r[j - 1]);
 
  //return F / (ACp[j] * ADensity[j]);
     return F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
-
 }
-/*
-void FRight(vector<double>& f, vector<double> T_cur, vector<double> T_next, vector<double> r, vector <double> ACp, vector <double> ADensity, vector <double> ALambda,
-    const int N, const double a, const double b, const double c, const double d, const double dt, double dM, int s, double inter,
-    const double Ti, double p, const double L_d, double& mod_nevyaz, int flag_evap)
-{
-    double F;
 
-    //Nevyazka on the left border
-    int l_f_num = 0;
-    F = 1. / (r[1] - r[0]) * pow((r[l_f_num + 1] + r[l_f_num]) / 2., 2.) * 0.5 * (ALambda[l_f_num + 1] + ALambda[l_f_num])
-        * (T_next[l_f_num + 1] - T_next[l_f_num]) / (r[l_f_num + 1] - r[l_f_num])
-        - ACp[l_f_num] * ADensity[l_f_num] * pow(r[l_f_num + 1], 2.) / 24. * (T_next[l_f_num] - T_cur[l_f_num]) / dt;
-    f[l_f_num] = -F;
-    //cout << "f[1]" << f[1] << "\n";
-
-    //Nevyazka in Water
-    for (int j = 1; j < s + 1; j++)
-    {
-        F = FDrop(T_next[j - 1], T_next[j], T_next[j + 1], r, ALambda, j)
-            - ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
-        f[j] = -F;
-        //cout << j << " f1_" << j << " " << f[j] << "\n";
-    }
-    //Nevyazka in Gaze
-    for (int j = s + 1; j < N; j++)
-    {
-        //cout << "(T_next[j] - T[j][n])" << (T_next[j] - T[j][n]) << endl;
-        F = FSteam(T_next[j - 1], T_next[j], T_next[j + 1], r, ALambda, ACp, dM, j)
-            - ACp[j] * ADensity[j] * pow(r[j], 2.) * (T_next[j] - T_cur[j]) / dt;
-        f[j] = -F;
-        //cout << j << " f1_" << j << " " << f[j] << "\n";
-    }
-    cout << "flag_evap= " << flag_evap << "\n";
-    cout << "inter= " << inter << "\n";
-    //Near interface Nevyazka
-    double term1, term3;
-    double h = r[s + 1] - r[s];
-    cout << "Ti" << Ti << "p" << p << "\n";
-
-    //To the left of the interface
-    double rs_avg = (r[s] + r[s - 1]) / 2.0;
-    double rs_diff = inter - rs_avg;
-    double q_right = pow(inter, 2.) * Lyambda(Ti, a, 0) * (Ti - T_next[s]) / (inter - r[s]);
-    //pow(inter, 2.) * Lyambda(Ti, a, 0) * ((p / ((p + 1) * h)) * T_next[s - 2] - ((p + 1) / (p * h)) * T_next[s - 1]
-    //+ ((2 * p + 1) / ((p + 1) * p * h)) * Ti);
-    double q_left = pow(rs_avg, 2.) * 0.5 * (ALambda[s] + ALambda[s - 1]) * (T_next[s] - T_next[s - 1]) / (r[s] - r[s - 1]);
-    term1 = (1.0 / rs_diff) * (q_right - q_left);
-    term3 = -ACp[s] * ADensity[s] * pow(r[s], 2.) * (T_next[s] - T_cur[s]) / dt;
-    //cout << "term1= " << term1 << "\n";
-    //cout << "term3= " << term3 << "\n";
-    cout << "q-(s)= " << q_left << "\n";
-    cout << "Lambda_d= " << Lyambda(Ti, a, 0) << "\n";
-    cout << "q+(s)= " << q_right << "\n";
-    F = term1 + term3;
-    f[s] = -F;
-
-    //On the interface
-    q_right = pow(inter, 2.) * Lyambda(Ti, a, 1) * ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti + (p - 4.0) / ((p - 3.0) * h) * T_next[s + 2]
-        + (p - 3.0) / ((4.0 - p) * h) * T_next[s + 3]);
-    q_left = pow(inter, 2.) * Lyambda(Ti, a, 0) * (p / ((p + 1.0) * h) * T_next[s - 2] - (p + 1.0) / (p * h) * T_next[s - 1]
-        + (2.0 * p + 1.0) / ((p + 1.0) * p * h) * Ti);
-    F = q_right - q_left + L_d * dM;
-    //cout << "term1= " << term1 << "\n";
-    //cout << "term2= " << term2 << "\n";
-    //cout << "L_d * dM " << L_d * dM << "\n";
-    f[N] = -F;
-
-    //To the right of the interface
-    double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
-    double rs_diff_plus = rs_avg_plus - inter;
-    q_right = pow(rs_avg_plus, 2.) * 0.5 * (ALambda[s + 2] + ALambda[s + 1]) * (T_next[s + 2] - T_next[s + 1]) / (r[s + 2] - r[s + 1]);
-    q_left = pow(inter, 2.) * Lyambda(Ti, a, 1) * (T_next[s + 1] - Ti) / (r[s + 1] - inter);
-    //pow(inter, 2.) * Lyambda(Ti, a, 1) * ((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_next[s + 2]
-    //+ (p - 3) / ((4 - p) * h) * T_next[s + 3]);
-    term1 = (1.0 / rs_diff_plus) * (q_right - q_left);
-    term3 = -ACp[s + 1] * (ADensity[s + 1] * pow(r[s + 1], 2.) * (T_next[s + 1] - T_cur[s + 1]) / dt + dM * ((T_next[s + 1] - Ti) / (r[s + 1] - inter)));
-    //cout << "term1= " << term1 << "\n";
-    //cout << "term3= " << term3 << "\n";
-    cout << "Lambda_g= " << Lyambda(Ti, a, 1) << "\n";
-    cout << "q-(s+1)= " << q_left << "\n";
-    cout << "q+(s+1)= " << q_right << "\n";
-    F = term1 + term3;
-    f[s + 1] = -F;
-    //Calculate modul of Nevyazka
-    for (int i = 1; i <= N; i++)
-        mod_nevyaz += pow(f[i], 2.0);
-    mod_nevyaz = pow(mod_nevyaz, 0.5);
-
-}
-*/
-/*
-void FRightTestCopyForArrays(vector <double>& f, realtype* T_vect, realtype* r, vector <double>& ACp, vector <double>& ADensity,
-    vector <double>& ALambda, const int n, const int N, const double a, double dM, int s, double inter,
-    const double Ti, double p, const double L_d, double& q_i_right, double& q_i_left)
-{
-    int N_minus = N - 1;
-    double F;
-    //Nevyazka on the left border
-    int l_f_num = 0;
-    double rj_diff = r[1] - r[0];
-    double rj_avg = pow((r[l_f_num + 1] + r[l_f_num]) / 2., 2.);
-    double Lambda_j_half = 0.5 * (ALambda[l_f_num + 1] + ALambda[l_f_num]);
-    F = 1. / rj_diff * (rj_avg * Lambda_j_half
-        * (T_vect[l_f_num + 1] - T_vect[l_f_num]) / (r[l_f_num + 1] - r[l_f_num]));
-    f[l_f_num] = F / (ACp[l_f_num] * ADensity[l_f_num] * pow(r[l_f_num + 1], 2.) / 24.);
-    //cout << "f[1]" << f[1] << "\n";
-    //Nevyazka in Water
-    for (int j = 1; j < s + 1; j++)
-    {
-        F = FDrop4Arrays(T_vect[j - 1], T_vect[j], T_vect[j + 1], r, ALambda, j);
-        f[j] = F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
-        //cout << j << " f1_" << j << " " << f[j] << "\n";
-    }
-    //Nevyazka in Gaze
-    for (int j = s + 1; j < N_minus; j++)
-    {
-        //cout << "(T_vect[j] - T[j][n])" << (T_vect[j] - T[j][n]) << endl;
-        F = FSteam4Arrays(T_vect[j - 1], T_vect[j], T_vect[j + 1], r, ALambda, ACp, dM, j);
-        f[j] = F / (ACp[j] * ADensity[j] * pow(r[j], 2.));
-        //cout << j << " f1_" << j << " " << f[j] << "\n";
-    }
-
-    //cout << "flag_evap= " << flag_evap << "\n";
-    //cout << "inter= " << inter << "\n";
-    //Near interface Nevyazka
-    double term1, term2, term3;
-    double h = r[s + 1] - r[s];
-    cout << "Ti" << Ti << "p" << p << "\n";
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    //Запишем градиенты потоков слева и справа
-    double grad_i_right = (2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti
-        + (p - 4.0) / ((p - 3.0) * h) * T_vect[s + 2] + (p - 3.0) / ((4.0 - p) * h) * T_vect[s + 3];
-    double grad_i_left = p / ((p + 1.0) * h) * T_vect[s - 2]
-        - (p + 1.0) / (p * h) * T_vect[s - 1] + (2.0 * p + 1.0) / ((p + 1.0) * p * h) * Ti;
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //To the left of the interface
-    double rs_avg = (r[s] + r[s - 1]) / 2.0;
-    double rs_diff = inter - rs_avg;
-    double Lambda_s_half = 0.5 * (ALambda[s] + ALambda[s - 1]);
-    //double grad_s_r = (p / ((p + 1) * h)) * T_vect[s - 2] - ((p + 1) / (p * h)) * T_vect[s - 1]
-      //  + ((2 * p + 1) / ((p + 1) * p * h)) * Ti;
-        //pow(inter, 2.) * Lyambda(Ti, a, 0) * (Ti - T_vect[s]) / (inter - r[s]);
-    double grad_s_l = (T_vect[s] - T_vect[s - 1]) / (r[s] - r[s - 1]);
-
-    term1 = (1.0 / rs_diff) * (pow(inter, 2.) * Lyambda(Ti, a, 0) * grad_i_left - pow(rs_avg, 2.) * Lambda_s_half * grad_s_l);
-    term3 = ACp[s] * ADensity[s] * pow(r[s], 2.);
-    //cout << "term1= " << term1 << "\n";
-    //cout << "term3= " << term3 << "\n";
-    cout << "q-(s)= " << Lambda_s_half * grad_s_l << "\n";
-    cout << "q+(s)= " << Lyambda(Ti, a, 0) * grad_i_left << "\n";
-    cout << "Lambda_d= " << Lyambda(Ti, a, 0) << "\n";
-
-    f[s] = term1 / term3;
-
-    //On the interface
-    q_i_right = Lyambda(Ti, a, 1) * grad_i_right;
-    q_i_left = Lyambda(Ti, a, 0) * grad_i_left;
-    f[N_minus] = pow(inter, 2.) * (q_i_right - q_i_left) + L_d * dM;
-    //f[N_minus] = q_i_right - q_i_left;
-    //cout << "term1= " << term1 << "\n";
-    //cout << "term2= " << term2 << "\n";
-    //cout << "L_d * dM " << L_d * dM << "\n";
-
-    //To the right of the interface
-    double rs_avg_plus = (r[s + 1] + r[s + 2]) / 2.0;
-    double rs_diff_plus = rs_avg_plus - inter;
-    double Lambda_s_plus_half = 0.5 * (ALambda[s + 2] + ALambda[s + 1]);
-    double grad_s_plus_r = (T_vect[s + 2] - T_vect[s + 1]) / (r[s + 2] - r[s + 1]);
-    //double grad_s_plus_l = ((2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * Ti
-      //  + (p - 4.0) / ((p - 3.0) * h) * T_vect[s + 2] + (p - 3.0) / ((4.0 - p) * h) * T_vect[s + 3]);
-    //pow(inter, 2.) * Lyambda(Ti, a, 1) * ((2 * p - 7) / ((p - 3) * (p - 4) * h) * Ti + (p - 4) / ((p - 3) * h) * T_vect[s + 2]
-    //+ (p - 3) / ((4 - p) * h) * T_vect[s + 3]);
-    term1 = (1.0 / rs_diff_plus) * (pow(rs_avg_plus, 2.) * Lambda_s_plus_half * grad_s_plus_r
-        - pow(inter, 2.) * Lyambda(Ti, a, 1) * grad_i_right);
-    term2 = -dM * ((T_vect[s + 1] - Ti) / (r[s + 1] - inter));
-    term3 = ACp[s + 1] * (ADensity[s + 1] * pow(r[s + 1], 2.));
-
-    //cout << "term1= " << term1 << "\n";
-    //cout << "term3= " << term3 << "\n";
-    cout << "Lambda_g= " << Lyambda(Ti, a, 1) << "\n";
-    cout << "q-(s+1)= " << Lyambda(Ti, a, 1) * grad_i_right << "\n";
-    cout << "q+(s+1)= " << Lambda_s_plus_half * grad_s_plus_r << "\n";
-
-    f[s + 1] = term1 / term3;
-    //+ term2) / term3;
-
-///////////////////////////////////
-//Write Flows on interface
-//Plot graphics of Flows as a function of Time
-    ofstream Flows;
-    Flows.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/IntFlows/IntFlows_" + to_string(n) + ".dat");
-    Flows << "TITLE=\"" << "Graphics" << "\"" << endl;
-    Flows << R"(VARIABLES= "t, s", "q_g, W/m^2", "q_d, W/m^2",)" << "\n";
-    int j = 0;
-    for (j; j < s + 1; j++)
-        Flows << r[j] << " " << q_i_right << " " << q_i_left << "\n";
-    Flows.close();
-    ///////////////////
-}
-*/
 
 double f(double q, const double N, const double h_min, const double x_r, const double x_l) //возвращает значение функции f(q) = ...
 
@@ -925,6 +930,34 @@ double DefineQ(const double N, const double h_min, const double x_r, const doubl
     return xn;
 }
 
+double DefineP(const double N, const double h_min, const double x_r, const double x_l)
+{
+    int i = 0;//переменные для расчета итерации
+    double x0, xn = 0;// вычисляемые приближения для корня
+    double a, b;// границы отрезка, между которыми находится решение q
+    a = 1;
+    b = 1.2;
+    cout << f(a, N, h_min, x_r, x_l) << " " << f(b, N, h_min, x_r, x_l) << endl;
+    if (f(a, N, h_min, x_r, x_l) * f(b, N, h_min, x_r, x_l) > 0) // если знаки функции на краях отрезка одинаковые, то здесь нет корня
+        cout << "\nError! No roots in this interval\n";
+    else
+    {
+        if (f(a, N, h_min, x_r, x_l) * d2f(a) > 0) x0 = a; // для выбора начальной точки проверяем f(x0)*d2f(x0)>0 ?
+        else x0 = b;
+        xn = x0 - f(x0, N, h_min, x_r, x_l) / df(x0, N, h_min, x_r, x_l); // считаем первое приближение
+        cout << ++i << "-th iteration = " << xn << "\n";
+        while (fabs(x0 - xn) > pow(10, -8)) // пока не достигнем необходимой точности, будет продолжать вычислять
+        {
+            x0 = xn;
+            xn = x0 - f(x0, N, h_min, x_r, x_l) / df(x0, N, h_min, x_r, x_l); // непосредственно формула Ньютона
+            cout << ++i << "-th iteration = " << xn << "\n";
+        }
+        cout << "\nRoot = " << xn; // вывод вычисленного корня
+    }
+    std::cout << "\nHello World!\n";
+    return xn;
+}
+
 void InitialGrid(int N, const double x_l, const double T_l, const double T_r, vector<double>& r,
     vector<double>& T_cur, double T_cur_i, double h, const double q, const double h_min, const int const_params,
     const int N_inter, const int N_uni, const int N_uni_near_center)
@@ -932,7 +965,7 @@ void InitialGrid(int N, const double x_l, const double T_l, const double T_r, ve
     ofstream OutX;
     OutX.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/X_grid.dat");
     OutX << "TITLE=\"" << "Graphics" << "\"" << endl;
-    OutX << R"(VARIABLES= "j", "hj, m" )" << endl;
+    OutX << R"(VARIABLES= "j", "hj, cm" )" << endl;
     /*
     //Setting the value on the boundaries and initial distribution
     r[0] = x_l;
@@ -1034,9 +1067,14 @@ static void PrintOutput(void* mem, realtype t, N_Vector y)
         t, yval[0], yval[1], yval[2], nst, kused, hused);
 #endif
 }
+int ForReinitialisation(int N_x, vector<double>& x_vect, vector<double>& T_vect, vector<double>& Y_vect,
+    double& dM, int& s, double tout1, int call, int number, int print_value, int cons_flag, double& p)
+{
+    return 0;
+}
 
 int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vector<double>& Y_vect,
-    double& M, int s, double tout1, int call, int number, int print_value, int cons_flag)
+    double& dM, int& s, double tout1, int call, int number, int print_value, int cons_flag, double& p)
 {
     void* mem;
     N_Vector yy, yp, avtol, cons;
@@ -1054,7 +1092,7 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
     //MAXIM added
     int NEQ = N_x - 1;
     int k = 0;
-    //Дальше не трогаем
+    int flag_evap = 0;
 
     data->kp = k;
     data->outNevyaz = new ofstream;
@@ -1066,7 +1104,10 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
     data->Tr = T_vect[N_x - 1];
     //data->Tp_inter = T_vect[N_inter];
     data->Np_inter = s;
-    data->M = M;
+    data->dMp = dM;
+    data->flag_evapp = flag_evap;
+    data->tout1p = tout1;
+    data->Nd = s;
 
     int j = 0;
     for (int i = 0; i < N_x; i++) {
@@ -1109,28 +1150,28 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
 
     //заполняю идовский массив
     //MAXIM added
-    double p = 1.5;
+
+    double p_old = p;
     data->x[s] = data->x[s - 1] + (p - 1) * (data->x[s + 1] - data->x[s - 1]);
-    //double q = 20 * pow(10, 3);                  //W / m^2
+    //double q = 20 * pow(10, 3);                  //W / cm^2
     double L_d = 2258.2 * pow(10, 3.);              //J / kg 
-    //const determination of dM
-    //dM = 4 * PI * pow(inter, 2.0) * q / L_d;     // kg / s
-    //dM equals zero because it is only warming time
-    double dM = 0.;                                       // kg / s
     double a = 1.;
     //pow(10, -10);
 
     data->pp = p;
     data->L_dp = L_d;
-    data->dMp = dM;
     data->ap = a;
     x_vect[s] = x_vect[s - 1] + (p - 1) * (x_vect[s + 1] - x_vect[s - 1]);
     vector <double> f(N_x);
     vector <double> ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda;
     ArraysParameters(a, N_x, data->x, data->T, s, ACp, ADensity, ALambda, 0, x_vect[s], p);
+    //dM redefinition
+    //double dM = (1. / 3.) * ADensity[s] * pow(x_vect[s], 3.);                      // kg / s
+    //data->dMp = dM;
+    /*
     //Collect dependence Ti от p
     double Ti_out;
-    /*
+    
     p = 1.001;
     while (p <= 2.)
     {
@@ -1142,6 +1183,7 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
     }
     p = 1.001;
     */
+    
 
     double h = data->x[s + 1] - data->x[s - 1];
     double grad_i_right = (2.0 * p - 7.0) / ((p - 3.0) * (p - 4.0) * h) * data->T[s]
@@ -1184,12 +1226,12 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
     OutTolerances.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/AbsTolerances/AbsTol_"
         + to_string(k) + ".dat");
     OutTolerances << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutTolerances << R"(VARIABLES= "rj, m", "atval_j" )" << "\n";
+    OutTolerances << R"(VARIABLES= "rj, cm", "atval_j" )" << "\n";
     ofstream OutIterNevyazka;
     OutIterNevyazka.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/IterNevyazka/IterNevyazka_"
         + to_string(k) + ".dat");
     OutIterNevyazka << "TITLE=\"" << "Graphics" << "\"" << "\n";
-    OutIterNevyazka << R"(VARIABLES= "rj, m", "F", "dT/dt" )" << "\n";
+    OutIterNevyazka << R"(VARIABLES= "rj, cm", "F", "dT/dt" )" << "\n";
     for (j = 0; j < NEQ; j++)
     {
         if (j == 0)
@@ -1230,7 +1272,7 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
         return 0;
     }
     *(data->outNevyaz) << "TITLE=\"" << "Graphics" << "\"" << endl;
-    *(data->outNevyaz) << R"(VARIABLES= "k", "F", "q_g, W/m^2",  "q_d, W/m^2" "qs_g, W/m^2", "qs_d, W/m^2",)" << endl;
+    *(data->outNevyaz) << R"(VARIABLES= "k", "F", "q_g, W/cm^2",  "q_d, W/cm^2" "qs_g, W/cm^2", "qs_d, W/cm^2",)" << endl;
     //Calculate modul of Nevyazka
     double mod_nevyaz = 0;
     for (int i = 0; i < N_x; i++)
@@ -1272,6 +1314,10 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
 
     }
     */
+
+    /* Call IDARootInit to specify the root function grob with 2 components */
+    retval = IDARootInit(mem, 1, grob);
+    if (check_retval(&retval, "IDARootInit", 1)) return(1);
     retval = IDASetUserData(mem, data);
     if (check_retval(&retval, "IDASetUserData", 1)) return(1);
     retval = IDASetMaxNumSteps(mem, 20000);
@@ -1296,14 +1342,16 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
 
     /////////////////////////
     // Write Initial dT/dt, q_g, g_d
+    double u_r;
     ofstream TimeNevyaz;
     TimeNevyaz.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/TimeNevyaz/TimeNevyaz.dat");
     TimeNevyaz << "TITLE=\"" << "Graphics" << "\"" << endl;
-    TimeNevyaz << R"(VARIABLES= "t, s", "T0, K", "Ts, K", "Ti, K", "Ts+1, K", "gradT_d, K/m", "gradT_g, K/m", "q_d, W", "q_g, W", "dM, kg/s",
- "rho, kg/m^3", "u_r, m/s", "p, m/(cell size) ", "inter, m" )" << endl;
+    TimeNevyaz << R"(VARIABLES= "t, s", "T0, K", "Ts, K", "Ti, K", "Ts+1, K", "gradT_d, K/cm", "gradT_g, K/cm", "q_d, W", "q_g, W", "dM, kg/s",
+ "rho, kg/cm^3", "u_r, cm/s", "p, cm/(cell size) ", "inter, cm" )" << endl;
     //dT/dt убрали
+    u_r = dM / (pow(x_vect[s], 2.0) * Density(T_vect[s], a));
     TimeNevyaz << 0 << " " << T_vect[0] << " " << T_vect[s - 1] << " " << T_vect[s] << " " << T_vect[s + 1] << " " << 0 << " " << 0 << " "
-        << abs(qi_d) * pow(10, 4.) << " " << abs(qi_g) * pow(10, 4.) << " " << data->M << " " << Density(T_vect[s], a) << " " << 0 << " "
+        << abs(qi_d) << " " << abs(qi_g) << " " << data->dMp << " " << Density(T_vect[s], a) << " " << u_r << " "
         << data->pp << " " << data->x[s] << "\n";
     // Write Initial distribution of Temperatures
     ofstream fout;
@@ -1312,7 +1360,7 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
     fout.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/1file(Temp)/" +
         to_string(call) + "file" + to_string(0) + ".dat");
     fout << "TITLE=\"" << "Graphics" << "\"" << endl;
-    fout << R"(VARIABLES= "rj, m", "T, K", "dT/dt", "Lambda, Watt/m*K", "Cp, J/kg*K", "rho, kg/m^3")" << endl;
+    fout << R"(VARIABLES= "rj, cm", "T, K", "dT/dt", "Lambda, Watt/cm*K", "Cp, J/kg*K", "rho, kg/cm^3")" << endl;
     i = 0;
     for (i; i < s; i++) {
         fout << x_vect[i] << "  " << T_vect[i] << "  " << Ith(yp, i) << "  "
@@ -1339,17 +1387,34 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
     /* In loop, call IDASolve, print results, and test for error.
        Break out of loop when NOUT preset output times have been reached. */
 
+    
+    char stats_filename[128];
+    FILE* outStats;
     iout = 0; tout = tout1;
     data->n_tout = (tout / tout1);
     double tend = pow(10, 5);
     while (iout < print_value) {
         retval = IDASolve(mem, tout, &tret, yy, yp, IDA_NORMAL);
-        ExportToArray(T_vect, M, data, yy, N_x);
-        //PrintOutput(mem, tret, yy);
+        
         //Print statistics on esach step on screen
-        //printf("\nFinal Statistics on %d step:\n", iout + 1);
+        printf("\nFinal Statistics on %d step:\n", iout + 1);
         //KINPrintAllStats(mem, stdout, SUN_OUTPUTFORMAT_TABLE);
         //IDAPrintAllStats(mem, stdout, SUN_OUTPUTFORMAT_TABLE);
+        /* Print final statistics to a file in CSV format */
+        //if (tout)
+        sprintf(stats_filename, "C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Statistics/Stats_% f.csv", tout);  // generate fi
+        outStats = fopen(stats_filename, "w");
+        if (outStats != NULL) {  // check if file was opened successfully
+            // write to the file
+            fprintf(outStats, "This is file number %d\n", int(tout / tout1));
+            IDAPrintAllStats(mem, outStats, SUN_OUTPUTFORMAT_TABLE);
+            fclose(outStats);
+        }
+        else {
+            printf("Error: unable to open file %s\n", stats_filename);
+        }
+
+        //break;
         //Out dT/dt, q_d, g_g depending on timesteps
         /*
         //Calculate modul of Nevyazka
@@ -1365,18 +1430,20 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
             - (p + 1.0) / (p * h) * data->T[s - 2] + (2.0 * p + 1.0) / ((p + 1.0) * p * h) * data->T[s];
         qi_g = Lyambda(data->T[s], a, 1) * grad_i_right;
         qi_d = Lyambda(data->T[s], a, 0) * grad_i_left;
+        //Define u_r
+        u_r = dM / (pow(x_vect[s], 2.0) * Density(T_vect[s], a));
         TimeNevyaz << tout << " " << T_vect[0] << " " << T_vect[s - 1] << " " << T_vect[s] << " " << T_vect[s + 1] << " " << 0 << " " << 0 << " "
-            << abs(qi_d) * pow(10, 4.) << " " << abs(qi_g) * pow(10, 4.) << " " << data->M << " " << Density(T_vect[s], a) << " " << 0 << " "
+            << abs(qi_d) << " " << abs(qi_g) << " " << data->dMp << " " << Density(T_vect[s], a) << " " << u_r << " "
             << data->pp << " " << data->x[s] << "\n";
         //Out Files on timesteps
-        if ((iout + 1) % number == 0 || iout < 16)
+        if ((iout + 1) % number == 0 || iout < 160)
         {
             cout << "t = " << tout << "\n";
-            //cout << "M = " << M << "\n";
+            //cout << "dM = " << dM << "\n";
             fout.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/1file(Temp)/" +
                 to_string(call) + "file" + to_string(int(tout / tout1)) + ".dat");
             fout << "TITLE=\"" << "Graphics" << "\"" << endl;
-            fout << R"(VARIABLES= "rj, m", "T, K", "dT/dt", "Lambda, Watt/m*K", "Cp, J/kg*K", "rho, kg/m^3")" << endl;
+            fout << R"(VARIABLES= "rj, cm", "T, K", "dT/dt", "Lambda, Watt/cm*K", "Cp, J/kg*K", "rho, kg/cm^3", "u_r, cm/s" )" << endl;
             /*
             mod_ypval = 0;
             for (int i = 0; i < N_x; i++)
@@ -1385,28 +1452,104 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
             */
             i = 0;
             for (i; i < s; i++) {
-                fout << x_vect[i] << "  " << T_vect[i] << "  "  << Ith(yp, i) << "  "
-                    << ALambda[i] << "  " << ACp[i] << "  " << ADensity[i] << "\n";
+                fout << data->x[i] << "  " << T_vect[i] << "  "  << Ith(yp, i) << "  "
+                    << Lyambda(T_vect[i], a, 0) << "  " << Cp(T_vect[i], a) << "  " << Density(T_vect[i], a) << " " << 0 << "\n";
             }
             //Writing on interface
             //Right side
-            fout << x_vect[s] << "  " << T_vect[s] << " " << Ith(yp, s) << " "
-                << Lyambda(T_vect[s], a, 0) << "  " << Cp(T_vect[s], a) << "  " << Density(T_vect[s], a) << "\n";
+            fout << data->x[s] << "  " << T_vect[s] << " " << Ith(yp, s) << " " << Lyambda(T_vect[s], a, 0) << "  "
+                << Cp(T_vect[s], a) << "  " << Density(T_vect[s], a) << " " << dM / (pow(x_vect[s], 2.0) * Density(T_vect[s], a)) << "\n";
             //Left side
-            fout << x_vect[s] << "  " << T_vect[s] << " " << Ith(yp, s) << " "
-                << Lyambda(T_vect[s], a, 1) << "  " << Cp(T_vect[s], a) << "  " << Density(T_vect[s], a) << "\n";
+            fout << data->x[s] << "  " << T_vect[s] << " " << Ith(yp, s) << " " << Lyambda(T_vect[s], a, 1) << "  "
+                << Cp(T_vect[s], a) << "  " << Density(T_vect[s], a) << " " << dM / (pow(x_vect[s], 2.0) * Density(T_vect[s], a)) << "\n";
             for (i = s + 1; i < NEQ; i++) {
-                fout << x_vect[i] << "  " << T_vect[i] << "  " << Ith(yp, i) << " "
-                    << ALambda[i] << "  " << ACp[i] << "  " << ADensity[i] << "\n";
+                fout << data->x[i] << "  " << T_vect[i] << "  " << Ith(yp, i) << "  " << Lyambda(T_vect[i], a, 0) << "  "
+                    << Cp(T_vect[i], a) << "  " << Density(T_vect[i], a) << " " << dM / (pow(x_vect[i], 2.0) * ADensity[i]) << "\n";
             }
             //For Right Boundary
-            fout << x_vect[i] << "  " << T_vect[i] << "  " << ZERO << "  "
-                << ALambda[i] << "  " << ACp[i] << "  " << ADensity[i] << "\n";
+            fout << data->x[i] << "  " << T_vect[i] << "  " << ZERO << "  " << Lyambda(T_vect[i], a, 0) << "  "
+                << Cp(T_vect[i], a) << "  " << Density(T_vect[i], a) << " " << dM / (pow(x_vect[i], 2.0) * ADensity[i]) << "\n";
             fout.close();
         }
         if (check_retval(&retval, "IDASolve", 1)) {
             return(1);
         }
+        //Catch when Ti = 373 and reinitialise IDA
+        if (retval == IDA_ROOT_RETURN) {
+            //Triggering the flag
+            Ith(yy, s) = dM;
+            flag_evap = 1;
+            data->flag_evapp = flag_evap;
+            //data->T[s] = T_vect[s];
+            cout << "Turn on evap" << "\n";
+            cout << "T_vect[s]= " << T_vect[s] << "data->T[s]= " << data->T[s] << "Ith(yy, s)= " << Ith(yy, s) << "\n";
+            for (j = 0; j < NEQ; j++)
+            {
+                if (j == 0)
+                    Ith(yp, j) = FAdiabatic(data->T[0], data->T[1], data->x, ALambda, ACp, ADensity);
+                else if (j < data->Nd - 1)
+                    Ith(yp, j) = FDrop(data->T[j - 1], data->T[j], data->T[j + 1], data->x, ALambda, ACp, ADensity, j);
+                else if (j == data->Nd - 1) {
+                    Ith(yp, j) = FMinus(data->T[s - 3], data->T[s - 2], data->T[s - 1], data->T[s], data->x,
+                        ALambda, ACp, ADensity, a, s, p, qs_g, qs_d);
+                }
+                else if (j == data->Nd) {
+                    Ith(yp, j) = ZERO;
+                }
+                else if (j == data->Nd + 1) {
+                    Ith(yp, j) = FPlus(data->T[s], data->T[s + 1], data->T[s + 2], data->T[s + 3], data->x,
+                        ALambda, ACp, ADensity, a, dM, s, p);
+                }
+                else if (j < NEQ)
+                    Ith(yp, j) = FSteam(data->T[j - 1], data->T[j], data->T[j + 1], data->x, ALambda, ACp, ADensity, dM, j);
+            }
+            retval = IDAReInit(mem, tout, yy, yp);
+            if (check_retval(&retval, "IDAReInit", 1)) return(1);
+        }
+        ExportToArray(T_vect, dM, data, yy, N_x);
+        //PrintOutput(mem, tret, yy);
+        //Renewing p
+        if (data->pp <= 1.001) {
+            data->pp = 1.999;
+            data->x[s] = data->x[s - 1];
+            data->Np_inter -= 1;
+            s = data->Np_inter;
+            data->T[s] = T_BOILING;
+
+            //Reinitialization
+            Ith(yy, s) = data->dMp;
+            Ith(yy, s + 1) = data->T[s + 1];
+            cout << "Going through a node" << "\n";
+            cout << "T_vect[s]= " << T_vect[s] << "data->T[s]= " << data->T[s] << "Ith(yy, s)= " << Ith(yy, s) << "\n";
+            for (j = 0; j < NEQ; j++)
+            {
+                if (j == 0)
+                    Ith(yp, j) = FAdiabatic(data->T[0], data->T[1], data->x, ALambda, ACp, ADensity);
+                else if (j < s - 1)
+                    Ith(yp, j) = FDrop(data->T[j - 1], data->T[j], data->T[j + 1], data->x, ALambda, ACp, ADensity, j);
+                else if (j == s - 1) {
+                    Ith(yp, j) = FMinus(data->T[s - 3], data->T[s - 2], data->T[s - 1], data->T[s], data->x,
+                        ALambda, ACp, ADensity, a, s, p, qs_g, qs_d);
+                }
+                else if (j == s) {
+                    Ith(yp, j) = ZERO;
+                }
+                else if (j == s + 1) {
+                    Ith(yp, j) = FPlus(data->T[s], data->T[s + 1], data->T[s + 2], data->T[s + 3], data->x,
+                        ALambda, ACp, ADensity, a, dM, s, p);
+                }
+                else if (j < NEQ)
+                    Ith(yp, j) = FSteam(data->T[j - 1], data->T[j], data->T[j + 1], data->x, ALambda, ACp, ADensity, dM, j);
+            }
+            retval = IDAReInit(mem, tout, yy, yp);
+            if (check_retval(&retval, "IDAReInit", 1)) return(1);
+
+        }
+        p_old = data->pp;
+        data->p_oldp = p_old;
+        if (data->dMp > 300)
+            break;
+        //
         iout++;
         tout += tout1;
         data->n_tout = (tout / tout1);
@@ -1434,28 +1577,32 @@ int Integrate_IDA(int N_x, vector<double>& x_vect, vector<double>& T_vect, vecto
 }
 
 
-void MySolver(int& retval, vector<double>& Y_vect, double& M, int& N_center)
+void MySolver(int& retval, vector<double>& Y_vect, int& N_center)
 {
     //InTime
     cout << "INTEGRATE ALL\n\n\n";
-    double tout1 = 0.0001;
-    int number = 10;
-    int print_value = pow(10, 5);
+    double tout1 = 0.005;
+    int number = 1;
+    int print_value = pow(10, 3);
     cout << "print_value" << print_value << "\n";
     //Mymain
     const int const_params = 1;
-    const double T_l = 300;
+    double dM = 0;
+    double p = 1.1;
+    const double T_l = 280;
     const double T_r = 1500;
     //Если хочется отдельно задать Ti
-    double T_cur_i = 337.637;
-        //323.948 p = 1.1;
-        //337.637 для p = 1.5 выдает невязку порядка 10^(-6);
-        // p= 1.001 Ti_out= 321.232
+    double T_cur_i = 302.97;
+        //316.777 p = 1.5 невязка 6.08293e-05 для T = 280
+        //302.97 p = 1.1 невязка 6.0334e-05 для T = 280
+        //323.948 p = 1.1; для T = 300
+        //337.637 для p = 1.5 выдает невязку порядка 10^(-6) для T = 300;
+        // p= 1.001 Ti_out= 321.232 для T = 300
     //зададим минимальный возможный размер ячейки
     const double h_min = 0.0025;        //cm                       //0.0005 * 2 / 41 = 0.0000243902439024= 24.3902439024 мкр;  
     //Number of cells
     int N = 102;                          //количество узлов. То есть ячеек N - 1, и еще раздвоили ячейку узлом интерфейса
-    const int Nd = 20;
+    int Nd = 20;
     const int N_uni = 2 * Nd;
     const int N_uni_near_center = 5;
     const double x_l = 0.;
@@ -1470,7 +1617,7 @@ void MySolver(int& retval, vector<double>& Y_vect, double& M, int& N_center)
     r.resize(N);
     cout << "check" << "\n";
     InitialGrid(N, x_l, T_l, T_r, r, T_cur, T_cur_i, h, q, h_min, const_params, Nd, N_uni, N_uni_near_center);
-    retval = Integrate_IDA(N, r, T_cur, Y_vect, M, Nd, tout1, 1, number, print_value, 0);
+    retval = Integrate_IDA(N, r, T_cur, Y_vect, dM, Nd, tout1, 1, number, print_value, 0, p);
 }
 
 int main()
@@ -1478,7 +1625,7 @@ int main()
     //init_consts(num_gas_species, num_react);
     //int N_x = 250;
     double b = 0.01;
-    double M;
+    double dM;
     double W, rho, Y_H2, Y_O2;
     int N_center;
     int retval;
@@ -1495,75 +1642,31 @@ int main()
     double x_start, x_finish;
     int cons_flag = 0;
     {
-        /*
-        N_center = InitialData(N_x, x_vect, T_vect, Y_vect, M);
-        Write_to_file("file_INITIAL", fout, x_vect,
-            T_vect, Y_vect, M, N_x, 0);
-        Add_elem(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        //Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        //Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        cout << "N_x = " << N_x << "\n";
-        //retval = Integrate_Y(N_x, x_vect, T_vect, Y_vect, M, N_center, 0);
-        Write_to_file("prefile1_Y", fout, x_vect,
-            T_vect, Y_vect, M, N_x, 0);
-        */
         //MAXIM added
-        MySolver(retval, Y_vect, M, N_center);
+        MySolver(retval, Y_vect, N_center);
         //Дальше не трогаем
-        /*
-        retval = Integrate_Y(N_x, x_vect, T_vect, Y_vect, M, N_center, 0);
-        retval = Integrate(N_x, x_vect, T_vect, Y_vect, M, N_center);
-        Write_to_file("file_part1", fout, x_vect,
-            T_vect, Y_vect, M, N_x, 1);
-
-
-        b = 0.05;
-        Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        retval = Integrate_Y(N_x, x_vect, T_vect, Y_vect, M, N_center, 0);
-        retval = Integrate(N_x, x_vect, T_vect, Y_vect, M, N_center);
-        Write_to_file("file_part2", fout, x_vect,
-            T_vect, Y_vect, M, N_x, 2);
-
-
-        b = 0.01;
-        Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        //Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        retval = Integrate_Y(N_x, x_vect, T_vect, Y_vect, M, N_center, 0);
-        retval = Integrate(N_x, x_vect, T_vect, Y_vect, M, N_center);
-        Write_to_file("file_part3", fout, x_vect,
-            T_vect, Y_vect, M, N_x, 3);
-
-        //b = 0.0012;
-        //Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        ////Add_elem_spec(T_vect, Y_vect, x_vect, N_x, N_center, b);
-        //retval = Integrate_Y(N_x, x_vect, T_vect, Y_vect, M, N_center, 0);
-        //retval = Integrate(N_x, x_vect, T_vect, Y_vect, M, N_center);
-        //Write_to_file("file_part3", fout, x_vect,
-        //    T_vect, Y_vect, M, N_x, 4);
-        */
     }
     return 0;
-    //T_find();
 }
-
 
 static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* user_data)
 {
     realtype* yval, * ypval, * rval;
     UserData data;
     realtype* x_cells, * T_vect, * Y_vect, * Tp_vect, * Yp_vect;
-    double M;
     data = (UserData)user_data;
     T_vect = data->T;
     Y_vect = data->Y_H2O;
     x_cells = data->x;
+    int NEQ = data->NEQ;
 
     yval = N_VGetArrayPointer(yy);
     ypval = N_VGetArrayPointer(yp);
     rval = N_VGetArrayPointer(rr);
     //cout << "ypvalres0 = " << yval[0] << "\n";
     int myNx = data->Nx;
-    ExportToArray(T_vect, data->M, data, yy, data->Nx);
+    cout << "data->dMp_bef-export" << data->dMp << "\n";
+    ExportToArrayResrob(T_vect, data->dMp, data, yy, data->Nx);
     double Y_H2, Y_O2;
     double W;
     double rho;
@@ -1573,17 +1676,30 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     int s = data->Np_inter;
     int k;
     int j;
-    double p, L_d, dM, a;
+    int m;
+    int Nd;
+    double p,p_old, L_d, dM, a, flag_evap, tout1;
     n_dt = data->n_tout;
     k = data->kp;
     p = data->pp;
+    p_old = data->p_oldp;
     L_d = data->L_dp;
     dM = data->dMp;
     a = data->ap;
-    //cout << "s= " << s << "\n";
-    //cout << "T[s]= " << T_vect[s] << "\n";
-    //cout << k << "ypval[s]= " << ypval[s] << "\n";
+    flag_evap = data->flag_evapp;
+    tout1 = data->tout1p;
+    Nd = data->Nd;
+
+    //Nailing down Ti
+    if (flag_evap == 1) {
+        data->T[s] = T_BOILING;
+        T_vect[s] = data->T[s];
+    }
     x_cells[s] = x_cells[s - 1] + (p - 1) * (x_cells[s + 1] - x_cells[s - 1]);
+    data->x[s] = x_cells[s];
+    //cout << "s= " << s << "\n";
+    cout << "T[s]= " << T_vect[s] << "\n";
+    cout << "dM" << dM << "\n";
 
     vector <double> f(myNx);
     vector <double> ACp, ADfCp, ADensity, ADfDensity, ALambda, ADfLambda;
@@ -1592,7 +1708,9 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     double qi_d = 0;
     double qs_g = 0;
     double qs_d = 0;
-    //Nevyazka
+    double Ti;
+    cout << "flag_evap = " << flag_evap << "\n";
+    //Nevyazka for Warming
     for (j = 0; j < myNx - 1; j++)
     {
         if (j == 0)
@@ -1600,27 +1718,129 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
         else if (j < s - 1)
             rval[j] = FDrop(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, j) - ypval[j];
         else if (j == s - 1) {
-            rval[j] = FMinus(T_vect[s - 3], T_vect[s - 2], T_vect[s - 1], T_vect[s], data->x,
-                ALambda, ACp, ADensity, a, s, p, qs_g, qs_d) - ypval[j];
+            rval[s - 1] = FMinusM(T_vect[s - 3], T_vect[s - 2], T_vect[s - 1], T_BOILING, data->x,
+                ALambda, ACp, ADensity, a, data->dMp, s, p_old, p, tout1, qs_g, qs_d) - ypval[j];
+            cout << "p_minus= " << p << "\n";
         }
         else if (j == s) {
-            rval[j] = FInterface(T_vect[s - 3], T_vect[s - 2], T_vect[s], T_vect[s + 2], T_vect[s + 3],
-                data->x, ALambda, ACp, ADensity, a, s, p, qi_g, qi_d);
+            //Change p in Function for interface using changed dM 
+            rval[s] = FInterfaceM(T_vect[s - 3], T_vect[s - 2], T_BOILING, T_vect[s + 2], T_vect[s + 3], data->dMp,
+                data->x, ALambda, ACp, ADensity, L_d, a, s, p_old, p, tout1, qi_g, qi_d);
+            cout << "p_interface= " << p << "\n";
             // / (Cp(T_vect[s], a) * Density(T_vect[s], a) * pow(data->x[s], 2.)) - ypval[j];
         }
         else if (j == s + 1) {
-            rval[j] = FPlus(T_vect[s], T_vect[s + 1], T_vect[s + 2], T_vect[s + 3], data->x,
-                ALambda, ACp, ADensity, a, dM, s, p) - ypval[j];
+            rval[s + 1] = FPlusM(T_BOILING, T_vect[s + 1], T_vect[s + 2], T_vect[s + 3], data->x,
+                ALambda, ACp, ADensity, a, data->dMp, s, p_old, p, tout1) - ypval[j];
+            cout << "p_plus= " << p << "\n";
         }
         else if (j < myNx - 1) {
-            rval[j] = FSteam(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, dM, j) - ypval[j];
+            rval[j] = FSteam(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, data->dMp, j) - ypval[j];
         }
     }
+    if (flag_evap == 0)
+    {
+        for (j = 0; j < myNx - 1; j++)
+        {
+            if (j == 0)
+                rval[j] = FAdiabatic(T_vect[0], T_vect[1], data->x, ALambda, ACp, ADensity) - ypval[j];
+            else if (j < s - 1)
+                rval[j] = FDrop(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, j) - ypval[j];
+            else if (j == s - 1) {
+                rval[j] = FMinus(T_vect[s - 3], T_vect[s - 2], T_vect[s - 1], T_vect[s], data->x,
+                    ALambda, ACp, ADensity, a, s, p, qs_g, qs_d) - ypval[j];
+            }
+            else if (j == s) {
+                rval[j] = FInterface(T_vect[s - 3], T_vect[s - 2], T_vect[s], T_vect[s + 2], T_vect[s + 3],
+                    data->x, ALambda, ACp, ADensity, a, s, p, qi_g, qi_d);
+                // / (Cp(T_vect[s], a) * Density(T_vect[s], a) * pow(data->x[s], 2.)) - ypval[j];
+            }
+            else if (j == s + 1) {
+                rval[j] = FPlus(T_vect[s], T_vect[s + 1], T_vect[s + 2], T_vect[s + 3], data->x,
+                    ALambda, ACp, ADensity, a, dM, s, p) - ypval[j];
+            }
+            else if (j < myNx - 1) {
+                rval[j] = FSteam(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, dM, j) - ypval[j];
+            }
+        }
+    }
+    else if (flag_evap == 1)
+    {
+        //Define number of nodes traversed 
+        m = Nd - s;
+        //Nevyazka for Evaporation
+        cout << "p_at start of evaporation= " << p << "\n";
+        cout << "data->dMp in evap cycle= " << data->dMp << "\n";
+        //if (s == 20) {
+        for (j = 0; j < myNx - 1; j++)
+        {
+            if (j == 0)
+                rval[j] = FAdiabatic(T_vect[0], T_vect[1], data->x, ALambda, ACp, ADensity) - ypval[j];
+            else if (j < s - 1)
+                rval[j] = FDrop(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, j) - ypval[j];
+            else if (j == s - 1) {
+                rval[s - 1] = FMinusM(T_vect[s - 3], T_vect[s - 2], T_vect[s - 1], T_BOILING, data->x,
+                    ALambda, ACp, ADensity, a, data->dMp, s, p_old, p, tout1, qs_g, qs_d) - ypval[j];
+                cout << "p_minus= " << p << "\n";
+            }
+            else if (j == s) {
+                //Change p in Function for interface using changed dM 
+                rval[s] = FInterfaceM(T_vect[s - 3], T_vect[s - 2], T_BOILING, T_vect[s + 2], T_vect[s + 3], data->dMp,
+                    data->x, ALambda, ACp, ADensity, L_d, a, s, p_old, p, tout1, qi_g, qi_d);
+                cout << "p_interface= " << p << "\n";
+                // / (Cp(T_vect[s], a) * Density(T_vect[s], a) * pow(data->x[s], 2.)) - ypval[j];
+            }
+            else if (j == s + 1) {
+                rval[s + 1] = FPlusM(T_BOILING, T_vect[s + 1], T_vect[s + 2], T_vect[s + 3], data->x,
+                    ALambda, ACp, ADensity, a, data->dMp, s, p_old, p, tout1) - ypval[j];
+                cout << "p_plus= " << p << "\n";
+            }
+            else if (j < myNx - 1) {
+                rval[j] = FSteam(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, data->dMp, j) - ypval[j];
+            }
+        }
+        //}
+            /*
+        else {
+            for (j = 0; j < myNx - 1; j++)
+            {
+                if (j == 0)
+                    rval[j] = FAdiabatic(T_vect[0], T_vect[1], data->x, ALambda, ACp, ADensity) - ypval[j];
+                else if (j < s - 1)
+                    rval[j] = FDrop(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, j) - ypval[j];
+                else if (j == s - 1) {
+                    rval[s - 1] = FMinusM(T_vect[s - 3], T_vect[s - 2], T_vect[s - 1], T_BOILING, data->x,
+                        ALambda, ACp, ADensity, a, data->dMp, s, p_old, p, tout1, qs_g, qs_d) - ypval[j];
+                    cout << "p_minus= " << p << "\n";
+                }
+                else if (j == s) {
+                    rval[s + 1] = FPlusM(T_BOILING, T_vect[s + 1], T_vect[s + 2], T_vect[s + 3], data->x,
+                        ALambda, ACp, ADensity, a, data->dMp, s, p_old, p, tout1) - ypval[j];
+                    cout << "p_plus= " << p << "\n";
+                }
+                else if (j == Nd) {
+                    //Change p in Function for interface using changed dM 
+                    rval[s] = FInterfaceM(T_vect[s - 3], T_vect[s - 2], T_BOILING, T_vect[s + 2], T_vect[s + 3], data->dMp,
+                        data->x, ALambda, ACp, ADensity, L_d, a, s, p_old, p, tout1, qi_g, qi_d);
+                    cout << "p_interface= " << p << "\n";
+                }
+                else if (j < myNx - 1) {
+                    rval[j] = FSteam(T_vect[j - 1], T_vect[j], T_vect[j + 1], data->x, ALambda, ACp, ADensity, data->dMp, j) - ypval[j];
+                }
+            }
+            */
+        //}
+        cout << "rval[s - 1]= " << rval[s - 1] << "\n";
+        cout << "rval[s]= " << rval[s] << "\n";
+        cout << "rval[s + 1]= " << rval[s + 1] << "\n";
+        cout << "dM= " << dM << " data->dMp= " << data->dMp << "\n";
+    }
+
 
     /////////////////////////////////
     //Opening file for T on iteration
     //Define nevyazkas on each iteration
-    if (k % (myNx + 1) == 0 && k > myNx)
+    if (k % (NEQ + 2) == 0 && k > NEQ)
     {
         //Calculate modul of Nevyazka
         double mod_nevyaz = 0;
@@ -1633,7 +1853,7 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
         ofstream OutIterNevyazka;
         OutIterNevyazka.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/IterNevyazka/IterNevyazka_" + to_string(k) + ".dat");
         OutIterNevyazka << "TITLE=\"" << "Graphics" << "\"" << "\n";
-        OutIterNevyazka << R"(VARIABLES= "rj, m", "F", "dT/dt" )" << "\n";
+        OutIterNevyazka << R"(VARIABLES= "rj, cm", "F", "dT/dt" )" << "\n";
         int i = 0;
         for (i; i < s; i++)
             OutIterNevyazka << x_cells[i] << " " << abs(rval[i]) << " " << abs(ypval[i]) << "\n";
@@ -1647,12 +1867,12 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
         ofstream OutIterCurrentTemp;
         OutIterCurrentTemp.open("C:/Users/user/source/Научная работа/DropletEvaporation(IDA)/Data_new/IterTemp/IterTemp_" + to_string(k) + ".dat");
         OutIterCurrentTemp << "TITLE=\"" << "Graphics" << "\"" << "\n";
-        OutIterCurrentTemp << R"(VARIABLES= "rj, m", "T, K", "Lambda, W/m*K" )" << "\n";
+        OutIterCurrentTemp << R"(VARIABLES= "rj, cm", "T, K", "Lambda, W/cm*K" )" << "\n";
         i = 0;
         for (i; i < s; i++)
             OutIterCurrentTemp << x_cells[i] << " " << T_vect[i] << " " << ALambda[i] << "\n";
         //Interface
-        OutIterCurrentTemp << x_cells[s] << " " << T_vect[s] << " " << ALambda[s] << "\n";
+        OutIterCurrentTemp << x_cells[s] << " " << T_vect[s] << " " << Lyambda(T_vect[s], a, 0) << "\n";
         i++;
         for (i; i < myNx; i++)
             OutIterCurrentTemp << x_cells[i] << " " << T_vect[i] << " " << ALambda[i] << "\n";
@@ -1662,6 +1882,7 @@ static int resrob(realtype tres, N_Vector yy, N_Vector yp, N_Vector rr, void* us
     //Counter of the jacobian challenges k
     k++;
     data->kp = k;
+    data->pp = p;
     return(0);
 }
 

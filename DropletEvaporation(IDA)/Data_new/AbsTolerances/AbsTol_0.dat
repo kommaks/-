@@ -1,5 +1,5 @@
 TITLE="Graphics"
-VARIABLES= "rj, m", "atval_j" 
+VARIABLES= "rj, cm", "atval_j" 
 0 1e-06
 0.0025 1e-06
 0.005 1e-06
@@ -20,7 +20,7 @@ VARIABLES= "rj, m", "atval_j"
 0.0425 1e-06
 0.045 1e-06
 0.0475 1e-06
-0.04875 1e-06
+0.04775 1e-06
 0.05 1e-06
 0.0525 1e-06
 0.055 1e-06
